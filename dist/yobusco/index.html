@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>YoBusco</title>
+    <link rel="stylesheet" href="assets/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="assets/css/style.css">
+    <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.4.0/css/font-awesome.min.css'>
+</head>
+
+<body>
+
+    <nav class="navbar navbar-dark navbar-expand-md bg-bluedark justify-content-between">
+        <div class="container">
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".dual-nav">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+            <div class="navbar-collapse collapse dual-nav w-50 order-1 order-md-0">
+                <ul class="navbar-nav">
+                    <li class="nav-item menu-li">
+                        <a class="nav-link pl-0" href="#"><img src="assets/img/home-png.png" alt="" height="20px">INMUEBLE</a>
+                    </li>
+                    <li class="nav-item menu-li">
+                        <a class="nav-link" href="#"><img src="assets/img/vehiculo-png.png" alt="" height="20px">VEHÍCULO</a>
+                    </li>
+                </ul>
+            </div>
+            <a href="" class="navbar-brand mx-auto d-block text-center order-0 order-md-1 w-50"><img src="assets/img/logo-png.png" alt=""></a>
+            <div class="navbar-collapse collapse dual-nav w-50 order-2">
+                <ul class="nav navbar-nav ml-auto">
+                    <li class="nav-item menu-li">
+                        <a class="nav-link " data-toggle="modal" data-target="#exampleModalCenter">
+                            <img src="assets/img/persona-png.png" alt="" height="20px">LOGIN
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div id="carouselExampleSlidesOnly" class="carousel slide" data-ride="carousel">
+        <div class="carousel-inner">
+            <div class="carousel-item active">
+                <img src="assets/img/bg_home.jpg" class="d-block w-100 imgslide">
+                <div class="carousel-caption  d-md-block">
+                    <div class="container-fluid">
+                        <div class="row">
+                            <div class="col  text-right btn_prin">
+                                <h6 class="h6">QUIERES UN INMUEBLE</h6>
+                            </div>
+                            <div class="col  text-left btn_prin">
+                                <h6 class="h6">TIENES UN INMUEBLE</h6>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+
+
+
+
+
+    <!-- MODAL LOGIN -->
+
+<div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      
+      <div class="modal-body">
+        <div align="center">
+        <img src="assets/img/logoblue-png.png" alt="" height="35px">
+        <a class="btn_cerrar_modal" data-dismiss="modal">X</a>
+        </div>
+        
+        <div class="container"> 
+           <button type="button" class="btn bg-blul btn-lg btn-block">Ingresar con <b>facebook</b></button>
+           <p class="p_login">O ingresa con tu correo electrónico</p>
+
+<nav>
+  <div class="nav nav-tabs" id="nav-tab" role="tablist">
+    <a class="nav-item nav_lo nav-link active" id="nav-home-tab" data-toggle="tab" href="#nav-home" role="tab" aria-controls="nav-home" aria-selected="true">INICIAR SESIÓN</a>
+    <a class="nav-item nav_lo nav-link" id="nav-profile-tab" data-toggle="tab" href="#nav-profile" role="tab" aria-controls="nav-profile" aria-selected="false">REGISTRATE</a>
+  </div>
+</nav>
+<div class="tab-content" id="nav-tabContent">
+
+
+  <div class="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab">
+<form>
+  <div class="form-group">
+<input type="email" class="form-control input_login" id="email_login" placeholder="Correo">
+  </div>
+  <div class="form-group">
+    <input type="password" class="form-control input_login" id="password_login" placeholder="Contraseña">
+  </div>
+  <button type="submit" class="btn bg-blul_ingresar btn-lg btn-block bg">INGRESAR</button>
+</form>
+
+<div align="center">
+<a class="a_olvidaste"> Olvidaste tu contraseña ?</a>
+</div>
+
+  </div>
+
+
+
+  <div class="tab-pane fade" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab">
+      
+      <form>
+        <div class="form-group">
+<input type="text" class="form-control input_login" id="nombre_registro" placeholder="Nombre Completo">
+  </div>
+  <div class="form-group">
+<input type="email" class="form-control input_login" id="email_registro" placeholder="Correo">
+  </div>
+  <div class="form-group">
+    <input type="password" class="form-control input_login" id="password_registro" placeholder="Contraseña">
+  </div>
+  <div class="form-group">
+    <input type="password" class="form-control input_login" id="password_registro_2" placeholder="Confirmar contraseña">
+  </div>
+  <button type="submit" class="btn bg-blul_ingresar btn-lg btn-block bg">REGISTRAR</button>
+</form>
+
+<div align="center">
+<a class="a_termino">Estoy de acuerdo con los <b>Terminos de uso</b> y <b>Políticas de privacidad</b> de YoBusco</a>
+</div>
+
+  </div>
+</div>
+
+        </div>
+        
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+
+    <script src="assets/jquery/jquery-3.3.1.min.js"></script>
+    <script src="assets/bootstrap/js/bootstrap.min.js"></script>
+</body>
+
+</html>

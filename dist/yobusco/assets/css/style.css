@@ -1,0 +1,208 @@
+@font-face {
+    font-family: MyriadPro;
+    src: url(../fonts/MyriadPro-Regular.otf);
+}
+
+@font-face {
+    font-family: volteM;
+    src: url(../fonts/VolteRounded-Medium.otf);
+}
+
+@font-face {
+    font-family: volteR;
+    src: url(../fonts/VolteRounded-Regular.otf);
+}
+
+@font-face {
+    font-family: volteS;
+    src: url(../fonts/VolteRounded-Semibold.otf);
+}
+
+.menu-li a {
+    font-family: volteM;
+    letter-spacing: 0px;
+    font-weight: 500;
+    color: white !important;
+    cursor: pointer;
+}
+
+.menu-li a img {
+    margin-right: 10px;
+}
+
+.menu-li {
+    color: white !important;
+}
+
+.bg-bluedark {
+    background-color: rgb(24, 52, 207);
+}
+
+.carousel-caption {
+    background-color: rgb(24, 52, 207);
+    position: absolute;
+    right: 0px;
+    bottom: 0px;
+    left: 0px;
+    z-index: 10;
+    padding: 10px 0px;
+    transition: 0.5s;
+}
+
+.btn_prin {
+    margin: 0px 20px;
+    padding: 13px 50px;
+    transition: 0.4s;
+    cursor: pointer;
+    background-color: rgba(255, 255, 255, 0.1);
+    color: white;
+}
+
+.btn_prin:hover {
+    background-color: rgba(255, 255, 255, 0.3);
+}
+
+.h6 {
+    margin-bottom: 0px;
+    transition: 0.5s;
+    font-family: volteM;
+    font-weight: 600;
+}
+
+.modal-content {
+    border-radius: 0px;
+}
+
+.modal-body{
+
+    border :1px solid rgb(24, 52, 207);
+    margin: 5px;
+    padding: 10px;
+}
+
+.btn_cerrar_modal{
+    position: absolute;
+    right: 5px;
+    top: 0px;
+    font-size: 18px;
+    font-family: volteM;
+    color: rgb(24, 52, 207) !important;
+    font-family: monospace;
+    cursor: pointer;
+    transition:.5s;
+}
+
+
+.bg-blul{
+    background-color: rgb(24, 52, 207);
+    border-radius: 0px;
+    color: white;
+     font-family: volteR;
+     padding: 4px;
+     font-size: 18px;
+     margin-top: 10px;
+}
+
+.bg-blul_ingresar{
+     background-color: rgb(24, 52, 207);
+     border-radius: 0px;
+     color: white;
+     font-family: volteR;
+     padding: 4px;
+     font-size: 16px;
+     margin-top: 10px;
+     font-weight: bold;
+}
+
+.p_login{
+    color: rgb(24, 52, 207);
+    text-align: center;
+    font-family: volteR;
+    font-size: 13px;
+    margin-top: 10px;
+
+}
+
+
+.btn:hover {
+    color: white;
+    text-decoration: none;
+    background-color: rgba(24, 52, 207, 0.9);
+}
+
+.a_olvidaste{
+
+    color: rgb(24, 52, 207) !important;
+    cursor: pointer;
+
+    font-size: 13px;
+}
+
+.a_termino{
+    color: rgb(24, 52, 207) !important;
+    font-size: 12px;
+    line-height: 0px;
+
+}
+
+form{
+
+    margin-top: 15px;
+    margin-bottom: 15px;
+
+}
+@media (max-width: 621px) {
+    .h6 {
+        font-size: 11.5px !important;
+        font-weight: bold;
+    }
+    .btn_prin {
+        padding: 7px 10px;
+        margin: 0px 10px;
+    }
+    .nav_lo{
+    font-size: 12px !important;
+}
+}
+
+@media (min-width: 576px){
+.modal-dialog {
+    max-width: 350px;
+}
+}
+
+.nav_lo{
+    width: auto;
+    color: rgb(24, 52, 207);
+    font-family: volteM;
+    font-weight: 500;
+    font-size: 14px;
+}
+
+.nav-tabs .nav-link {
+    border-top-left-radius: 0px; 
+    border-top-right-radius: 0px;  
+    width: 50%;
+    text-align: center;
+}
+
+ .nav-tabs .nav-link.active {
+    color: white;
+    background-color: rgb(24, 52, 207);
+    border-color: rgb(24, 52, 207);
+}
+
+.nav-tabs {
+    border-bottom: 1px solid rgb(24, 52, 207);
+}
+
+.input_login{
+
+    border-radius: 0px;
+    border-color: rgb(24, 52, 207);
+}
+
+.input_login::placeholder {
+  color: rgb(24, 52, 207);
+  opacity: 1; 
+}
