@@ -1,18 +1,24 @@
-import {NgModule} from '@angular/core';
-import {RouterModule, Routes} from '@angular/router';
-import {HomeComponent} from './home/home.component';
+import { NgModule } from '@angular/core';
+import { Routes, RouterModule } from '@angular/router';
+import { InmuebleComponent } from './inmueble/inmueble.component';
+import { VehiculoComponent } from './vehiculo/vehiculo.component';
+import { PerfilComponent } from './perfil/perfil.component';
+import { AuthGuard } from './observador/auth.guard';
 
-
-const routes: Routes = [
-  {path: 'home', component: HomeComponent},
-  {path: '', redirectTo: 'home', pathMatch: 'full'}
-  // {path: 'user/login', component: LoginComponent}
- 
+const app_routes: Routes = [
+  {path: 'home', component: InmuebleComponent },
+  {path: 'vehiculo', component: VehiculoComponent},
+  {path: 'perfil', component: PerfilComponent,canActivate: [AuthGuard]},
+  {path: '**', redirectTo: 'home',pathMatch: 'full' }
 ];
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes)],
-  exports: [RouterModule]
+  imports: [
+      RouterModule.forRoot( app_routes, { useHash: false } )
+  ],
+  exports: [
+      RouterModule
+  ]
 })
-export class AppRoutingModule {
-}
+
+export class AppRoutingModule { }

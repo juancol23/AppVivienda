@@ -1,106 +1,115 @@
- 
-   <nav class="navbar navbar-dark navbar-expand-md bg-bluedark justify-content-between ">
+<nav class="navbar navbar-dark navbar-expand-md bg-bluedark justify-content-between ">
     <div class="container">
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".dual-nav">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
+                  <span class="navbar-toggler-icon"></span>
+              </button>
         <div class="navbar-collapse collapse dual-nav w-50 ww-0 order-1 order-md-0">
             <ul class="navbar-nav">
-                <li class="nav-item menu-li active">
-                    <a class="nav-link pl-0"><img src="/assets/image/menu/home-png.png" alt="" height="16px">INMUEBLE</a>
+                <li class="nav-item menu-li " routerLinkActive="active" >
+                    <a class="nav-link pl-0" routerLink="home"><img src="assets/img/home-png.png" alt="" height="16px">INMUEBLE</a>
                 </li>
-                <li class="nav-item menu-li">
-                    <a class="nav-link"><img src="/assets/image/menu/vehiculo-png.png" alt="" height="16px">VEHÍCULO</a>
+                <li class="nav-item menu-li" routerLinkActive="active" >
+                    <a class="nav-link" routerLink="vehiculo"><img src="assets/img/vehiculo-png.png" alt="" height="16px">VEHÍCULO</a>
                 </li>
             </ul>
         </div>
-        <a href="" class="navbar-brand mx-auto d-block text-center order-0 order-md-1 w-50"><img src="/assets/image/menu/logo-png.png" alt=""></a>
+        <a routerLink="home" class="navbar-brand mx-auto d-block text-center order-0 order-md-1 w-50"><img src="assets/img/logo-png.png" alt=""></a>
         <div class="navbar-collapse collapse dual-nav w-50 ww-0 order-2">
             <ul class="nav navbar-nav ml-auto">
-                <li class="nav-item menu-li">
+                <li class="nav-item menu-li" *ngIf="!isLogged">
                     <a class="nav-link " data-toggle="modal" data-target="#exampleModalCenter">
-                        <img src="/assets/image/menu/persona-png.png" alt="" height="16px">LOGIN
+                        <img src="assets/img/persona-png.png" alt="" height="16px">LOGIN
                     </a>
                 </li>
+                <li class="nav-item menu-li " *ngIf="isLogged" routerLinkActive="active">
+                    <a class="nav-link "  routerLink="perfil">
+                        <img src="assets/img/persona-png.png" alt="" height="16px">VOLDEMAR  <span class="online">•</span>
+                    </a>
+                </li>
+                <li class="nav-item menu-li" *ngIf="isLogged">
+                    <a class="nav-link " (click)="onLogout()">
+                        CERRAR SESION
+                    </a>
+                </li>
+
             </ul>
         </div>
     </div>
 </nav>
- 
 
 
-    <!-- MODAL LOGIN -->
+<!-- MODAL LOGIN -->
 
-    <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered" role="document">
-            <div class="modal-content">
+<div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
 
-                <div class="modal-body">
-                    <div class="text-center">
-                        <img src="assets/img/logoblue-png.png" alt="">
-                        <a class="btn_cerrar_modal" data-dismiss="modal">X</a>
-                    </div>
+            <div class="modal-body">
+                <div class="text-center">
+                    <img src="assets/img/logoblue-png.png" alt="">
+                    <a class="btn_cerrar_modal" data-dismiss="modal">X</a>
+                </div>
 
-                    <div class="container">
-                        <button type="button" class="btn bg-blul btn-lg btn-block">Ingresar con <b>facebook</b></button>
-                        <p class="p_login">O ingresa con tu correo electrónico</p>
+                <div class="container">
+                    <button type="button" (click)="onLoginFacebook()" class="btn bg-blul btn-lg btn-block">Ingresar con <b>facebook</b></button>
+                    <p class="p_login">O ingresa con tu correo electrónico</p>
 
-                        <nav>
-                            <div class="nav nav-tabs" id="nav-tab" role="tablist">
-                                <a class="nav-item nav_lo nav-link active" id="nav-home-tab" data-toggle="tab" href="#nav-home" role="tab" aria-controls="nav-home" aria-selected="true">INICIAR SESIÓN</a>
-                                <a class="nav-item nav_lo nav-link" id="nav-profile-tab" data-toggle="tab" href="#nav-profile" role="tab" aria-controls="nav-profile" aria-selected="false">REGISTRATE</a>
-                            </div>
-                        </nav>
-                        <div class="tab-content" id="nav-tabContent">
+                    <nav>
+                        <div class="nav nav-tabs" id="nav-tab" role="tablist">
+                            <a class="nav-item nav_lo nav-link active" id="nav-home-tab" data-toggle="tab" href="#nav-home" role="tab" aria-controls="nav-home" aria-selected="true">INICIAR SESIÓN</a>
+                            <a class="nav-item nav_lo nav-link" id="nav-profile-tab" data-toggle="tab" href="#nav-profile" role="tab" aria-controls="nav-profile" aria-selected="false">REGISTRATE</a>
+                        </div>
+                    </nav>
+                    <div class="tab-content" id="nav-tabContent">
 
 
-                            <div class="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab">
-                                <form onSubmit="form_login(); return false">
-                                    <div class="form-group">
-                                        <input type="email" class="form-control input_login" id="email_login" placeholder="Correo">
-                                    </div>
-                                    <div class="form-group">
-                                        <input type="password" class="form-control input_login" id="password_login" placeholder="Contraseña">
-                                    </div>
-                                    <button onClick="ingreso()" class="btn bg-blul_ingresar btn-lg btn-block bg">INGRESAR</button>
-                                </form>
-
-                                <div class="text-center">
-                                    <a class="a_olvidaste"> Olvidaste tu contraseña ?</a>
+                        <div class="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab">
+                            <form #formLogin="ngForm" (submit)="onLogin(c)">
+                                <div class="form-group">
+                                    <input type="email" [(ngModel)]="email_login" class="form-control input_login" id="email_login" name="email_login" placeholder="Correo" required> 
                                 </div>
-
-                            </div>
-
-
-
-                            <div class="tab-pane fade" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab">
-
-                                <form>
-                                    <div class="form-group">
-                                        <input type="text" class="form-control input_login" id="nombre_registro" placeholder="Nombre Completo">
-                                    </div>
-                                    <div class="form-group">
-                                        <input type="email" class="form-control input_login" id="email_registro" placeholder="Correo">
-                                    </div>
-                                    <div class="form-group">
-                                        <input type="password" class="form-control input_login" id="password_registro" placeholder="Contraseña">
-                                    </div>
-                                    <div class="form-group">
-                                        <input type="password" class="form-control input_login" id="password_registro_2" placeholder="Confirmar contraseña">
-                                    </div>
-                                    <button type="submit" class="btn bg-blul_ingresar btn-lg btn-block bg">REGISTRAR</button>
-                                </form>
-
-                                <div class="text-center">
-                                    <a class="a_termino">Estoy de acuerdo con los <b>Terminos de uso</b> y <b>Políticas de privacidad</b> de YoBusco</a>
+                                <div class="form-group">
+                                    <input type="password" [(ngModel)]="password_login" class="form-control input_login" id="password_login" name="password_login" placeholder="Contraseña" required>
                                 </div>
+                                <button type="submit" class="btn bg-blul_ingresar btn-lg btn-block bg">INGRESAR</button>
+                            </form>
 
+                            <div class="text-center">
+                                <a class="a_olvidaste"> Olvidaste tu contraseña ?</a>
                             </div>
+
                         </div>
 
+
+
+                        <div class="tab-pane fade" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab">
+
+                            <form>
+                                <div class="form-group">
+                                    <input type="text" class="form-control input_login" id="nombre_registro" placeholder="Nombre Completo">
+                                </div>
+                                <div class="form-group">
+                                    <input type="email" class="form-control input_login" id="email_registro" placeholder="Correo">
+                                </div>
+                                <div class="form-group">
+                                    <input type="password" class="form-control input_login" id="password_registro" placeholder="Contraseña">
+                                </div>
+                                <div class="form-group">
+                                    <input type="password" class="form-control input_login" id="password_registro_2" placeholder="Confirmar contraseña">
+                                </div>
+                                <button type="submit" class="btn bg-blul_ingresar btn-lg btn-block bg">REGISTRAR</button>
+                            </form>
+
+                            <div class="text-center">
+                                <a class="a_termino">Estoy de acuerdo con los <b>Terminos de uso</b> y <b>Políticas de privacidad</b> de YoBusco</a>
+                            </div>
+
+                        </div>
                     </div>
 
                 </div>
+
             </div>
         </div>
     </div>
+</div>

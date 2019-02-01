@@ -1,1 +1,443 @@
 /* You can add global styles to this file, and also import other style files */
+
+@import '~bootstrap/dist/css/bootstrap.min.css';
+@font-face {
+    font-family: MyriadPro;
+    src: url(assets/fonts/MyriadPro-Regular.otf);
+}
+
+@font-face {
+    font-family: volteM;
+    src: url(assets/fonts/VolteRounded-Medium.otf);
+}
+
+@font-face {
+    font-family: volteR;
+    src: url(assets/fonts/VolteRounded-Regular.otf);
+}
+
+@font-face {
+    font-family: volteS;
+    src: url(assets/fonts/VolteRounded-Semibold.otf);
+}
+
+body {
+    max-width: 100%;
+    overflow-x: hidden;
+}
+
+.navbar {
+    padding: 0px;
+}
+
+.navbar-brand img {
+    margin: 0px;
+    padding: 0px;
+    height: 45px;
+}
+
+.menu-li a {
+    font-family: volteM;
+    letter-spacing: 0px;
+    font-weight: 500;
+    color: white !important;
+    cursor: pointer;
+    font-size: 13px;
+    transition: 0.5s;
+    width: 100%;
+    text-align: center;
+}
+
+.menu-li {
+    padding: 10px 14px;
+    transition: 0.5s;
+}
+
+.menu-li:hover {
+    background-color: rgb(6, 33, 187);
+}
+
+.navbar-toggler {
+    margin-left: 10px;
+}
+
+.menu-li.active {
+    background-color: rgb(6, 33, 187);
+    border-bottom: 2px solid white;
+}
+
+.online {
+    color: #00FF00;
+    font-weight: bold;
+    font-size: 14px;
+    font-family: volteM;
+    margin: 0px;
+    padding: 0px;
+}
+
+.menu-li a img {
+    margin-right: 10px;
+}
+
+.menu-li {
+    color: white !important;
+}
+
+.bg-bluedark {
+    background-color: rgb(24, 52, 207);
+}
+
+.carousel-caption {
+    background-color: rgb(24, 52, 207);
+    position: absolute;
+    right: 0px;
+    bottom: 0px;
+    left: 0px;
+    z-index: 10;
+    padding: 10px 0px;
+    transition: 0.5s;
+}
+
+.btn_prin {
+    margin: 0px 20px;
+    padding: 13px 50px;
+    transition: 0.4s;
+    cursor: pointer;
+    background-color: rgba(255, 255, 255, 0.1);
+    color: white;
+}
+
+.btn_prin:hover {
+    background-color: rgba(255, 255, 255, 0.3);
+}
+
+.h6 {
+    margin-bottom: 0px;
+    transition: 0.5s;
+    font-family: volteM;
+    font-weight: 600;
+}
+
+.modal-content {
+    border-radius: 0px;
+}
+
+.modal-body {
+    border: 1px solid rgb(24, 52, 207);
+    margin: 5px;
+    padding: 10px;
+}
+
+.btn_cerrar_modal {
+    position: absolute;
+    right: 5px;
+    top: 0px;
+    font-size: 18px;
+    font-family: volteM;
+    color: rgb(24, 52, 207) !important;
+    font-family: monospace;
+    cursor: pointer;
+    transition: .5s;
+}
+
+.bg-blul {
+    background-color: rgb(24, 52, 207);
+    border-radius: 0px;
+    color: white;
+    font-family: volteR;
+    padding: 4px;
+    font-size: 18px;
+    margin-top: 10px;
+}
+
+.bg-blul_ingresar {
+    background-color: rgb(24, 52, 207);
+    border-radius: 0px;
+    color: white;
+    font-family: volteR;
+    padding: 4px;
+    font-size: 16px;
+    margin-top: 10px;
+    font-weight: bold;
+}
+
+.p_login {
+    color: rgb(24, 52, 207);
+    text-align: center;
+    font-family: volteR;
+    font-size: 13px;
+    margin-top: 10px;
+}
+
+.btn:hover {
+    color: white;
+    text-decoration: none;
+    background-color: rgba(24, 52, 207, 0.9);
+}
+
+.a_olvidaste {
+    color: rgb(24, 52, 207) !important;
+    cursor: pointer;
+    font-size: 13px;
+}
+
+.a_termino {
+    color: rgb(24, 52, 207) !important;
+    font-size: 12px;
+    line-height: 0px;
+}
+
+form {
+    margin-top: 15px;
+    margin-bottom: 15px;
+}
+
+.nav_lo {
+    width: auto;
+    color: rgb(24, 52, 207);
+    font-family: volteM;
+    font-weight: 500;
+    font-size: 14px;
+}
+
+.nav-tabs .nav-link {
+    border-top-left-radius: 0px;
+    border-top-right-radius: 0px;
+    width: 50%;
+    text-align: center;
+}
+
+.nav-tabs .nav-link.active {
+    color: white;
+    background-color: rgb(24, 52, 207);
+    border-color: rgb(24, 52, 207);
+}
+
+.nav-tabs {
+    border-bottom: 1px solid rgb(24, 52, 207);
+}
+
+.input_login {
+    border-radius: 0px;
+    border-color: rgb(24, 52, 207);
+}
+
+.input_login::placeholder {
+    color: rgb(24, 52, 207);
+    opacity: 1;
+}
+
+.text-publica {
+    background-image: url(assets/img/bg-blue.png);
+    height: 100px;
+    font-family: volteM;
+    color: rgb(24, 52, 207);
+}
+
+.text-publica h4 {
+    padding-top: 30px;
+    transition: 0.5s;
+}
+
+.mod_pub {
+    height: 500px;
+    padding-top: 30px;
+    padding-bottom: 30px;
+}
+
+.footer {
+    bottom: 0;
+    background-color: #2b2b2b;
+}
+
+.foot_prin {
+    padding-top: 15px;
+    padding-bottom: 15px;
+    border-bottom: 1px solid gray;
+}
+
+.text_footer p {
+    color: gray;
+    font-family: volteM;
+    font-size: 14px;
+    margin-top: 18px;
+    margin-bottom: 10px;
+    font-weight: 500;
+    transition: 0.5s;
+}
+
+.text_footer span img {
+    margin-top: 10px;
+}
+
+.text_footer_sec p {
+    color: gray;
+    font-family: volteM;
+    font-size: 14px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    font-weight: 500;
+    transition: 0.5s;
+}
+
+.text_r {
+    text-align: right;
+}
+
+.datos_perfil {
+    padding-top: 40px;
+    padding-bottom: 40px;
+}
+
+.datos_perfil button {
+    border-color: rgb(24, 52, 207);
+    border-radius: 30px;
+    font-size: 13px;
+    font-family: volteM;
+    padding-left: 15px;
+    padding-right: 15px;
+    color: rgb(24, 52, 207);
+    margin-bottom: 30px;
+}
+
+.datos_perfil img {
+    border-radius: 50%;
+    width: 200px;
+    height: 190px;
+}
+
+.nombre_perfil {
+    margin-top: 10px;
+    margin-bottom: 5px;
+}
+
+.nombre_perfil p {
+    margin: 0px;
+    color: rgb(24, 52, 207);
+    font-family: volteR;
+    font-weight: bold;
+}
+
+.datos_perfil .nav-link {
+    margin: 5px 10px;
+    font-family: volteR;
+    font-weight: bold;
+    font-size: 14px;
+    border-radius: 30px;
+    letter-spacing: 1.5px;
+    text-align: center;
+    border: 1px solid rgb(24, 52, 207) !important;
+}
+
+.datos_perfil .nav-link.active {
+    background-color: rgb(24, 52, 207);
+}
+
+.perfil_tab h3 {
+    font-family: volteR;
+    font-weight: 500;
+    letter-spacing: 2px;
+    color: rgb(24, 52, 207);
+}
+
+.perfil_tab .linea {
+    width: 100%;
+    height: 1.5px;
+    background-color: rgb(24, 52, 207);
+}
+
+.perfil_tab button {
+    padding: 5px 25px;
+    color: white;
+    font-size: 16px;
+}
+
+.perfil_tab input {
+    text-align: right;
+}
+
+.perfil_tab label {
+    color: rgb(24, 52, 207);
+    font-family: volteR;
+    font-weight: 500;
+    transition: .5s;
+    text-align: right !important;
+    font-size: 15px;
+}
+
+@media (max-width: 621px) {
+    .h6 {
+        font-size: 11.5px !important;
+        font-weight: bold;
+    }
+    .btn_prin {
+        padding: 7px 10px;
+        margin: 0px 10px;
+    }
+    .nav_lo {
+        font-size: 12px !important;
+    }
+    .menu-li a {
+        font-size: 12px;
+    }
+}
+
+@media (min-width: 576px) {
+    .modal-dialog {
+        max-width: 350px;
+    }
+}
+
+@media (max-width: 576px) {
+    .foot_prin {
+        text-align: center !important;
+    }
+    .foot_sec {
+        text-align: center !important;
+    }
+    .text_r {
+        text-align: center !important;
+    }
+    .text_footer p {
+        font-size: 12px;
+    }
+    .text_footer_sec p {
+        font-size: 12px;
+    }
+    .perfil_tab label {
+        text-align: left !important;
+    }
+    .perfil_tab input {
+        text-align: left;
+    }
+    .perfil_tab {
+        padding: 30px 10px;
+    }
+}
+
+@media (max-width: 867px) {
+    .menu-li {
+        padding: 10px 5px !important;
+    }
+}
+
+@media (max-width: 768px) {
+    .container {
+        max-width: 100%;
+    }
+    .text-publica h4 {
+        font-size: 20px;
+    }
+}
+
+@media (min-width: 768px) {
+    nav .container {
+        max-width: 960px !important;
+    }
+}
+
+@media (min-width: 992px) {
+    nav .container {
+        max-width: 1020px !important;
+    }
+}

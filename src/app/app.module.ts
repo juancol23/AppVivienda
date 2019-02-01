@@ -1,41 +1,40 @@
-import {BrowserModule} from '@angular/platform-browser';
-import {NgModule} from '@angular/core';
-import {HttpClientModule} from '@angular/common/http';
-import {NgxSpinnerModule} from 'ngx-spinner';
-import {AppComponent} from './app.component';
-import {NavbarComponent} from './navbar/navbar.component';
-import {FooterComponent} from './footer/footer.component';
-import {AgmCoreModule} from '@agm/core';
-import {AppRoutingModule} from './app-routing.module';
-import {HomeComponent} from './home/home.component';
-import {FormsModule} from '@angular/forms';
+import { BrowserModule } from '@angular/platform-browser';
+import { NgModule } from '@angular/core';
+import { AppRoutingModule } from './app-routing.module';
+import { AppComponent } from './app.component';
+import { NavbarComponent } from './navbar/navbar.component';
+import { FooterComponent } from './footer/footer.component';
+import { InmuebleComponent } from './inmueble/inmueble.component';
+import { VehiculoComponent } from './vehiculo/vehiculo.component';
+import { PerfilComponent } from './perfil/perfil.component';
 
-import {environment} from './../environments/environment';
+import { FormsModule } from '@angular/forms';
+import { environment } from '../environments/environment';
 
-  
+import { AngularFireModule } from '@angular/fire';
+import { AngularFireDatabaseModule } from '@angular/fire/database';
+import { AngularFireAuth } from '@angular/fire/auth';
+import { AngularFireStorageModule } from '@angular/fire/storage';
+import { AngularFirestore } from '@angular/fire/firestore';
 
 @NgModule({
   declarations: [
     AppComponent,
     NavbarComponent,
     FooterComponent,
-    HomeComponent
+    InmuebleComponent,
+    VehiculoComponent,
+    PerfilComponent
   ],
   imports: [
     BrowserModule,
-    HttpClientModule,
-    FormsModule,
-    NgxSpinnerModule,
-    AgmCoreModule.forRoot({apiKey: 'AIzaSyDc2AdGnT2qtKTMHxa-5yupJd-m46NGPCI', libraries: ['places']}),
     AppRoutingModule,
-
-    // AngularFireModule.initializeApp(environment.firebase),
-    // AngularFireDatabaseModule,
-    // AngularFireAuthModule
-
+    FormsModule,
+    AngularFireModule.initializeApp(environment.firebase),
+    AngularFireDatabaseModule,
+    AngularFireStorageModule,
   ],
-  // providers: [ExceptionService],
+  providers: [AngularFireAuth, AngularFirestore],
   bootstrap: [AppComponent]
 })
-export class AppModule {
-}
+export class AppModule { }
