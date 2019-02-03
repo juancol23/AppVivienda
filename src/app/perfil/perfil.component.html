@@ -4,12 +4,10 @@
 
         <div class="col-sm-4 text-center">
 
-            <img src="assets/img/foto_perfil.jpg" alt="Cinque Terre">
+            <img src="{{foto_perfil}}" alt="Cinque Terre">
 
             <div class="nombre_perfil">
-
-                <p>SPOCKY VOLDEMAR</p>
-                <p>GAY CABRO</p>
+                <p class="text-uppercase">{{nombre_perfil}}</p>
             </div>
 
             <button class="btn btn">SUBIR FOTO</button>
@@ -36,27 +34,20 @@
 
                             <label for="nombre_p" class="col-sm-3 col-form-label ">Nombres:</label>
                             <div class="col-sm-7">
-                                <input type="text" class="form-control input_login" id="nombre_p" placeholder="Nombre" required>
+                                <input type="text" class="form-control input_login" value="{{nombre_perfil}}" id="nombre_p" placeholder="Nombre" required>
                             </div>
                         </div>
 
-
-                        <div class="form-group row">
-                            <label for="apellido_p" class="col-sm-3 col-form-label ">Apellidos:  </label>
-                            <div class="col-sm-7">
-                                <input type="text" class="form-control input_login" id="apellido_p" placeholder="Apellidos" required>
-                            </div>
-                        </div>
                         <div class="form-group row">
                             <label for="email_p" class="col-sm-3 col-form-label ">E-mail:  </label>
                             <div class="col-sm-7">
-                                <input type="email" class="form-control input_login" id="email_p" placeholder="E-mail" required>
+                                <input type="email" disabled class="form-control input_login" value="{{email_perfil}}" id="email_p" placeholder="E-mail" required>
                             </div>
                         </div>
                         <div class="form-group row">
                             <label for="celular_p" class="col-sm-3 col-form-label ">Teléfono:  </label>
                             <div class="col-sm-7">
-                                <input type="text" class="form-control input_login" id="celular_p" placeholder="Teléfono" required>
+                                <input type="text" class="form-control input_login" value="{{telefono_perfil}}" id="celular_p" placeholder="Teléfono" required>
                             </div>
                         </div>
 

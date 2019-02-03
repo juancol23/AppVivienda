@@ -51,6 +51,24 @@ body {
 .menu-li {
     padding: 10px 14px;
     transition: 0.5s;
+
+}
+
+.dropdown-menu{
+  background-color:rgb(24, 52, 207);
+  padding: 0px;
+}
+.dropdown-menu a{
+  padding: 12px 48px;
+  margin: 0px;
+  transition: 0.5s;
+}
+.dropdown-menu a:hover{
+  background-color: rgb(6, 33, 187);
+}
+.dropdown-menu a.active{
+  background-color: rgb(6, 33, 187);
+  color:white;
 }
 
 .menu-li:hover {
@@ -220,7 +238,9 @@ form {
 .input_login {
     border-radius: 0px;
     border-color: rgb(24, 52, 207);
-}
+    font-weight: 400;
+    color: black;
+  }
 
 .input_login::placeholder {
     color: rgb(24, 52, 207);
@@ -316,6 +336,7 @@ form {
     color: rgb(24, 52, 207);
     font-family: volteR;
     font-weight: bold;
+
 }
 
 .datos_perfil .nav-link {

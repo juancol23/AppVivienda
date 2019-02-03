@@ -5,10 +5,10 @@
               </button>
         <div class="navbar-collapse collapse dual-nav w-50 ww-0 order-1 order-md-0">
             <ul class="navbar-nav">
-                <li class="nav-item menu-li " routerLinkActive="active" >
+                <li class="nav-item menu-li " routerLinkActive="active">
                     <a class="nav-link pl-0" routerLink="home"><img src="assets/img/home-png.png" alt="" height="16px">INMUEBLE</a>
                 </li>
-                <li class="nav-item menu-li" routerLinkActive="active" >
+                <li class="nav-item menu-li" routerLinkActive="active">
                     <a class="nav-link" routerLink="vehiculo"><img src="assets/img/vehiculo-png.png" alt="" height="16px">VEHÍCULO</a>
                 </li>
             </ul>
@@ -17,20 +17,23 @@
         <div class="navbar-collapse collapse dual-nav w-50 ww-0 order-2">
             <ul class="nav navbar-nav ml-auto">
                 <li class="nav-item menu-li" *ngIf="!isLogged">
-                    <a class="nav-link " data-toggle="modal" data-target="#exampleModalCenter" (click)="modalAuth()">
+                    <a class="nav-link " data-toggle="modal" data-target="#exampleModalCenter">
                         <img src="assets/img/persona-png.png" alt="" height="16px">LOGIN
                     </a>
                 </li>
-                <li class="nav-item menu-li " *ngIf="isLogged" routerLinkActive="active">
-                    <a class="nav-link "  routerLink="perfil">
-                        <img src="assets/img/persona-png.png" alt="" height="16px">VOLDEMAR  <span class="online">•</span>
+
+
+                <li class="nav-item menu-li dropdown"  *ngIf="isLogged" >
+                    <a class="nav-link dropdown-toggle text-uppercase" id="navbarDropdown" href="#"  data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <img src="assets/img/persona-png.png" alt="" height="16px">{{nameUser}} <span class="online">•</span>
                     </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                      <a routerLinkActive="active" class="dropdown-item" routerLink="perfil">PERFIL</a>
+                      <a class="dropdown-item"  (click)="onLogout()">CERRAR SESION</a>
+                    </div>
                 </li>
-                <li class="nav-item menu-li" *ngIf="isLogged">
-                    <a class="nav-link " (click)="onLogout()">
-                        CERRAR SESION
-                    </a>
-                </li>
+
+
 
             </ul>
         </div>
@@ -40,7 +43,7 @@
 
 <!-- MODAL LOGIN -->
 
-<div *ngIf="_modaAuth"  class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+<div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
 
@@ -64,9 +67,10 @@
 
 
                         <div class="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab">
-                            <form #formLogin="ngForm" (submit)="onLogin(c)">
+                            <form #formLogin="ngForm" (submit)=" onLogin()" autocomplete="off">
                                 <div class="form-group">
-                                    <input type="email" [(ngModel)]="email_login" class="form-control input_login" id="email_login" name="email_login" placeholder="Correo" required> 
+                                    <input type="email" [(ngModel)]="email_login" class="form-control input_login" id="email_login" name="email_login" placeholder="Correo" required>
+
                                 </div>
                                 <div class="form-group">
                                     <input type="password" [(ngModel)]="password_login" class="form-control input_login" id="password_login" name="password_login" placeholder="Contraseña" required>
@@ -84,18 +88,18 @@
 
                         <div class="tab-pane fade" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab">
 
-                            <form>
+                            <form #formRegistro="ngForm" (submit)="onAddUser()">
                                 <div class="form-group">
-                                    <input type="text" class="form-control input_login" id="nombre_registro" placeholder="Nombre Completo">
+                                    <input type="text" [(ngModel)]="nombre_registro" class="form-control input_login" id="nombre_registro" name="nombre_registro" placeholder="Nombre Completo" required>
                                 </div>
                                 <div class="form-group">
-                                    <input type="email" class="form-control input_login" id="email_registro" placeholder="Correo">
+                                    <input type="email" [(ngModel)]="email_registro" class="form-control input_login" id="email_registro" name="email_registro" placeholder="Correo" required>
                                 </div>
                                 <div class="form-group">
-                                    <input type="password" class="form-control input_login" id="password_registro" placeholder="Contraseña">
+                                    <input type="password" [(ngModel)]="password_registro" class="form-control input_login" id="password_registro" name="password_registro" placeholder="Contraseña" required>
                                 </div>
                                 <div class="form-group">
-                                    <input type="password" class="form-control input_login" id="password_registro_2" placeholder="Confirmar contraseña">
+                                    <input type="password" [(ngModel)]="password_registro_2" class="form-control input_login" id="password_registro_2" name="password_registro_2" placeholder="Confirmar contraseña" required>
                                 </div>
                                 <button type="submit" class="btn bg-blul_ingresar btn-lg btn-block bg">REGISTRAR</button>
                             </form>
