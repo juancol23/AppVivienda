@@ -52,11 +52,18 @@ export class NavbarComponent implements OnInit {
       .then((res) => {
           
         var el = document.getElementsByClassName("modal-backdrop");
-        el[0].setAttribute('style', 'display:none');
+        // el[0].setAttribute('style', 'display:none');
+       
+        for(var _i = 0; _i < el.length;_i++){
+          el[_i].setAttribute('style', 'display:none'); 
+        }
+      
+        
         this._modaAuth = false; 
-         console.log(el[0])
+         console.log(el.item)
+         console.log(el.length)
  
-        // this.router.navigate(['perfil']);
+        this.router.navigate(['perfil']);
 
       }).catch(err => console.log('err', err.message,'Credenciales incorrectas'));
   }
