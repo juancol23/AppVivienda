@@ -10,13 +10,22 @@ import { AuthService } from '../services/auth.service';
   styleUrls: ['./navbar.component.css']
 })
 export class NavbarComponent implements OnInit {
-
-  constructor(public afAuth: AngularFireAuth, private router: Router, private authService: AuthService) { }
+  private _modaAuth:boolean = true;
   public email_login: string = '';
   public password_login: string = '';
   public isLogged: boolean = false;
-  ngOnInit() {
 
+  constructor(
+    public afAuth: AngularFireAuth, 
+    private router: Router, 
+    private authService: AuthService) { }
+
+  
+
+
+  ngOnInit() {
+     
+  
     this.getCurrentUser();
   }
    
@@ -24,7 +33,7 @@ export class NavbarComponent implements OnInit {
     this.authService.isAuth().subscribe(auth => {
       if (auth) {
         console.log('Usuario logueado');
-        this.isLogged = true;
+        this.isLogged = true;  
       } else {
         console.log('Usuario no logueado');
         this.isLogged = false;
@@ -32,10 +41,23 @@ export class NavbarComponent implements OnInit {
     });
   }
 
+  modalAuth(){
+    var el = document.getElementsByClassName("modal-backdrop");
+    el[0].setAttribute('style', 'display:block');
+    this._modaAuth=true;
+  }
+
   onLogin(): void {
     this.authService.loginEmailUser(this.email_login, this.password_login)
       .then((res) => {
-        this.router.navigate(['perfil']);
+          
+        var el = document.getElementsByClassName("modal-backdrop");
+        el[0].setAttribute('style', 'display:none');
+        this._modaAuth = false; 
+         console.log(el[0])
+ 
+        // this.router.navigate(['perfil']);
+
       }).catch(err => console.log('err', err.message,'Credenciales incorrectas'));
   }
 

@@ -17,7 +17,7 @@
         <div class="navbar-collapse collapse dual-nav w-50 ww-0 order-2">
             <ul class="nav navbar-nav ml-auto">
                 <li class="nav-item menu-li" *ngIf="!isLogged">
-                    <a class="nav-link " data-toggle="modal" data-target="#exampleModalCenter">
+                    <a class="nav-link " data-toggle="modal" data-target="#exampleModalCenter" (click)="modalAuth()">
                         <img src="assets/img/persona-png.png" alt="" height="16px">LOGIN
                     </a>
                 </li>
@@ -40,7 +40,7 @@
 
 <!-- MODAL LOGIN -->
 
-<div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+<div *ngIf="_modaAuth"  class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
 
