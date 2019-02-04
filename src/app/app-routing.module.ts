@@ -3,6 +3,7 @@ import { Routes, RouterModule } from '@angular/router';
 import { InmuebleComponent } from './inmueble/inmueble.component';
 import { VehiculoComponent } from './vehiculo/vehiculo.component';
 import { PerfilComponent } from './perfil/perfil.component';
+import { NavbarComponent } from './navbar/navbar.component';
 import { AuthGuard } from './observador/auth.guard';
 
 const app_routes: Routes = [
