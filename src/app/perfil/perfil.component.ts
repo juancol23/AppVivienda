@@ -34,16 +34,17 @@ export class PerfilComponent implements OnInit {
     this.authService.isAuth().subscribe(auth => {
       if (auth) {
         this.isLogged = true;
-
+        
+        console.log(auth);
+         
         this.FirebaseService.getUserById(auth.uid).subscribe((result) => {
-
-          this.nombre_perfil=auth.displayName;
-          this.email_perfil=auth.email;
+          
+          this.nombre_perfil=result["name"];
+          this.email_perfil=result["email"];
+          this.foto_perfil=result["photoUrl"];
           this.telefono_perfil=result["telefono"];
-          this.foto_perfil=auth.photoURL;
-
-        });
-
+        
+        })
         
 
       }else {

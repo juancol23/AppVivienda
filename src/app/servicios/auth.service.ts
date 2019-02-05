@@ -6,22 +6,23 @@ import { AngularFirestore, AngularFirestoreDocument} from '@angular/fire/firesto
 import { UserInterface } from '../models/user';
 import { Observable } from 'rxjs';
 
+
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
 
-
-  constructor(private afsAuth: AngularFireAuth, private afs: AngularFirestore) { }
+  
+ constructor(private afsAuth: AngularFireAuth, private afs: AngularFirestore) { }
 
 
   registerUser(email: string, pass: string) {
     return new Promise((resolve, reject) => {
       this.afsAuth.auth.createUserWithEmailAndPassword(email, pass)
-        .then(userData => {
+        .then(credential => {
 
-          this.updateUserData(userData.user),
-          resolve(userData)
+          this.updateUserData(credential.user,credential.additionalUserInfo["isNewUser"]),
+          resolve(credential)
 
         }).catch(
 
@@ -30,7 +31,6 @@ export class AuthService {
           )
     });
   }
-
 
   loginEmailUser(email: string, pass: string) {
     return new Promise((resolve, reject) => {
@@ -43,7 +43,9 @@ export class AuthService {
 
   loginFacebookUser() {
     return this.afsAuth.auth.signInWithPopup(new auth.FacebookAuthProvider())
-      .then(credential => this.updateUserData(credential.user))
+      .then(credential => 
+        this.updateUserData(credential.user,credential.additionalUserInfo["isNewUser"])
+        )
   }
 
 
@@ -58,37 +60,35 @@ export class AuthService {
   }
 
 
-  private updateUserData(user) {
+  private updateUserData(user,userinfo) {
 
-     const userRef: AngularFirestoreDocument<any> = this.afs.doc(`users/${user.uid}`);
-/*consulto si existe registro en bd*/
-     this.afs.firestore.doc(`/users/${user.uid}`).get().then(docSnapshot => {
-      if (docSnapshot.exists) {
+    const userRef: AngularFirestoreDocument<any> = this.afs.doc(`users/${user.uid}`);
 
-      }else{
+    const data: UserInterface = {
+      name:user.displayName,
+      email:user.email,
+      photoUrl:user.photoURL,
+      telefono:null
 
-        const data: UserInterface = {
-          name:user.displayName,
-          email: user.email,
-          photoUrl:user.photoURL,
-          telefono:null
+    } 
+    
+    if(userinfo){
 
-        }
+    
+    return userRef.set(data, { merge: true });
+      
+      
+    }else{
 
-        return userRef.set(data);
-
-      }
-    });
+    
+      
+    }
 
     }
 
+}
 
-
-
-
-    }
-
-
+  
 
 
 

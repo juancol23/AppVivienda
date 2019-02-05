@@ -33,9 +33,7 @@ export class FirebaseService {
   }
 
   getUserById(uid){
-
     return this.afs.doc(`users/${uid}`).valueChanges();
-
   }
 
   updatePhotoUrl(user){
