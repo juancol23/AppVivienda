@@ -4,7 +4,7 @@
 
         <div class="col-sm-4 text-center">
 
-            
+
             <div class="con">
                 <img src="{{foto_perfil}}" alt="Cinque Terre" class="img_hover_file">
                 <div class="overlay" (click)="fileInput.click()">
@@ -12,7 +12,7 @@
                       <i>Actualizar Imagen</i>
                     </a>
                 </div>
-                
+
               </div>
 
             <div class="nombre_perfil">
@@ -23,8 +23,8 @@
              </p>
             <input type="file"  #fileInput (change)="detectFiles($event)" hidden accept=".png,.jpg" >
             <button  class="btn btn ds" [disabled]="!selectedFiles" (click)="uploadSingle()">SUBIR FOTO</button>
-            
-            
+
+
 
 
 
@@ -45,13 +45,39 @@
                     <h3>MIS DATOS</h3>
                     <div class="linea"></div>
 
-                    <form  #formRegistro="ngForm" (submit)="onUpdatePerfilUser()">
+                    <form  #formPerfil="ngForm" (submit)="onUpdatePerfilUser()">
                         <div class="form-group row">
 
                             <label for="nombre_p" class="col-sm-3 col-form-label ">Nombres:</label>
                             <div class="col-sm-7">
-                                <input type="text" [(ngModel)]="nombre_perfil" name="nombre_perfil" class="form-control input_login" value="{{nombre_perfil}}" id="nombre_p" placeholder="Nombre" required>
+                                <input 
+                                type="text"
+                                #nombre="ngModel"
+                                [(ngModel)]="nombre_perfil"
+                                name="nombre_perfil"
+                                class="form-control input_login" 
+                                value="{{nombre_perfil}}" 
+                                id="nombre_p" 
+                                placeholder="Nombre" minlength="4"
+                                pattern="[a-zA-Z ]*"
+                                required>
+                            <div *ngIf="nombre.invalid && (nombre.dirty || nombre.touched)" style="color:red;font-size: 13px;">
+                             
+                                        <div *ngIf="nombre.errors.required">
+                                          Nombre es requerido*
+                                        </div>
+                                        <div *ngIf="nombre.errors.minlength">
+                                          Nombre debe contener minimo de 4 digitos*
+                                        </div>
+                                        <div *ngIf="nombre.errors.pattern">
+                                            Nombre debe contener solo letras*
+                                        </div>
+         
                             </div>
+                            </div>
+
+                            
+
                         </div>
 
                         <div class="form-group row">
@@ -60,16 +86,38 @@
                                 <input type="email" disabled class="form-control input_login" value="{{email_perfil}}" id="email_p" placeholder="E-mail" required>
                             </div>
                         </div>
+
                         <div class="form-group row">
                             <label for="celular_p" class="col-sm-3 col-form-label ">Teléfono:  </label>
                             <div class="col-sm-7">
-                                <input type="text" [(ngModel)]="telefono_perfil"  name="telefono_perfil"  class="form-control input_login" value="{{telefono_perfil}}" id="celular_p" placeholder="Teléfono" required>
+
+                                <input type="text"
+                                 #telefono="ngModel"
+                                 [(ngModel)]="telefono_perfil"
+                                 name="telefono_perfil"
+                                 class="form-control input_login"
+                                 value="{{telefono_perfil}}"
+                                 id="celular_p"
+                                 pattern="[0-9]*"
+                                 placeholder="Teléfono" minlength="9" maxlength="9"
+                                 >
+
+                            <div *ngIf="telefono.invalid && (telefono.dirty || telefono.touched)" style="color:red;font-size: 13px;">
+                             
+                               
+                               <div *ngIf="telefono.errors.minlength || telefono.errors.maxlength">
+                                 Telefono debe contener 9 digitos*
+                               </div>
+                               <div *ngIf="telefono.errors.pattern">
+                                Telefono debe contener solo numeros*
+                               </div>
+
+                             </div>
                             </div>
                         </div>
 
                         <div class="text-center">
-
-                            <button type="submit" class="btn bg-blul">Guardar</button>
+                            <button type="submit" class="btn bg-blul" [disabled] = "!formPerfil.valid">Guardar</button>
                         </div>
                     </form>
 

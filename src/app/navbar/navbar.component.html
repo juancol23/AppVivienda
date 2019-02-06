@@ -1,4 +1,4 @@
-<nav class="navbar navbar-dark navbar-expand-md bg-bluedark justify-content-between ">
+<nav class="navbar navbar-dark navbar-expand-md bg-bluedark justify-content-between  ">
     <div class="container">
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".dual-nav">
                   <span class="navbar-toggler-icon"></span>
@@ -50,7 +50,7 @@
             <div class="modal-body">
                 <div class="text-center">
                     <img src="assets/img/logoblue-png.png" alt="">
-                    <a class="btn_cerrar_modal" data-dismiss="modal">X</a>
+                    <a class="btn_cerrar_modal" data-dismiss="modal" (click)="resetform(formLogin)">X</a>
                 </div>
 
                 <div class="container">
@@ -67,15 +67,54 @@
 
 
                         <div class="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab">
-                            <form #formLogin="ngForm" (submit)=" onLogin()" autocomplete="off">
+                            
+                            <form #formLogin="ngForm"  (submit)=" onLogin(formLogin)" autocomplete="off">
                                 <div class="form-group">
-                                    <input type="email" [(ngModel)]="email_login" class="form-control input_login" id="email_login" name="email_login" placeholder="Correo" required>
+                                    <input
+                                    email
+                                    type="email"
+                                    #emails="ngModel"
+                                    [(ngModel)]="email_login" 
+                                    class="form-control input_login" 
+                                    id="email_login" 
+                                    name="email_login" 
+                                    placeholder="Correo" 
+                                    required>
+
+                                    <div *ngIf="emails.invalid && (emails.dirty )" style="color:red;font-size: 13px;">
+
+                                        <div *ngIf="emails.errors.required">
+                                             Correo es requerido*
+                                        </div>
+                                        <div *ngIf="emails.errors.email">
+                                            Correo no tiene el formato correcto*
+                                        </div>
+                                       
+                                    </div>
 
                                 </div>
                                 <div class="form-group">
-                                    <input type="password" [(ngModel)]="password_login" class="form-control input_login" id="password_login" name="password_login" placeholder="Contraseña" required>
+                                    <input 
+                                    type="password" 
+                                    #pass_l="ngModel"
+                                    [(ngModel)]="password_login" 
+                                    class="form-control input_login" 
+                                    id="password_login" 
+                                    name="password_login" 
+                                    placeholder="Contraseña" minlength="6" required>
+
+                                    <div *ngIf="pass_l.invalid && (pass_l.dirty )" style="color:red;font-size: 13px;">
+
+                                            <div *ngIf="pass_l.errors.required">
+                                                 Password es requerido*
+                                            </div>
+                                            <div *ngIf="pass_l.errors.minlength">
+                                                Password debe contener mayor a 6 digitos*
+                                            </div>
+                                           
+                                    </div>
                                 </div>
-                                <button type="submit" class="btn bg-blul_ingresar btn-lg btn-block bg">INGRESAR</button>
+                                <button type="submit" class="btn bg-blul_ingresar btn-lg btn-block bg" [disabled] = "!formLogin.valid">INGRESAR</button>
                             </form>
 
                             <p  *ngIf="_message_login"  class="text-center " style="padding: 5px;background: red;color: white;font-size: 0.8em">
@@ -83,7 +122,7 @@
                            </p>
 
                             <div class="text-center">
-                                <a class="a_olvidaste"> Olvidaste tu contraseña ?</a>
+                                <a class="a_olvidaste" routerLink="reset"> Olvidaste tu contraseña ?</a>
                             </div>
 
                         </div>
@@ -92,20 +131,101 @@
 
                         <div class="tab-pane fade" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab">
 
-                            <form #formRegistro="ngForm" (submit)="onAddUser()">
+                            <form #formRegistro="ngForm" (submit)="onAddUser(formRegistro)">
                                 <div class="form-group">
-                                    <input type="text" [(ngModel)]="nombre_registro" class="form-control input_login" id="nombre_registro" name="nombre_registro" placeholder="Nombre Completo" required>
+                                    <input 
+                                    type="text" 
+                                    [(ngModel)]="nombre_registro" 
+                                    class="form-control input_login" 
+                                    id="nombre_registro" 
+                                    name="nombre_registro" 
+                                    placeholder="Nombre Completo"
+                                    #nombre_re="ngModel"
+                                    minlength="4"
+                                    pattern="[a-zA-Z ]*"
+                                    required>
+
+                                    <div *ngIf="nombre_re.invalid && (nombre_re.dirty) " style="color:red;font-size: 13px;">
+
+                                        <div *ngIf="nombre_re.errors.required">
+                                           Nombre es requerido*
+                                        </div>
+                                        <div *ngIf="nombre_re.errors.minlength">
+                                            Nombre debe contener mayor a 4 digitos*
+                                        </div>
+                                        <div *ngIf="nombre_re.errors.pattern">
+                                            Nombre debe contener solo letras*
+                                        </div>
+                                       
+                                    </div>
                                 </div>
                                 <div class="form-group">
-                                    <input type="email" [(ngModel)]="email_registro" class="form-control input_login" id="email_registro" name="email_registro" placeholder="Correo" required>
+                                    <input 
+                                    type="email" 
+                                    [(ngModel)]="email_registro" 
+                                    class="form-control input_login" 
+                                    id="email_registro" 
+                                    name="email_registro" 
+                                    placeholder="Correo"
+                                    #em="ngModel"
+                                    email
+                                    required>
+
+                                    <div *ngIf="em.invalid && (em.dirty) " style="color:red;font-size: 13px;">
+
+                                        <div *ngIf="em.errors.required">
+                                            Email es requerido*
+                                        </div>
+                                        <div *ngIf="em.errors.email">
+                                            Correo no tiene el formato correcto*
+                                        </div>
+                                       
+                                    </div>
                                 </div>
                                 <div class="form-group">
-                                    <input type="password" [(ngModel)]="password_registro" class="form-control input_login" id="password_registro" name="password_registro" placeholder="Contraseña" required>
+                                    <input 
+                                    type="password" 
+                                    #pass="ngModel"
+                                    [(ngModel)]="password_registro" 
+                                    class="form-control input_login" 
+                                    id="password_registro" 
+                                    name="password_registro" 
+                                    placeholder="Contraseña"
+                                    minlength="6"
+                                    required>
+                                    <div *ngIf="pass.invalid && (pass.dirty) " style="color:red;font-size: 13px;">
+
+                                        <div *ngIf="pass.errors.required">
+                                            Password es requerido*
+                                        </div>
+                                        <div *ngIf="pass.errors.minlength">
+                                            Password debe contener mayor a 6 digitos*
+                                        </div>
+                                       
+                                    </div>
                                 </div>
                                 <div class="form-group">
-                                    <input type="password" [(ngModel)]="password_registro_2" class="form-control input_login" id="password_registro_2" name="password_registro_2" placeholder="Confirmar contraseña" required>
+                                    <input type="password" 
+                                    #passConfi="ngModel"
+                                    [(ngModel)]="password_registro_2" 
+                                    class="form-control input_login" 
+                                    id="password_registro_2" 
+                                    name="password_registro_2" 
+                                    placeholder="Confirmar contraseña"
+                                    minlength="6"
+                                    required>
+                                    <div *ngIf="passConfi.invalid && (passConfi.dirty) " style="color:red;font-size: 13px;">
+
+                                        <div *ngIf="passConfi.errors.required">
+                                            Password requerido*
+                                        </div>
+                                        <div *ngIf="passConfi.errors.minlength">
+                                            Password debe contener mayor a 6 digitos*
+                                        </div>
+                                       
+                                    </div>
                                 </div>
-                                <button type="submit" class="btn bg-blul_ingresar btn-lg btn-block bg">REGISTRAR</button>
+                                <button type="submit" [disabled] = "!formRegistro.valid" class="btn bg-blul_ingresar btn-lg btn-block bg">REGISTRAR</button>
                             </form>
 
                             <p  *ngIf="_message_register"  class="text-center " style="padding: 5px;background: red;color: white;font-size: 0.8em">

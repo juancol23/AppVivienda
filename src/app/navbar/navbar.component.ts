@@ -3,7 +3,8 @@ import { AngularFireAuth } from '@angular/fire/auth';
 import { Router } from '@angular/router';
 import { AuthService } from '../servicios/auth.service';
 import { FirebaseService } from '../servicios/firebase.service';
-declare var jquery:any;
+import { NgForm } from '@angular/forms';
+
 declare var $ :any;
 
 @Component({
@@ -13,9 +14,9 @@ declare var $ :any;
 })
 export class NavbarComponent implements OnInit {
 
-constructor(public afAuth: AngularFireAuth, private router: Router, private authService: AuthService , private FirebaseService: FirebaseService) { }
+  constructor(public afAuth: AngularFireAuth, private router: Router, private authService: AuthService , private FirebaseService: FirebaseService) { }
 
-  /*LOGIN*/
+/*LOGIN*/
 public email_login: string = null;
 public password_login: string = null;
 
@@ -37,56 +38,69 @@ public _message_register: boolean = false;
 public message_text_register: String = "";
 
 
+
+
+
   ngOnInit() {
-
     this.getCurrentUser();
-
-
   }
+
+    
+  resetform(form: NgForm):void{
+    
+  }
+
 
   getCurrentUser() {
     this.authService.isAuth().subscribe(auth => {
       if (auth) {
-        this.isLogged = true;
 
-        this.FirebaseService.getUserById(auth.uid).subscribe((result) => {
-          
-        })
-        
+          this.isLogged = true;
 
-      }else {
+          this.FirebaseService.getUserById(auth.uid).subscribe((res) => {
+
+            this.nameUser=res['name'];
+
+          })
+
+      }else{
+
         this.isLogged = false;
+
       }
+
     });
   }
 
 
-//REGISTRAR 
-  onAddUser(): void {
+
+  onAddUser(form: NgForm): void {
     if(this.password_registro==this.password_registro_2){
 
-      this.authService.registerUser(this.email_registro, this.password_registro).then((res) => {
-        this.authService.isAuth().subscribe(auth => {
-          if (auth) {
-            
-            auth.updateProfile({
+      this.authService.registerUser(this.email_registro, this.password_registro,this.nombre_registro)
+      .then((res) => {
+        this.authService.isAuth().subscribe(user => {
+          if (user) {
+              user.updateProfile({
               displayName: this.nombre_registro,
-              photoURL: "assets/img/foto_perfil.jpg",
-          }).then((res) => {
+              photoURL: "assets/img/foto_perfil.jpg"
+            }).then((res) => {
 
-            this.router.navigate(['perfil']);
-            $("#exampleModalCenter").hide();
-            $(".modal-backdrop").hide();
+              this.router.navigate(['perfil']);
+              $("#exampleModalCenter").hide();
+              $(".modal-backdrop").hide();
+              form.reset();
 
-          }).catch((err) => console.log(err.message));
-        }
-        })   
-
+            }).catch((err) => console.log(err.message));
+          }
+        });
       }).catch(err => {
-        
-        this._message_register = true;
 
+        this._message_register = true;
         switch (err.message) {
+          case 'createUserWithEmailAndPassword failed: Second argument "password" must be a valid string.':
+            this.message_text_register="La contraseña debe tener al menos 6 caracteres";
+            break;
           case "The email address is already in use by another account.":
             this.message_text_register="La dirección de correo electrónico ya está en uso por otra cuenta.";
             break;
@@ -106,7 +120,7 @@ public message_text_register: String = "";
           }, 5000);
 
 
-        });
+      });
 
     }else{
 
@@ -118,21 +132,24 @@ public message_text_register: String = "";
   }
 
 
-//CORREO
-  onLogin(): void {
+
+  onLogin(form: NgForm): void {
     this.authService.loginEmailUser(this.email_login, this.password_login)
       .then((res) => {
+
        this.router.navigate(['perfil']);
        $("#exampleModalCenter").hide();
        $(".modal-backdrop").hide();
+       form.reset();
+
       }).catch(
         err => {
-         console.log(err.message);
+
           this._message_login = true;
 
           switch (err.message) {
             case "The password is invalid or the user does not have a password.":
-              this.message_text_login="Usuario y/o contraseña invalidos.";
+              this.message_text_login="Correo electrónico y/o contraseña incorrectos.";
               break;
             case "The email address is badly formatted.":
               this.message_text_login="La dirección de correo electrónico está mal formateada.";
@@ -141,9 +158,8 @@ public message_text_register: String = "";
               this.message_text_login="La cuenta de usuario ha sido desactivada por un administrador.";
                 break;
             case "There is no user record corresponding to this identifier. The user may have been deleted.":
-              this.message_text_login="Usuario y/o contraseña invalidos.";
+              this.message_text_login="Correo electrónico y/o contraseña incorrectos.";
                 break;
-                
             default:
             this.message_text_login="Error generico";
           }
@@ -158,18 +174,16 @@ public message_text_register: String = "";
   }
 
 
-
-
-//FACEBOOK
   onLoginFacebook(): void {
     this.authService.loginFacebookUser().then(
       (success) => {
+
       this.router.navigate(['perfil']);
       $("#exampleModalCenter").hide();
       $(".modal-backdrop").hide();
+
       }
-    ).catch(
-       err => {
+    ).catch(err => {
 
         this._message_login = true;
 
@@ -188,7 +202,6 @@ public message_text_register: String = "";
 
        });
   }
-
 
 
   onLogout() {

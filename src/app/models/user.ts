@@ -1,8 +1,8 @@
 
 
 export interface UserInterface {
-  email: string;
-  photoUrl?: string;
   name?: string;
+  email?: string;
+  photoUrl?: string;
   telefono?: string;
 }

@@ -1,19 +1,23 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from '../servicios/auth.service';
 import { FirebaseService } from '../servicios/firebase.service';
-import * as _ from "lodash";
+
 
 @Component({
   selector: 'app-perfil',
   templateUrl: './perfil.component.html',
   styleUrls: ['./perfil.component.css']
 })
-export class PerfilComponent implements OnInit {
-  public nombre_perfil: string = null;
-  public nombre_perfil_principal: string = null;
-  public email_perfil: string = null;
-  public telefono_perfil: string = null;
-  public foto_perfil: string = null;
+
+export class PerfilComponent implements OnInit{
+
+  public nombre_perfil: string = ""
+  public email_perfil: string = "";
+  public telefono_perfil: string ="";
+  public foto_perfil: string ="";
+  public id:String="";
+
+
   public isLogged: boolean = false;
 
   public _message_perfil: boolean = false;
@@ -22,42 +26,55 @@ export class PerfilComponent implements OnInit {
   public _message_img: boolean = false;
   public message_text_img: String = "";
 
-  constructor( private authService: AuthService , private FirebaseService: FirebaseService) { }
-  
+
   selectedFiles: FileList;
 
+  constructor( private authService: AuthService , private FirebaseService: FirebaseService) {
+
+   }
+
+
+
   ngOnInit() {
+
     this.getCurrentUser();
+
   }
 
+
+
   getCurrentUser() {
+
     this.authService.isAuth().subscribe(auth => {
+
       if (auth) {
         this.isLogged = true;
-        
         console.log(auth);
-         
-        this.FirebaseService.getUserById(auth.uid).subscribe((result) => {
-          
-          this.nombre_perfil=result["name"];
-          this.email_perfil=result["email"];
-          this.foto_perfil=result["photoUrl"];
-          this.telefono_perfil=result["telefono"];
-        
-        })
-        
+            this.FirebaseService.getUserById(auth.uid).subscribe((res) => {
+
+              this.nombre_perfil=res['name'];
+              this.email_perfil=res['email'];
+              this.foto_perfil=res["photoUrl"];
+              this.telefono_perfil=res["telefono"];
+
+            })
 
       }else {
         this.isLogged = false;
       }
+
     });
+
   }
+
+
 
   onUpdatePerfilUser(): void {
 
     this.authService.isAuth().subscribe(auth => {
 
       if (auth) {
+
         auth.updateProfile({
         displayName: this.nombre_perfil,
         photoURL: auth.photoURL
@@ -66,13 +83,11 @@ export class PerfilComponent implements OnInit {
 
         this.FirebaseService.updatePerfil(
           {
-            displayName: this.nombre_perfil,
-            phoneNumber: this.telefono_perfil,
-            photoUrl: auth.photoURL,
-            email:auth.email,
+            name: this.nombre_perfil,
+            telefono: this.telefono_perfil,
             id:auth.uid
-          }).then((res) =>{
 
+          }).then((res) =>{
 
              this._message_perfil = true;
              this.message_text_perfil = "Se actualizaron los datos correctamente.";
@@ -82,7 +97,6 @@ export class PerfilComponent implements OnInit {
              this.message_text_perfil = "";
              }, 5000);
 
-
           }).catch((err)=>
 
                 console.log(err.message)
@@ -90,9 +104,15 @@ export class PerfilComponent implements OnInit {
           );
 
       }).catch((err) => console.log(err.message));
+
+
     }
     });
   }
+
+
+
+
 
 detectFiles(event) {
     this.selectedFiles = event.target.files;
@@ -109,7 +129,7 @@ uploadSingle() {
       id     : auth.uid
 
     }).then((res) => {
-       
+
       res.ref.getDownloadURL().then((url) => {
 
         auth.updateProfile({
@@ -120,9 +140,7 @@ uploadSingle() {
           this.FirebaseService.updatePhotoUrl({
             image:url,
             id:auth.uid
-
           });
-
 
           this._message_img = true;
           this.message_text_img = "Se actualizo foto de perfil";
@@ -131,17 +149,17 @@ uploadSingle() {
           this._message_img = false;
           this.message_text_img = "";
           }, 5000);
-      
-          
+
+
         }).catch((err) => console.log(err.message));
-       
+
       }).catch((err) => console.log(err.message));
-      
+
     }).catch((err) => console.log(err.message));
-  
+
   })
-  
- 
+
+
 }
 
 

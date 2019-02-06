@@ -4,25 +4,20 @@ import { map } from 'rxjs/operators';
 import { auth, User } from 'firebase/app';
 import { AngularFirestore, AngularFirestoreDocument} from '@angular/fire/firestore';
 import { UserInterface } from '../models/user';
-import { Observable } from 'rxjs';
-
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
 
-  
- constructor(private afsAuth: AngularFireAuth, private afs: AngularFirestore) { }
+  constructor(private afsAuth: AngularFireAuth, private afs: AngularFirestore) { }
 
-
-  registerUser(email: string, pass: string) {
+  registerUser(email: string, pass: string,name:String) {
     return new Promise((resolve, reject) => {
       this.afsAuth.auth.createUserWithEmailAndPassword(email, pass)
-        .then(credential => {
-
-          this.updateUserData(credential.user,credential.additionalUserInfo["isNewUser"]),
-          resolve(credential)
+        .then(userData => {
+          resolve(userData),
+          this.updateUserDataCorreo(userData.user,userData.additionalUserInfo["isNewUser"],name)
 
         }).catch(
 
@@ -32,6 +27,7 @@ export class AuthService {
     });
   }
 
+
   loginEmailUser(email: string, pass: string) {
     return new Promise((resolve, reject) => {
       this.afsAuth.auth.signInWithEmailAndPassword(email, pass)
@@ -40,15 +36,14 @@ export class AuthService {
     });
   }
 
-
   loginFacebookUser() {
-    return this.afsAuth.auth.signInWithPopup(new auth.FacebookAuthProvider())
-      .then(credential => 
+      return this.afsAuth.auth.signInWithPopup(new auth.FacebookAuthProvider())
+      .then(credential =>
         this.updateUserData(credential.user,credential.additionalUserInfo["isNewUser"])
+
         )
+
   }
-
-
 
   logoutUser() {
     return this.afsAuth.auth.signOut();
@@ -58,6 +53,12 @@ export class AuthService {
   isAuth() {
     return this.afsAuth.authState.pipe(map(auth => auth));
   }
+
+  resetPassword(email: string) {
+
+    return this.afsAuth.auth.sendPasswordResetEmail(email)
+  }
+
 
 
   private updateUserData(user,userinfo) {
@@ -69,26 +70,46 @@ export class AuthService {
       email:user.email,
       photoUrl:user.photoURL,
       telefono:null
+    }
 
-    } 
-    
     if(userinfo){
 
-    
     return userRef.set(data, { merge: true });
-      
-      
+
     }else{
 
-    
-      
     }
 
     }
 
-}
+    private updateUserDataCorreo(user,userinfo,nombre) {
 
-  
+      const userRef: AngularFirestoreDocument<any> = this.afs.doc(`users/${user.uid}`);
+
+      const data: UserInterface = {
+        name:nombre,
+        email:user.email,
+        photoUrl:"assets/img/foto_perfil.jpg",
+        telefono:null
+      }
+
+      if(userinfo){
+
+      return userRef.set(data);
+
+      }else{
+
+      }
+
+      }
+
+
+
+
+
+    }
+
+
 
 
 
