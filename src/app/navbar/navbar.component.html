@@ -1,4 +1,4 @@
-<nav class="navbar navbar-dark navbar-expand-md bg-bluedark justify-content-between ">
+<nav class="navbar navbar-dark navbar-expand-md bg-bluedark justify-content-between  ">
     <div class="container">
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".dual-nav">
                   <span class="navbar-toggler-icon"></span>
@@ -78,8 +78,12 @@
                                 <button type="submit" class="btn bg-blul_ingresar btn-lg btn-block bg">INGRESAR</button>
                             </form>
 
+                            <p  *ngIf="_message_login"  class="text-center " style="padding: 5px;background: red;color: white;font-size: 0.8em">
+                              {{message_text_login}}
+                           </p>
+
                             <div class="text-center">
-                                <a class="a_olvidaste"> Olvidaste tu contraseña ?</a>
+                                <a class="a_olvidaste" routerLink="reset"> Olvidaste tu contraseña ?</a>
                             </div>
 
                         </div>
@@ -103,6 +107,12 @@
                                 </div>
                                 <button type="submit" class="btn bg-blul_ingresar btn-lg btn-block bg">REGISTRAR</button>
                             </form>
+
+                            <p  *ngIf="_message_register"  class="text-center " style="padding: 5px;background: red;color: white;font-size: 0.8em">
+                              {{message_text_register}}
+                           </p>
+
+
 
                             <div class="text-center">
                                 <a class="a_termino">Estoy de acuerdo con los <b>Terminos de uso</b> y <b>Políticas de privacidad</b> de YoBusco</a>

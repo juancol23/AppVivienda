@@ -4,13 +4,29 @@
 
         <div class="col-sm-4 text-center">
 
-            <img src="{{foto_perfil}}" alt="Cinque Terre">
+
+            <div class="con">
+                <img src="{{foto_perfil}}" alt="Cinque Terre" class="img_hover_file">
+                <div class="overlay" (click)="fileInput.click()">
+                    <a  class="icon" >
+                      <i>Actualizar Imagen</i>
+                    </a>
+                </div>
+
+              </div>
 
             <div class="nombre_perfil">
                 <p class="text-uppercase">{{nombre_perfil}}</p>
             </div>
+            <p  *ngIf="_message_img"  class="text-center " style="padding: 5px;color: green;font-size: 1em">
+                {{message_text_img}}
+             </p>
+            <input type="file"  #fileInput (change)="detectFiles($event)" hidden accept=".png,.jpg" >
+            <button  class="btn btn ds" [disabled]="!selectedFiles" (click)="uploadSingle()">SUBIR FOTO</button>
 
-            <button class="btn btn">SUBIR FOTO</button>
+
+
+
 
             <div class="nav flex-column nav-pills text-center" id="v-pills-tab" role="tablist" aria-orientation="vertical">
                 <a class="nav-link active" id="v-pills-home-tab" data-toggle="pill" href="#v-pills-home" role="tab" aria-controls="v-pills-home" aria-selected="true">MIS DATOS</a>
@@ -29,12 +45,12 @@
                     <h3>MIS DATOS</h3>
                     <div class="linea"></div>
 
-                    <form>
+                    <form  #formRegistro="ngForm" (submit)="onUpdatePerfilUser()">
                         <div class="form-group row">
 
                             <label for="nombre_p" class="col-sm-3 col-form-label ">Nombres:</label>
                             <div class="col-sm-7">
-                                <input type="text" class="form-control input_login" value="{{nombre_perfil}}" id="nombre_p" placeholder="Nombre" required>
+                                <input type="text" [(ngModel)]="nombre_perfil" name="nombre_perfil" class="form-control input_login" value="{{nombre_perfil}}" id="nombre_p" placeholder="Nombre" required>
                             </div>
                         </div>
 
@@ -47,7 +63,7 @@
                         <div class="form-group row">
                             <label for="celular_p" class="col-sm-3 col-form-label ">Teléfono:  </label>
                             <div class="col-sm-7">
-                                <input type="text" class="form-control input_login" value="{{telefono_perfil}}" id="celular_p" placeholder="Teléfono" required>
+                                <input type="text" [(ngModel)]="telefono_perfil"  name="telefono_perfil"  class="form-control input_login" value="{{telefono_perfil}}" id="celular_p" placeholder="Teléfono" required>
                             </div>
                         </div>
 
@@ -56,6 +72,10 @@
                             <button type="submit" class="btn bg-blul">Guardar</button>
                         </div>
                     </form>
+
+                    <p  *ngIf="_message_perfil"  class="text-center " style="padding: 5px;background-color: green;color: white;font-size: 1em">
+                      {{message_text_perfil}}
+                   </p>
 
 
 
@@ -92,6 +112,10 @@
                             <button type="submit" class="btn bg-blul">Actualizar contraseña</button>
                         </div>
                     </form>
+                    <p  *ngIf="_message_contra"  class="text-center " style="padding: 5px;color: green;font-size: 1.5em">
+                      {{message_text_contra}}
+                   </p>
+
                 </div>
                 <div class="tab-pane fade" id="v-pills-messages" role="tabpanel" aria-labelledby="v-pills-messages-tab">
                     <h3>MIS SOLICITUDES</h3>
@@ -102,6 +126,7 @@
                     <div class="linea"></div>
                 </div>
             </div>
+
 
         </div>
 

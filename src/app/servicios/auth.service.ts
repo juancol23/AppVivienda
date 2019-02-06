@@ -4,24 +4,20 @@ import { map } from 'rxjs/operators';
 import { auth, User } from 'firebase/app';
 import { AngularFirestore, AngularFirestoreDocument} from '@angular/fire/firestore';
 import { UserInterface } from '../models/user';
-import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
 
-
   constructor(private afsAuth: AngularFireAuth, private afs: AngularFirestore) { }
 
-
-  registerUser(email: string, pass: string) {
+  registerUser(email: string, pass: string,name:String) {
     return new Promise((resolve, reject) => {
       this.afsAuth.auth.createUserWithEmailAndPassword(email, pass)
         .then(userData => {
-
-          this.updateUserData(userData.user),
-          resolve(userData)
+          resolve(userData),
+          this.updateUserDataCorreo(userData.user,userData.additionalUserInfo["isNewUser"],name)
 
         }).catch(
 
@@ -40,13 +36,14 @@ export class AuthService {
     });
   }
 
-
   loginFacebookUser() {
-    return this.afsAuth.auth.signInWithPopup(new auth.FacebookAuthProvider())
-      .then(credential => this.updateUserData(credential.user))
+      return this.afsAuth.auth.signInWithPopup(new auth.FacebookAuthProvider())
+      .then(credential =>
+        this.updateUserData(credential.user,credential.additionalUserInfo["isNewUser"])
+
+        )
+
   }
-
-
 
   logoutUser() {
     return this.afsAuth.auth.signOut();
@@ -57,30 +54,54 @@ export class AuthService {
     return this.afsAuth.authState.pipe(map(auth => auth));
   }
 
+  resetPassword(email: string) {
 
-  private updateUserData(user) {
+    return this.afsAuth.auth.sendPasswordResetEmail(email)
+  }
 
-     const userRef: AngularFirestoreDocument<any> = this.afs.doc(`users/${user.uid}`);
-/*consulto si existe registro en bd*/
-     this.afs.firestore.doc(`/users/${user.uid}`).get().then(docSnapshot => {
-      if (docSnapshot.exists) {
+
+
+  private updateUserData(user,userinfo) {
+
+    const userRef: AngularFirestoreDocument<any> = this.afs.doc(`users/${user.uid}`);
+
+    const data: UserInterface = {
+      name:user.displayName,
+      email:user.email,
+      photoUrl:user.photoURL,
+      telefono:null
+    }
+
+    if(userinfo){
+
+    return userRef.set(data, { merge: true });
+
+    }else{
+
+    }
+
+    }
+
+    private updateUserDataCorreo(user,userinfo,nombre) {
+
+      const userRef: AngularFirestoreDocument<any> = this.afs.doc(`users/${user.uid}`);
+
+      const data: UserInterface = {
+        name:nombre,
+        email:user.email,
+        photoUrl:"assets/img/foto_perfil.jpg",
+        telefono:null
+      }
+
+      if(userinfo){
+
+      return userRef.set(data);
 
       }else{
 
-        const data: UserInterface = {
-          name:user.displayName,
-          email: user.email,
-          photoUrl:user.photoURL,
-          telefono:null
-
-        }
-
-        return userRef.set(data);
+      }
 
       }
-    });
-
-    }
 
 
 

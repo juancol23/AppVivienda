@@ -16,6 +16,8 @@ import { AngularFireDatabaseModule } from '@angular/fire/database';
 import { AngularFireAuth } from '@angular/fire/auth';
 import { AngularFireStorageModule } from '@angular/fire/storage';
 import { AngularFirestore } from '@angular/fire/firestore';
+import { ResetComponent } from './reset/reset.component';
+
 
 @NgModule({
   declarations: [
@@ -24,7 +26,8 @@ import { AngularFirestore } from '@angular/fire/firestore';
     FooterComponent,
     InmuebleComponent,
     VehiculoComponent,
-    PerfilComponent
+    PerfilComponent,
+    ResetComponent
   ],
   imports: [
     BrowserModule,

@@ -1,0 +1,32 @@
+
+
+<div class="container">
+  <div class="row justify-content-md-center">
+
+    <div class="col col-lg-6 recuperar" >
+        <h3>RECUPERAR CONTRASEÑA</h3>
+        <div class="linea"></div>
+        <p>
+            Restablecer su contraseña es fácil. Simplemente ingrese su correo  y siga las instrucciones. Te tendremos en funcionamiento en muy poco tiempo.</p>
+        <form #formReset="ngForm" >
+        <input type="email" [(ngModel)]="email" name="email" class="form-control input_login"   id="email"  placeholder="Ingrese su correo" required>
+        <div class="text-center">
+
+            <button  (click)="resetPasswordEmail()" class="btn bg-blul">Enviar</button>
+
+        </div>
+      </form>
+
+      <p  *ngIf="true_m"  class="text-center " style="padding: 5px;background-color: green;color: white;font-size: 1em">
+          {{message_true}}
+       </p>
+       <p  *ngIf="false_m"  class="text-center " style="padding: 5px;background-color:red;color: white;font-size: 1em">
+          {{message_false}}
+       </p>
+
+
+    </div>
+
+  </div>
+
+</div>
