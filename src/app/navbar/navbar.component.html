@@ -67,15 +67,58 @@
 
 
                         <div class="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab">
-                            <form #formLogin="ngForm" (submit)=" onLogin()" autocomplete="off">
+                            <!-- FORMULARIO LOGIN -->
+                            <form #formLogin="ngForm"  (submit)=" onLogin(formLogin)" autocomplete="off">
                                 <div class="form-group">
-                                    <input type="email" [(ngModel)]="email_login" class="form-control input_login" id="email_login" name="email_login" placeholder="Correo" required>
+
+                                  <input
+                                    email
+                                    type="email"
+                                    #email_="ngModel"
+                                    [(ngModel)]="login.email"
+                                    class="form-control input_login"
+                                    name="email"
+                                    placeholder="Correo"
+                                    required>
+
+                                    <div *ngIf="email_.invalid && (email_.dirty )" class="validif">
+
+                                        <div *ngIf="email_.errors.required">
+                                            Email es requerido*
+                                        </div>
+                                        <div *ngIf="email_.errors.email">
+                                            Email no tiene el formato correcto*
+                                        </div>
+
+                                    </div>
 
                                 </div>
+
                                 <div class="form-group">
-                                    <input type="password" [(ngModel)]="password_login" class="form-control input_login" id="password_login" name="password_login" placeholder="Contraseña" required>
+
+                                  <input
+                                    type="password"
+                                    #password_="ngModel"
+                                    [(ngModel)]="login.passwordr"
+                                    class="form-control input_login"
+                                    name="passwordr"
+                                    placeholder="Contraseña"
+                                    minlength="6"
+                                    required>
+
+                                    <div *ngIf="password_.invalid && (password_.dirty )" class="validif">
+
+                                            <div *ngIf="password_.errors.required">
+                                                 Password es requerido*
+                                            </div>
+                                            <div *ngIf="password_.errors.minlength">
+                                                Password debe contener mayor a 6 digitos*
+                                            </div>
+                                    </div>
+
                                 </div>
-                                <button type="submit" class="btn bg-blul_ingresar btn-lg btn-block bg">INGRESAR</button>
+
+                                <button type="submit" class="btn bg-blul_ingresar btn-lg btn-block bg" [disabled] = "!formLogin.valid">INGRESAR</button>
                             </form>
 
                             <p  *ngIf="_message_login"  class="text-center " style="padding: 5px;background: red;color: white;font-size: 0.8em">
@@ -91,24 +134,99 @@
 
 
                         <div class="tab-pane fade" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab">
+<!-- FORMULARIO REGISTRO -->
+                            <form #formRegistro="ngForm" (submit)="onAddUser(formRegistro)" [mustMatch]="['password', 'passwordConfirm']">
+                                <div class="form-group">
 
-                            <form #formRegistro="ngForm" (submit)="onAddUser()">
-                                <div class="form-group">
-                                    <input type="text" [(ngModel)]="nombre_registro" class="form-control input_login" id="nombre_registro" name="nombre_registro" placeholder="Nombre Completo" required>
+                                    <input
+                                    type="text"
+                                    [(ngModel)]="register.nombre"
+                                    class="form-control input_login"
+                                    name="nombre"
+                                    placeholder="Nombre Completo"
+                                    #nombre_="ngModel"
+                                    minlength="4"
+                                    pattern="[a-zA-Z ]*"
+                                    required>
+
+                                    <div *ngIf="nombre_.invalid && (nombre_.dirty) " class="validif">
+
+                                        <div *ngIf="nombre_.errors.required">
+                                           Nombre es requerido*
+                                        </div>
+                                        <div *ngIf="nombre_.errors.minlength">
+                                            Nombre debe ser mayor a 4 digitos*
+                                        </div>
+                                        <div *ngIf="nombre_.errors.pattern">
+                                            Nombre debe contener solo letras*
+                                        </div>
+
+                                    </div>
+
                                 </div>
                                 <div class="form-group">
-                                    <input type="email" [(ngModel)]="email_registro" class="form-control input_login" id="email_registro" name="email_registro" placeholder="Correo" required>
+
+                                    <input
+                                    type="email"
+                                    [(ngModel)]="register.emailr"
+                                    class="form-control input_login"
+                                    name="emailr"
+                                    placeholder="Correo"
+                                    #emailr_="ngModel"
+                                    email
+                                    required>
+
+                                    <div *ngIf="emailr_.invalid && (emailr_.dirty) " class="validif">
+
+                                        <div *ngIf="emailr_.errors.required">
+                                            Email es requerido*
+                                        </div>
+                                        <div *ngIf="emailr_.errors.email">
+                                            Email no tiene el formato correcto*
+                                        </div>
+
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+
+                                    <input
+                                    type="password"
+                                    class="form-control input_login"
+                                    name="password"
+                                    #password__="ngModel"
+                                    [(ngModel)]="register.password"
+                                    placeholder="Contraseña"
+                                    required
+                                    minlength="6">
+
+                                    <div *ngIf="password__.invalid && (password__.dirty || password__.touched)" class="validif">
+                                        <div *ngIf="password__.errors.required">Contraseña es requerido*</div>
+                                        <div *ngIf="password__.errors.minlength">Contraseña debe ser mayor a 6 digitos*</div>
+                                    </div>
+
                                 </div>
                                 <div class="form-group">
-                                    <input type="password" [(ngModel)]="password_registro" class="form-control input_login" id="password_registro" name="password_registro" placeholder="Contraseña" required>
+
+                                    <input
+                                    type="password"
+                                    class="form-control input_login"
+                                    name="passwordConfirm"
+                                    #passwordConfirm_="ngModel"
+                                    [(ngModel)]="register.passwordConfirm"
+                                    placeholder="Confirmar contraseña"
+                                    required>
+
+                                    <div *ngIf="passwordConfirm_.invalid && (passwordConfirm_.dirty || passwordConfirm_.touched)" class="validif" >
+                                        <div *ngIf="passwordConfirm_.errors.required">Confirmar contraseña es requerido*</div>
+                                        <div *ngIf="passwordConfirm_.errors.mustMatch">Contraseñas no coinciden*</div>
+                                    </div>
+
                                 </div>
-                                <div class="form-group">
-                                    <input type="password" [(ngModel)]="password_registro_2" class="form-control input_login" id="password_registro_2" name="password_registro_2" placeholder="Confirmar contraseña" required>
-                                </div>
-                                <button type="submit" class="btn bg-blul_ingresar btn-lg btn-block bg">REGISTRAR</button>
+                                <button type="submit" [disabled] = "!formRegistro.valid" class="btn bg-blul_ingresar btn-lg btn-block bg">REGISTRAR</button>
                             </form>
 
-                            <p  *ngIf="_message_register"  class="text-center " style="padding: 5px;background: red;color: white;font-size: 0.8em">
+                           <p  *ngIf="_message_register"  class="text-center " style="padding: 5px;background: red;color: white;font-size: 0.8em">
                               {{message_text_register}}
                            </p>
 

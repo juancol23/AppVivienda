@@ -18,11 +18,8 @@ export class AuthService {
         .then(userData => {
           resolve(userData),
           this.updateUserDataCorreo(userData.user,userData.additionalUserInfo["isNewUser"],name)
-
         }).catch(
-
           err => reject(err)
-
           )
     });
   }
@@ -40,7 +37,6 @@ export class AuthService {
       return this.afsAuth.auth.signInWithPopup(new auth.FacebookAuthProvider())
       .then(credential =>
         this.updateUserData(credential.user,credential.additionalUserInfo["isNewUser"])
-
         )
 
   }
@@ -55,8 +51,7 @@ export class AuthService {
   }
 
   resetPassword(email: string) {
-
-    return this.afsAuth.auth.sendPasswordResetEmail(email)
+    return this.afsAuth.auth.sendPasswordResetEmail(email);
   }
 
 

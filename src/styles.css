@@ -21,14 +21,16 @@
     src: url(assets/fonts/VolteRounded-Semibold.otf);
 }
 
-body {
-    max-width: 100%;
+
+html {
+    min-height: 100%;
+    position: relative;
+  }
+  body {
+    margin: 0;
     overflow-x: hidden;
-    height: auto;
-}
-html{
-  height: auto;
-}
+    margin-bottom: 40px;
+  }
 
 .navbar {
     padding: 0px;
@@ -83,6 +85,8 @@ html{
   .con:hover .overlay {
     opacity: 1;
   }
+
+
 
   .ds:disabled {
 
@@ -282,6 +286,11 @@ form {
     border-color: rgb(24, 52, 207);
     font-weight: 400;
     color: black;
+    transition: 0.5;
+  }
+
+  .input_login:focus {
+    box-shadow: none;
   }
 
 .input_login::placeholder {
@@ -308,11 +317,18 @@ form {
 }
 
 .footer {
-  left: 0;
-  bottom: 0 !important;
-  width: 100%;
-  background-color: #2b2b2b;
+    position: absolute;
+    bottom: 0 !important;
+    width: 100%;
+    background-color: #2b2b2b;
+    z-index: 0px;
+
 }
+
+
+
+
+
 
 .foot_prin {
     padding-top: 15px;
@@ -349,8 +365,10 @@ form {
 }
 
 .datos_perfil {
+    position: relative;
     padding-top: 40px;
-    padding-bottom: 40px;
+    padding-bottom: 120px;
+    transition:0.5s;
 }
 
 .datos_perfil button {
@@ -409,6 +427,7 @@ form {
   padding: 20px;
   box-shadow: 0 10px 16px 0 rgba(0,0,0,0.2),0 6px 20px 0 rgba(0,0,0,0.19) !important;
   margin: 20px;
+  margin-bottom: 250px;
 }
 .recuperar p{
   color:black;
@@ -464,6 +483,30 @@ form {
     font-size: 15px;
 }
 
+.validif{
+  color:red;
+  font-size: 12px;
+  font-family: volteM;
+  transition: 12s;
+}
+
+
+.mesage_valid{
+ padding: 5px;
+ background-color: green;
+ color: white !important;
+ font-size: 1em;
+ font-family: volteM;
+}
+
+.mesage_invalid{
+  padding: 5px;
+  background-color: red;
+  color: white !important;
+  font-size: 1em;
+  font-family: volteM;
+ }
+
 @media (max-width: 621px) {
     .h6 {
         font-size: 11.5px !important;
@@ -488,6 +531,9 @@ form {
 }
 
 @media (max-width: 576px) {
+    .datos_perfil {
+        padding-bottom: 170px;
+    }
     .foot_prin {
         text-align: center !important;
     }

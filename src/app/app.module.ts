@@ -7,16 +7,16 @@ import { FooterComponent } from './footer/footer.component';
 import { InmuebleComponent } from './inmueble/inmueble.component';
 import { VehiculoComponent } from './vehiculo/vehiculo.component';
 import { PerfilComponent } from './perfil/perfil.component';
-
 import { FormsModule } from '@angular/forms';
+import { ReactiveFormsModule } from '@angular/forms';
 import { environment } from '../environments/environment';
-
 import { AngularFireModule } from '@angular/fire';
 import { AngularFireDatabaseModule } from '@angular/fire/database';
 import { AngularFireAuth } from '@angular/fire/auth';
 import { AngularFireStorageModule } from '@angular/fire/storage';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { ResetComponent } from './reset/reset.component';
+import { MustMatchDirective } from './validationForm/match.directive';
 
 
 @NgModule({
@@ -27,7 +27,8 @@ import { ResetComponent } from './reset/reset.component';
     InmuebleComponent,
     VehiculoComponent,
     PerfilComponent,
-    ResetComponent
+    ResetComponent,
+    MustMatchDirective
   ],
   imports: [
     BrowserModule,
@@ -36,6 +37,7 @@ import { ResetComponent } from './reset/reset.component';
     AngularFireModule.initializeApp(environment.firebase),
     AngularFireDatabaseModule,
     AngularFireStorageModule,
+    ReactiveFormsModule
   ],
   providers: [AngularFireAuth, AngularFirestore],
   bootstrap: [AppComponent]

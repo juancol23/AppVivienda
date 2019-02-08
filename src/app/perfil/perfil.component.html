@@ -6,7 +6,7 @@
 
 
             <div class="con">
-                <img src="{{foto_perfil}}" alt="Cinque Terre" class="img_hover_file">
+                <img src="{{photo_profile}}" alt="Cinque Terre" class="img_hover_file">
                 <div class="overlay" (click)="fileInput.click()">
                     <a  class="icon" >
                       <i>Actualizar Imagen</i>
@@ -16,12 +16,12 @@
               </div>
 
             <div class="nombre_perfil">
-                <p class="text-uppercase">{{nombre_perfil}}</p>
+                <p class="text-uppercase">{{name_profile}}</p>
             </div>
             <p  *ngIf="_message_img"  class="text-center " style="padding: 5px;color: green;font-size: 1em">
                 {{message_text_img}}
-             </p>
-            <input type="file"  #fileInput (change)="detectFiles($event)" hidden accept=".png,.jpg" >
+            </p>
+            <input type="file"  #fileInput (change)="detectFiles($event)" hidden accept="image/jpeg,image/png" >
             <button  class="btn btn ds" [disabled]="!selectedFiles" (click)="uploadSingle()">SUBIR FOTO</button>
 
 
@@ -30,7 +30,7 @@
 
             <div class="nav flex-column nav-pills text-center" id="v-pills-tab" role="tablist" aria-orientation="vertical">
                 <a class="nav-link active" id="v-pills-home-tab" data-toggle="pill" href="#v-pills-home" role="tab" aria-controls="v-pills-home" aria-selected="true">MIS DATOS</a>
-                <a class="nav-link" id="v-pills-profile-tab" data-toggle="pill" href="#v-pills-profile" role="tab" aria-controls="v-pills-profile" aria-selected="false">MI CONTRASEÑA</a>
+                <a *ngIf="!typeUser" class="nav-link" id="v-pills-profile-tab" data-toggle="pill" href="#v-pills-profile" role="tab" aria-controls="v-pills-profile" aria-selected="false">MI CONTRASEÑA</a>
                 <a class="nav-link" id="v-pills-messages-tab" data-toggle="pill" href="#v-pills-messages" role="tab" aria-controls="v-pills-messages" aria-selected="false">MIS SOLICITUDES</a>
                 <a class="nav-link" id="v-pills-settings-tab" data-toggle="pill" href="#v-pills-settings" role="tab" aria-controls="v-pills-settings" aria-selected="false">MIS INMUEBLES</a>
             </div>
@@ -45,32 +45,96 @@
                     <h3>MIS DATOS</h3>
                     <div class="linea"></div>
 
-                    <form  #formRegistro="ngForm" (submit)="onUpdatePerfilUser()">
+                    <form  #formPerfil="ngForm" (submit)="onUpdatePerfilUser()">
                         <div class="form-group row">
 
                             <label for="nombre_p" class="col-sm-3 col-form-label ">Nombres:</label>
                             <div class="col-sm-7">
-                                <input type="text" [(ngModel)]="nombre_perfil" name="nombre_perfil" class="form-control input_login" value="{{nombre_perfil}}" id="nombre_p" placeholder="Nombre" required>
+
+                                <input
+                                type="text"
+                                #nameProfile_="ngModel"
+                                [(ngModel)]="modelProfile.nameProfile"
+                                name="nameProfile"
+                                class="form-control input_login"
+                                placeholder="Nombre"
+                                minlength="4"
+                                pattern="[a-zA-Z ]*"
+                                required
+                                (keypress)="onlyText($event)">
+
+                            <div *ngIf="nameProfile_.invalid && (nameProfile_.dirty || nameProfile_.touched)" class="validif">
+
+                                        <div *ngIf="nameProfile_.errors.required">
+                                          Nombre es requerido*
+                                        </div>
+                                        <div *ngIf="nameProfile_.errors.minlength">
+                                          Nombre debe ser mayor a 4 digitos*
+                                        </div>
+                                        <div *ngIf="nameProfile_.errors.pattern">
+                                          Nombre debe contener solo letras*
+                                        </div>
+
                             </div>
+
+                          </div>
+
+
+
                         </div>
 
                         <div class="form-group row">
                             <label for="email_p" class="col-sm-3 col-form-label ">E-mail:  </label>
                             <div class="col-sm-7">
-                                <input type="email" disabled class="form-control input_login" value="{{email_perfil}}" id="email_p" placeholder="E-mail" required>
+                                <input
+                                type="email"
+                                disabled
+                                class="form-control input_login"
+                                name="email"
+                                [(ngModel)]="modelProfile.email"
+                                placeholder="E-mail"
+                                required>
                             </div>
                         </div>
+
                         <div class="form-group row">
                             <label for="celular_p" class="col-sm-3 col-form-label ">Teléfono:  </label>
                             <div class="col-sm-7">
-                                <input type="text" [(ngModel)]="telefono_perfil"  name="telefono_perfil"  class="form-control input_login" value="{{telefono_perfil}}" id="celular_p" placeholder="Teléfono" required>
-                            </div>
+
+                                <input
+                                 type="text"
+                                 class="form-control input_login"
+                                 name="phoneNumber"
+                                 [(ngModel)]="modelProfile.phoneNumber"
+                                 #phoneNumber_="ngModel"
+                                 pattern="[0-9]*"
+                                 placeholder="Teléfono"
+                                 minlength="9"
+                                 maxlength="9"
+                                 required
+                                 (keypress)="onlyNumber($event)">
+
+                            <div *ngIf="phoneNumber_.invalid && (phoneNumber_.dirty || phoneNumber_.touched)" class="validif">
+
+                               <div *ngIf="phoneNumber_.errors.minlength || phoneNumber_.errors.maxlength">
+                                 Telefono debe contener 9 digitos*
+                               </div>
+                               <div *ngIf="phoneNumber_.errors.pattern">
+                                Telefono debe contener solo numeros*
+                               </div>
+                               <div *ngIf="phoneNumber_.errors.required">
+                                  Telefono es requerido*
+                               </div>
+
+                             </div>
+
+                          </div>
                         </div>
 
                         <div class="text-center">
-
-                            <button type="submit" class="btn bg-blul">Guardar</button>
+                            <button type="submit" class="btn bg-blul" [disabled] = "!formPerfil.valid">Guardar</button>
                         </div>
+
                     </form>
 
                     <p  *ngIf="_message_perfil"  class="text-center " style="padding: 5px;background-color: green;color: white;font-size: 1em">
@@ -83,38 +147,90 @@
                 <div class="tab-pane fade" id="v-pills-profile" role="tabpanel" aria-labelledby="v-pills-profile-tab">
                     <h3>MI CONTRASEÑA</h3>
                     <div class="linea"></div>
-                    <form>
+
+                    <form #formPerfilContrasena="ngForm" (submit)="onUpdatePassword(formPerfilContrasena)" [mustMatch]="['passwordNew', 'passwordConfirm']" >
                         <div class="form-group row">
 
-                            <label for="password_p_actual" class="col-sm-4 col-form-label ">Contraseña actual:</label>
+                            <label for="password" class="col-sm-4 col-form-label ">Contraseña actual:</label>
                             <div class="col-sm-6">
-                                <input type="password" class="form-control input_login" id="password_p_actual" required>
+
+                                <input
+                                type="email"
+                                disabled
+                                class="form-control input_login"
+                                name="email"
+                                [(ngModel)]="modelPassword.email"
+                                placeholder="E-mail"
+                                required
+                                hidden>
+
+                                <input
+                                type="password"
+                                class="form-control input_login"
+                                name="password"
+                                [(ngModel)]="modelPassword.password"
+                                #password_="ngModel"
+                                required>
+
+                                <div *ngIf="password_.invalid && (password_.dirty || password_.touched)"  class="validif">
+                                    <div *ngIf="password_.errors.required">Contraseña nueva es requerido*</div>
+                                </div>
                             </div>
                         </div>
 
 
                         <div class="form-group row">
-                            <label for="password_p" class="col-sm-4 col-form-label ">Contraseña nueva:</label>
+                            <label for="passwordNew" class="col-sm-4 col-form-label ">Contraseña nueva:</label>
                             <div class="col-sm-6">
-                                <input type="password" class="form-control input_login" id="password_p" required>
+                                <input
+                                type="password"
+                                class="form-control input_login"
+                                name="passwordNew"
+                                #passwordNew_="ngModel"
+                                [(ngModel)]="modelPassword.passwordNew"
+                                required
+                                minlength="6">
+
+                                <div *ngIf="passwordNew_.invalid && (passwordNew_.dirty || passwordNew_.touched)" class="validif">
+                                    <div *ngIf="passwordNew_.errors.required">Contraseña es requerido*</div>
+                                    <div *ngIf="passwordNew_.errors.minlength">Contraseña debe ser mayor a 6 digitos*</div>
+                                </div>
+
                             </div>
                         </div>
                         <div class="form-group row">
-                            <label for="password_p_2" class="col-sm-4 col-form-label ">Confirmar contraseña:</label>
+                            <label for="passwordConfirm" class="col-sm-4 col-form-label ">Confirmar contraseña:</label>
                             <div class="col-sm-6">
-                                <input type="password" class="form-control input_login" id="password_p_2" required>
+                                <input
+                                type="password"
+                                class="form-control input_login"
+                                name="passwordConfirm"
+                                #passwordConfirm_="ngModel"
+                                [(ngModel)]="modelPassword.passwordConfirm"
+                                required>
+
+                                <div *ngIf="passwordConfirm_.invalid && (passwordConfirm_.dirty || passwordConfirm_.touched)" class="validif" >
+                                    <div *ngIf="passwordConfirm_.errors.required">Confirmar contraseña nueva es requerido*</div>
+                                    <div *ngIf="passwordConfirm_.errors.mustMatch">Contraseñas no coinciden*</div>
+                                </div>
+
                             </div>
                         </div>
 
 
                         <div class="text-center">
 
-                            <button type="submit" class="btn bg-blul">Actualizar contraseña</button>
+                            <button type="submit" class="btn bg-blul" [disabled] = "!formPerfilContrasena.valid" >Actualizar contraseña</button>
                         </div>
                     </form>
-                    <p  *ngIf="_message_contra"  class="text-center " style="padding: 5px;color: green;font-size: 1.5em">
+
+
+
+                   <p *ngIf="message_c_valid" [ngClass]="{'mesage_valid':error.message === 'success','mesage_invalid':error.message === 'error'}"  class="text-center" >
                       {{message_text_contra}}
                    </p>
+
+
 
                 </div>
                 <div class="tab-pane fade" id="v-pills-messages" role="tabpanel" aria-labelledby="v-pills-messages-tab">

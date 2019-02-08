@@ -3,6 +3,7 @@ import { AngularFireAuth } from '@angular/fire/auth';
 import { Router } from '@angular/router';
 import { AuthService } from '../servicios/auth.service';
 import { FirebaseService } from '../servicios/firebase.service';
+import { NgForm } from '@angular/forms';
 
 declare var $ :any;
 
@@ -13,20 +14,14 @@ declare var $ :any;
 })
 export class NavbarComponent implements OnInit {
 
-  constructor(public afAuth: AngularFireAuth, private router: Router, private authService: AuthService , private FirebaseService: FirebaseService) { }
+constructor(public afAuth: AngularFireAuth, private router: Router, private authService: AuthService , private FirebaseService: FirebaseService) { }
 
-/*LOGIN*/
-public email_login: string = null;
-public password_login: string = null;
+public login:any = {};
+public register:any={};
 
-/*REGISTRO*/
-public email_registro: string = null;
-public nombre_registro: string = null;
-public password_registro: string = null;
-public password_registro_2: string = null;
 
 /*USUARIO*/
-public idUser: string = null;
+
 public nameUser: string=null;
 public isLogged: boolean = false;
 
@@ -37,9 +32,17 @@ public _message_register: boolean = false;
 public message_text_register: String = "";
 
 
+
+
+
   ngOnInit() {
+
     this.getCurrentUser();
   }
+
+
+
+
 
   getCurrentUser() {
     this.authService.isAuth().subscribe(auth => {
@@ -48,15 +51,11 @@ public message_text_register: String = "";
           this.isLogged = true;
 
           this.FirebaseService.getUserById(auth.uid).subscribe((res) => {
-
             this.nameUser=res['name'];
-
           })
 
       }else{
-
         this.isLogged = false;
-
       }
 
     });
@@ -64,21 +63,21 @@ public message_text_register: String = "";
 
 
 
-  onAddUser(): void {
-    if(this.password_registro==this.password_registro_2){
+  onAddUser(form: NgForm): void {
 
-      this.authService.registerUser(this.email_registro, this.password_registro,this.nombre_registro)
+
+      this.authService.registerUser(this.register.emailr, this.register.password,this.register.nombre)
       .then((res) => {
         this.authService.isAuth().subscribe(user => {
           if (user) {
               user.updateProfile({
-              displayName: this.nombre_registro,
+              displayName: this.register.nombre,
               photoURL: "assets/img/foto_perfil.jpg"
             }).then((res) => {
-
               this.router.navigate(['perfil']);
               $("#exampleModalCenter").hide();
               $(".modal-backdrop").hide();
+              form.reset();
 
             }).catch((err) => console.log(err.message));
           }
@@ -111,33 +110,35 @@ public message_text_register: String = "";
 
       });
 
-    }else{
 
-      this._message_register = true;
-      this.message_text_register="Las contraseñas no coinciden";
-
-    }
 
   }
 
 
 
-  onLogin(): void {
-    this.authService.loginEmailUser(this.email_login, this.password_login)
+
+
+
+
+
+
+  onLogin(form: NgForm): void {
+    this.authService.loginEmailUser(this.login.email, this.login.passwordr)
       .then((res) => {
 
-        this.router.navigate(['perfil']);
+       this.router.navigate(['perfil']);
        $("#exampleModalCenter").hide();
        $(".modal-backdrop").hide();
+       form.reset();
 
       }).catch(
         err => {
-
+           console.log(err.message);
           this._message_login = true;
 
           switch (err.message) {
             case "The password is invalid or the user does not have a password.":
-              this.message_text_login="Correo y/o contraseña incorrectos.";
+              this.message_text_login="Correo electrónico y/o contraseña incorrectos.";
               break;
             case "The email address is badly formatted.":
               this.message_text_login="La dirección de correo electrónico está mal formateada.";
@@ -146,7 +147,7 @@ public message_text_register: String = "";
               this.message_text_login="La cuenta de usuario ha sido desactivada por un administrador.";
                 break;
             case "There is no user record corresponding to this identifier. The user may have been deleted.":
-              this.message_text_login="Correo y/o contraseña incorrectos.";
+              this.message_text_login="Correo electrónico y/o contraseña incorrectos.";
                 break;
             default:
             this.message_text_login="Error generico";
@@ -162,6 +163,7 @@ public message_text_register: String = "";
   }
 
 
+
   onLoginFacebook(): void {
     this.authService.loginFacebookUser().then(
       (success) => {
@@ -172,22 +174,7 @@ public message_text_register: String = "";
 
       }
     ).catch(err => {
-
-        this._message_login = true;
-
-        switch (err.message) {
-          case "The user account has been disabled by an administrator.":
-            this.message_text_login="La cuenta de usuario ha sido desactivada por un administrador.";
-              break;
-          default:
-          this.message_text_login="Error generico";
-        }
-
-        setTimeout(()=>{
-          this._message_login = false;
-          this.message_text_login = "";
-          }, 5000);
-
+        console.log(err.message);
        });
   }
 

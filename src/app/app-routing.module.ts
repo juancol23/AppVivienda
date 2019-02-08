@@ -12,7 +12,7 @@ const app_routes: Routes = [
   {path: 'reset', component: ResetComponent},
   {path: 'perfil', component: PerfilComponent,canActivate: [AuthGuard]},
   {path: '**', redirectTo: 'home',pathMatch: 'full' }
-];
+]
 
 @NgModule({
   imports: [

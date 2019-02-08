@@ -7,21 +7,40 @@
         <h3>RECUPERAR CONTRASEÑA</h3>
         <div class="linea"></div>
         <p>
-            Restablecer su contraseña es fácil. Simplemente ingrese su correo  y siga las instrucciones. Te tendremos en funcionamiento en muy poco tiempo.</p>
-        <form #formReset="ngForm" >
-        <input type="email" [(ngModel)]="email" name="email" class="form-control input_login"   id="email"  placeholder="Ingrese su correo" required>
+            Restablecer su contraseña es fácil. Simplemente ingrese su correo  y
+             siga las instrucciones. Te tendremos en comunicación en muy poco tiempo.</p>
+
+     <form #formReset="ngForm" (ngSubmit)="resetPasswordEmail(formReset)" >
+     <input type="email"
+     email
+     name="email"
+     #emails="ngModel"
+     [(ngModel)]="reset.email"
+     class="form-control input_login"
+     placeholder="Ingrese su correo"
+     required>
+
+     <div *ngIf="emails.invalid && (emails.dirty) " class="validif">
+
+     <div *ngIf="emails.errors.required">
+      Correo es requerido*
+     </div>
+     <div *ngIf="emails.errors.email">
+      Correo no tiene el formato correcto*
+     </div>
+
+     </div>
+
         <div class="text-center">
 
-            <button  (click)="resetPasswordEmail()" class="btn bg-blul">Enviar</button>
+            <button  type="submit" class="btn bg-blul"  [disabled] = "!formReset.valid">Enviar</button>
 
         </div>
       </form>
 
-      <p  *ngIf="true_m"  class="text-center " style="padding: 5px;background-color: green;color: white;font-size: 1em">
-          {{message_true}}
-       </p>
-       <p  *ngIf="false_m"  class="text-center " style="padding: 5px;background-color:red;color: white;font-size: 1em">
-          {{message_false}}
+
+      <p *ngIf="message_c_valid" [ngClass]="{'mesage_valid':error.message === 'success','mesage_invalid':error.message === 'error'}"  class="text-center" >
+          {{message_text}}
        </p>
 
 

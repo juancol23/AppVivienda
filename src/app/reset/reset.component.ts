@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from '../servicios/auth.service';
 declare var $ :any;
+import { NgForm } from '@angular/forms';
 
 @Component({
   selector: 'app-reset',
@@ -12,14 +13,16 @@ export class ResetComponent implements OnInit {
 
 
 
-  constructor( private authService: AuthService ) { }
+constructor( private authService: AuthService) { }
 
-public email: string = null;
+public reset: any = {};
+public error:any={};
 
-public true_m: boolean = false;
-public message_true: String = "";
-public false_m: boolean = false;
-public message_false: String = "";
+
+public message_c_valid:boolean = false;
+public message_text: String = null;
+
+
 
   ngOnInit() {
 
@@ -28,58 +31,47 @@ public message_false: String = "";
 
   }
 
-  resetPasswordEmail(): void {
-    if(this.email==""){
-
-      this.false_m = true;
-      this.message_false="Ingrese su correo *";
-
-      setTimeout(()=>{
-        this.false_m = false;
-        this.message_false=""
-        }, 5000);
 
 
-    }else{
-    this.authService.resetPassword(this.email)
+
+  resetPasswordEmail(form: NgForm): void {
+    this.authService.resetPassword(this.reset.email)
       .then((res) => {
 
-        this.true_m = true;
-        this.message_true="Comprueba si has recibido un correo.";
-
+        this.message_c_valid= true,
+        this.error.message="success",
+        this.message_text = "Verficar correo electronico.",
+        form.reset();
 
       }).catch(
         err => {
-          console.log(err["message"]);
 
+          this.message_c_valid= true;
 
-          this.false_m = true;
+          this.error.message="error";
 
-          switch (err["message"]) {
-            case "The password is invalid or the user does not have a password.":
-              this.message_false="Correo y/o contraseña incorrectos.";
-              break;
+          switch (err.message) {
             case "The email address is badly formatted.":
-              this.message_false="La dirección de correo electrónico está mal formateada.";
+              this.message_text="La dirección de correo electrónico está mal formateada.";
               break;
-            case "The user account has been disabled by an administrator.":
-              this.message_false="La cuenta de usuario ha sido desactivada por un administrador.";
-                break;
             case "There is no user record corresponding to this identifier. The user may have been deleted.":
-              this.message_false="No existe correo.";
+              this.message_text="No existe correo electrónico.";
                 break;
+            case 'sendPasswordResetEmail failed: First argument "email" must be a valid string.':
+              this.message_text="Ingresar correo electrónico.";
+              break
             default:
-            this.message_false="Error generico";
+            this.message_text="Error.";
           }
-
-          setTimeout(()=>{
-            this.false_m = false;
-            this.message_false = "";
-            }, 5000);
 
 
         });
-  }
+
+        setTimeout(()=>{
+          this.message_c_valid = false;
+          this.error.message = "";
+          }, 5000);
+
   }
 
 }
