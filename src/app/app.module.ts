@@ -17,6 +17,10 @@ import { AngularFireStorageModule } from '@angular/fire/storage';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { ResetComponent } from './reset/reset.component';
 import { MustMatchDirective } from './validationForm/match.directive';
+import { AppPasswordDirective } from './validationForm/app-password.directive';
+import { AppPasswordDirectiveLogin } from './validationForm/app-password-login.directive';
+import { RegisterInmuebleComponent } from './register-inmueble/register-inmueble.component';
+
 
 
 @NgModule({
@@ -28,7 +32,10 @@ import { MustMatchDirective } from './validationForm/match.directive';
     VehiculoComponent,
     PerfilComponent,
     ResetComponent,
-    MustMatchDirective
+    MustMatchDirective,
+    AppPasswordDirective,
+    AppPasswordDirectiveLogin,
+    RegisterInmuebleComponent
   ],
   imports: [
     BrowserModule,

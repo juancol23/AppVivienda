@@ -64,7 +64,8 @@ export class AuthService {
       name:user.displayName,
       email:user.email,
       photoUrl:user.photoURL,
-      telefono:null
+      telefono:null,
+      provider:user.providerData[0].providerId
     }
 
     if(userinfo){
@@ -85,7 +86,8 @@ export class AuthService {
         name:nombre,
         email:user.email,
         photoUrl:"assets/img/foto_perfil.jpg",
-        telefono:null
+        telefono:null,
+        provider:user.providerData[0].providerId
       }
 
       if(userinfo){

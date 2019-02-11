@@ -5,6 +5,7 @@ import { AngularFireStorage, AngularFireStorageReference, AngularFireUploadTask 
 import { Observable } from 'rxjs';
 import { AngularFireAuth } from '@angular/fire/auth';
 
+
 @Injectable({
   providedIn: 'root'
 })
@@ -15,6 +16,8 @@ export class FirebaseService {
   userCollection: AngularFirestoreCollection<UserInterface>;
   user: Observable<UserInterface[]>;
   userDoc: AngularFirestoreDocument<UserInterface>;
+
+
 
   constructor(private afs: AngularFirestore,private afStorage: AngularFireStorage,private afsAuth: AngularFireAuth) {
 
@@ -34,10 +37,14 @@ export class FirebaseService {
   }
 
   getUserById(uid){
-
      return this.afs.collection(`users`).doc(`${uid}`).valueChanges();
-
   }
+
+getUserByEmail(email){
+
+  return this.afs.collection(`users`, ref => ref.where("email", '==', email))
+  .valueChanges();
+}
 
   updatePhotoUrl(user){
     this.afs.doc(`users/${user.id}`).update({
@@ -65,13 +72,12 @@ export class FirebaseService {
 
         this.afsAuth.auth.currentUser.updatePassword(pass2)
         .then(success => resolve("Se actualizo la contraseña correctamente.") )
-        .catch(err => reject("Error en la actualizacion"))
+        .catch(err => reject("Error en la actualizacion."))
 
         ).catch(
-          err => reject("Contraseña Incorrecta")
+          err => reject("Contraseña Incorrecta.")
         )
     });
-
   }
 
 

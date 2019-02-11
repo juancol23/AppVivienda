@@ -305,9 +305,27 @@ form {
     color: rgb(24, 52, 207);
 }
 
+
+
+
+.text-publica span{
+  color: rgb(24, 52, 207);
+  transition: 0.5s;
+  font-size: 15px;
+  position: absolute;
+  margin-top: 10px;
+}
+
+.text-publica span a{
+ text-decoration: none;
+ font-size: 16px;
+}
+
+
 .text-publica h4 {
     padding-top: 30px;
     transition: 0.5s;
+    text-align: center !important;
 }
 
 .mod_pub {
@@ -318,7 +336,6 @@ form {
 
 .footer {
     position: absolute;
-    bottom: 0 !important;
     width: 100%;
     background-color: #2b2b2b;
     z-index: 0px;
@@ -366,8 +383,8 @@ form {
 
 .datos_perfil {
     position: relative;
-    padding-top: 40px;
-    padding-bottom: 120px;
+    padding-top: 80px;
+    padding-bottom: 80px;
     transition:0.5s;
 }
 
@@ -379,7 +396,6 @@ form {
     padding-left: 15px;
     padding-right: 15px;
     color: rgb(24, 52, 207);
-    margin-bottom: 30px;
 }
 
 .datos_perfil img {
@@ -402,14 +418,23 @@ form {
 }
 
 .datos_perfil .nav-link {
-    margin: 5px 10px;
+     margin: 5px 10px;
     font-family: volteR;
     font-weight: bold;
     font-size: 14px;
     border-radius: 30px;
-    letter-spacing: 1.5px;
-    text-align: center;
+    letter-spacing: 2.5px;
+    text-align: justify;
     border: 1px solid rgb(24, 52, 207) !important;
+    padding-left: 20px;
+
+transition: 0.5s;
+}
+
+.datos_perfil .nav-link i {
+font-size: 18px;
+margin-right: 20px;
+transition: 0.5s;
 }
 
 .datos_perfil .nav-link.active {
@@ -480,7 +505,7 @@ form {
     font-weight: 500;
     transition: .5s;
     text-align: right !important;
-    font-size: 15px;
+    font-size: 16px;
 }
 
 .validif{
@@ -507,6 +532,127 @@ form {
   font-family: volteM;
  }
 
+ .absolute_pass{
+   position: absolute;
+   right: -7px;
+   top:10px;
+   color:rgb(24, 52, 207,0.8);
+   cursor: pointer;
+ }
+ .absolute_login{
+  position: absolute;
+  right: -20px;
+  top:10px;
+  color:rgb(24, 52, 207,0.8);
+  cursor: pointer;
+}
+
+ .adjust{
+   padding-left: 0px !important;
+   padding-right: 0px !important;
+ }
+
+input[type="radio"]:checked .btn-primary  {
+
+  display: none;
+  background-color: rgb(24, 52, 207,0.1) !important;
+}
+
+input[type="radio"]{
+  display: none;
+  background-color: white;
+}
+
+
+
+
+.style_toggle .btn-primary{
+    color: rgb(24, 52, 207) !important;
+    background-color:white;
+    border-color:  rgb(24, 52, 207) !important;
+    border-radius: 0px;
+    font-family: volteM;
+    font-size: 14px;
+}
+
+.style_toggle .btn{
+  border-radius: 0px;
+}
+
+
+.style_toggle .btn-primary:not(:enabled):not(.enabled).active, .btn-primary:not(:enabled):not(.enabled):active, .show>.btn-primary.dropdown-toggle {
+  color: #fff !important;
+  background-color: rgb(24, 52, 207) !important;
+  font-weight: bold;
+}
+
+
+.label_text{
+  margin-bottom: 0px;
+  margin-top: 7px;
+  color: rgb(24, 52, 207) !important;
+  font-family: volteR;
+  font-size: 13px;
+  font-weight: bold;
+  padding: 0px;
+}
+.sm{
+  width: 100px;
+  display: inline-block;
+  height: calc(2.25rem + 2px);
+    padding: .375rem .75rem;
+    margin-left: 5px;
+}
+.sm-2{
+  width: 100px;
+  display: inline-block;
+  height: calc(2.25rem + 2px);
+    padding: .375rem .75rem;
+}
+.sm-1{
+  width: 80px;
+  display: inline-block;
+  margin-top: 0px;
+  font-size: 13px;
+  height: calc(2.25rem + 2px);
+  padding: .375rem .75rem;
+}
+
+.registre{
+  padding-top: 40px;
+  padding-bottom: 40px;
+}
+.registre .form-group{
+  margin-bottom: 0px;
+}
+
+.button_red{
+  padding: 30px 10px;
+  border-radius: 50%;
+  font-weight: bold;
+  font-family: volteR;
+  margin: 10px 0px;
+  transition: 0.5s;
+  z-index: 10;
+}
+
+.fir_se{
+border: 1px solid rgb(24, 52, 207) !important;
+width: 120px;
+border-radius: 50%;
+text-align: center;
+transition: 0.5s;
+}
+
+
+
+
+
+@-webkit-keyframes first {
+    from {margin: 10px 0px;}
+    to  {margin: 20px 0px;}
+  }
+
 @media (max-width: 621px) {
     .h6 {
         font-size: 11.5px !important;
@@ -531,9 +677,7 @@ form {
 }
 
 @media (max-width: 576px) {
-    .datos_perfil {
-        padding-bottom: 170px;
-    }
+
     .foot_prin {
         text-align: center !important;
     }
@@ -585,4 +729,52 @@ form {
     nav .container {
         max-width: 1020px !important;
     }
+
+
 }
+@media (max-width: 768px) {
+  .datos_perfil .nav-link {
+    font-size: 12px !important;
+    padding-left: 5px !important;
+    margin: 5px 0px !important;
+
+    letter-spacing: 1px !important;
+  }
+
+  .datos_perfil .nav-link i {
+  font-size: 13px !important;
+  margin: 5px !important;
+  }
+
+}
+@media (max-width: 992px) {
+  .datos_perfil .nav-link {
+    font-size: 13px !important;
+    letter-spacing: 1px !important;
+  }
+
+
+}
+
+@media (max-width: 575px) {
+  .datos_perfil .nav-link {
+   font-size: 14px !important;
+   padding-left: 20px !important;
+   margin: 5px 10px !important;
+   letter-spacing: 1px !important;
+  }
+
+  .datos_perfil .nav-link i {
+  font-size: 18px !important;
+  margin-right: 20px !important;
+  }
+
+  .text-publica span{
+    margin-top: 0px !important;
+  }
+
+
+
+}
+
+

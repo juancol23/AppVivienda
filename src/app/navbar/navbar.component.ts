@@ -32,16 +32,10 @@ public _message_register: boolean = false;
 public message_text_register: String = "";
 
 
-
-
-
   ngOnInit() {
 
     this.getCurrentUser();
   }
-
-
-
 
 
   getCurrentUser() {
@@ -64,8 +58,6 @@ public message_text_register: String = "";
 
 
   onAddUser(form: NgForm): void {
-
-
       this.authService.registerUser(this.register.emailr, this.register.password,this.register.nombre)
       .then((res) => {
         this.authService.isAuth().subscribe(user => {
@@ -74,6 +66,7 @@ public message_text_register: String = "";
               displayName: this.register.nombre,
               photoURL: "assets/img/foto_perfil.jpg"
             }).then((res) => {
+
               this.router.navigate(['perfil']);
               $("#exampleModalCenter").hide();
               $(".modal-backdrop").hide();
@@ -107,16 +100,8 @@ public message_text_register: String = "";
           this.message_text_register = "";
           }, 5000);
 
-
       });
-
-
-
   }
-
-
-
-
 
 
 

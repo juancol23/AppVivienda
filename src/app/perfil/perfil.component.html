@@ -29,10 +29,10 @@
 
 
             <div class="nav flex-column nav-pills text-center" id="v-pills-tab" role="tablist" aria-orientation="vertical">
-                <a class="nav-link active" id="v-pills-home-tab" data-toggle="pill" href="#v-pills-home" role="tab" aria-controls="v-pills-home" aria-selected="true">MIS DATOS</a>
-                <a *ngIf="!typeUser" class="nav-link" id="v-pills-profile-tab" data-toggle="pill" href="#v-pills-profile" role="tab" aria-controls="v-pills-profile" aria-selected="false">MI CONTRASEÑA</a>
-                <a class="nav-link" id="v-pills-messages-tab" data-toggle="pill" href="#v-pills-messages" role="tab" aria-controls="v-pills-messages" aria-selected="false">MIS SOLICITUDES</a>
-                <a class="nav-link" id="v-pills-settings-tab" data-toggle="pill" href="#v-pills-settings" role="tab" aria-controls="v-pills-settings" aria-selected="false">MIS INMUEBLES</a>
+                <a class="nav-link active" id="v-pills-home-tab" data-toggle="pill" href="#v-pills-home" role="tab" aria-controls="v-pills-home" aria-selected="true"><i class="fas fa-align-justify"></i>MIS DATOS</a>
+                <a *ngIf="!typeUser" class="nav-link" id="v-pills-profile-tab" data-toggle="pill" href="#v-pills-profile" role="tab" aria-controls="v-pills-profile" aria-selected="false"><i class="far fa-user"></i>MI CONTRASEÑA</a>
+                <a class="nav-link" id="v-pills-messages-tab" data-toggle="pill" href="#v-pills-messages" role="tab" aria-controls="v-pills-messages" aria-selected="false"><i class="fab fa-telegram-plane"></i>MIS SOLICITUDES</a>
+                <a class="nav-link" id="v-pills-settings-tab" data-toggle="pill" href="#v-pills-settings" role="tab" aria-controls="v-pills-settings" aria-selected="false"><i class="fas fa-home"></i>MIS INMUEBLES</a>
             </div>
 
 
@@ -170,7 +170,7 @@
                                 name="password"
                                 [(ngModel)]="modelPassword.password"
                                 #password_="ngModel"
-                                required>
+                                required appPassword>
 
                                 <div *ngIf="password_.invalid && (password_.dirty || password_.touched)"  class="validif">
                                     <div *ngIf="password_.errors.required">Contraseña nueva es requerido*</div>
@@ -189,7 +189,7 @@
                                 #passwordNew_="ngModel"
                                 [(ngModel)]="modelPassword.passwordNew"
                                 required
-                                minlength="6">
+                                minlength="6" appPassword>
 
                                 <div *ngIf="passwordNew_.invalid && (passwordNew_.dirty || passwordNew_.touched)" class="validif">
                                     <div *ngIf="passwordNew_.errors.required">Contraseña es requerido*</div>
@@ -207,7 +207,7 @@
                                 name="passwordConfirm"
                                 #passwordConfirm_="ngModel"
                                 [(ngModel)]="modelPassword.passwordConfirm"
-                                required>
+                                required appPassword>
 
                                 <div *ngIf="passwordConfirm_.invalid && (passwordConfirm_.dirty || passwordConfirm_.touched)" class="validif" >
                                     <div *ngIf="passwordConfirm_.errors.required">Confirmar contraseña nueva es requerido*</div>
