@@ -13,4 +13,13 @@ export class InmuebleComponent implements OnInit {
   ngOnInit() {
   }
 
+
+  redireccionar(href):void{
+
+    this.router.navigate([href]);
+  }
+
+
 }
+
+

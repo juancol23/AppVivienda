@@ -573,6 +573,7 @@ input[type="radio"]{
     border-radius: 0px;
     font-family: volteM;
     font-size: 14px;
+    transition: 0.5s;
 }
 
 .style_toggle .btn{
@@ -609,6 +610,15 @@ input[type="radio"]{
   height: calc(2.25rem + 2px);
     padding: .375rem .75rem;
 }
+
+.sm-3{
+  width: 150px;
+  display: inline-block;
+  height: calc(2.25rem + 2px);
+    padding: .375rem .75rem;
+}
+
+
 .sm-1{
   width: 80px;
   display: inline-block;
@@ -619,8 +629,8 @@ input[type="radio"]{
 }
 
 .registre{
-  padding-top: 40px;
-  padding-bottom: 40px;
+  padding-top: 30px;
+  padding-bottom: 30px;
 }
 .registre .form-group{
   margin-bottom: 0px;
@@ -644,13 +654,123 @@ text-align: center;
 transition: 0.5s;
 }
 
+agm-map {
+  height: 200px;
+}
+
+.margin0{
+  margin: 0px;
+  width: 25%;
+  padding: 20px;
+
+
+}
+a {
+  color: rgb(24, 52, 207);
+  text-decoration: none;
+  background-color: transparent;
+}
+
+.border-b{
+  border-bottom: 0px !important;
+}
+
+input:checked .btn-primary  {
+  background-color: rgb(24, 52, 207) !important;
+}
+
+
+.modal-open .modal {
+   overflow-y: hidden;
+
+  padding:0px !important;
+}
+
+.modal-open{
+  overflow-y: visible;
+  padding:0px !important;
+}
+
+#modal_ok h6{
+  color: rgb(24, 52, 207);
+  font-family: volteM;
+  font-size: 22px;
+}
+
+#modal_ok p{
+  color: rgb(24, 52, 207);
+  font-family: volteR;
+  font-size: 16.5px;
+}
+
+.item{
+  /* background: #3f4dda; */
+   padding:10px;
+  border: solid #3f4dda .5px;
+  color:  #3f4dda;
+  font-family: volteR;
+  font-size: 15px;
+  font-weight: bold;
+  transition: 0.2s
+
+  }
+
+.padding{
+  padding: 0px;
+}
+
+.botom-border{
+  border: solid blue 1px;
+  text-align: center;
+}
+
+.border_s{
+  border:1px solid rgb(24, 52, 207) !important;
+  padding: 5px;
+
+ }
+
+ .border_s span{
+  float: right;
+  color: rgb(24, 52, 207) !important;
+
+
+ }
+
+ .margin_p{
+   margin-top: 15px;
+ }
+ .margin_p_10{
+  margin-top: 10px;
+}
+
+.maps-renta{
+  bottom: 10px;
+  position: absolute;
+  transition: 0.3s;
+}
+
+ .item:hover{
+  color:  white  !important;
+  background-color:  #3f4dda  !important;
+  cursor: pointer;
+  transform: scale(1.05)
+}
+
+.item:hover  .border_s {
+  border:1px solid white !important;
+ }
+
+ .item:hover  span{
+  color:white !important;
+ }
 
 
 
-
-@-webkit-keyframes first {
-    from {margin: 10px 0px;}
-    to  {margin: 20px 0px;}
+@media (min-width: 1px){
+  .justify-content-md-center {
+      justify-content: center!important;
+  }
   }
 
 @media (max-width: 621px) {
@@ -772,6 +892,20 @@ transition: 0.5s;
   .text-publica span{
     margin-top: 0px !important;
   }
+
+
+
+.margin0 i{
+ font-size: 30px !important;
+
+}
+
+
+
+ .style_toggle .btn-primary{
+  font-size: 12px !important;
+}
+
 
 
 

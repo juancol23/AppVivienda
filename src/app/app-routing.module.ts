@@ -11,7 +11,7 @@ const app_routes: Routes = [
   {path: 'home', component: InmuebleComponent },
   {path: 'vehiculo', component: VehiculoComponent},
   {path: 'reset', component: ResetComponent},
-  {path: 'registro', component: RegisterInmuebleComponent,canActivate: [AuthGuard]},
+  {path: 'registro-inmueble', component: RegisterInmuebleComponent},
   {path: 'perfil', component: PerfilComponent,canActivate: [AuthGuard]},
   {path: '**', redirectTo: 'home',pathMatch: 'full' }
 ]

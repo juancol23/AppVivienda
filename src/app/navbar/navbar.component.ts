@@ -67,7 +67,6 @@ public message_text_register: String = "";
               photoURL: "assets/img/foto_perfil.jpg"
             }).then((res) => {
 
-              this.router.navigate(['perfil']);
               $("#exampleModalCenter").hide();
               $(".modal-backdrop").hide();
               form.reset();
@@ -111,7 +110,6 @@ public message_text_register: String = "";
     this.authService.loginEmailUser(this.login.email, this.login.passwordr)
       .then((res) => {
 
-       this.router.navigate(['perfil']);
        $("#exampleModalCenter").hide();
        $(".modal-backdrop").hide();
        form.reset();
@@ -153,7 +151,6 @@ public message_text_register: String = "";
     this.authService.loginFacebookUser().then(
       (success) => {
 
-      this.router.navigate(['perfil']);
       $("#exampleModalCenter").hide();
       $(".modal-backdrop").hide();
 

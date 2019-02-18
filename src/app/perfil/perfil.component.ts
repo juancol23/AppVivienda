@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { AuthService } from '../servicios/auth.service';
 import { FirebaseService } from '../servicios/firebase.service';
 import { NgForm } from '@angular/forms';
+import { Router } from '@angular/router';
 
 
 @Component({
@@ -24,6 +25,8 @@ export class PerfilComponent implements OnInit{
   public modelPassword: any = {};
   public error:any={};
 
+  public data:any;
+
 
   public _message_perfil: boolean = false;
   public message_text_perfil: String = null;
@@ -40,7 +43,7 @@ export class PerfilComponent implements OnInit{
 
   selectedFiles: FileList;
 
-  constructor( private authService: AuthService , private FirebaseService: FirebaseService) {
+  constructor( private authService: AuthService , private FirebaseService: FirebaseService,private router: Router) {
 
   }
 
@@ -49,9 +52,27 @@ export class PerfilComponent implements OnInit{
   ngOnInit() {
 
     this.getCurrentUser();
+    this.getInmueble();
   }
 
 
+
+  getInmueble(){
+
+    this.authService.isAuth().subscribe(auth => {
+      if (auth) {
+
+
+            this.FirebaseService.getInmuebles(auth.uid).subscribe((res) => {
+              this.data=res;
+              console.log(res);
+            })
+
+      }else {
+
+      }
+    });
+  }
 
   getCurrentUser() {
 

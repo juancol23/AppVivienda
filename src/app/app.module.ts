@@ -20,6 +20,8 @@ import { MustMatchDirective } from './validationForm/match.directive';
 import { AppPasswordDirective } from './validationForm/app-password.directive';
 import { AppPasswordDirectiveLogin } from './validationForm/app-password-login.directive';
 import { RegisterInmuebleComponent } from './register-inmueble/register-inmueble.component';
+import {AgmCoreModule} from '@agm/core';
+import { CommonModule } from '@angular/common';
 
 
 
@@ -41,10 +43,12 @@ import { RegisterInmuebleComponent } from './register-inmueble/register-inmueble
     BrowserModule,
     AppRoutingModule,
     FormsModule,
+    CommonModule,
     AngularFireModule.initializeApp(environment.firebase),
     AngularFireDatabaseModule,
     AngularFireStorageModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    AgmCoreModule.forRoot({apiKey: 'AIzaSyDc2AdGnT2qtKTMHxa-5yupJd-m46NGPCI', libraries: ['places']})
   ],
   providers: [AngularFireAuth, AngularFirestore],
   bootstrap: [AppComponent]
