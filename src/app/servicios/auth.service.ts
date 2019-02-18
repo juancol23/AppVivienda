@@ -18,11 +18,8 @@ export class AuthService {
         .then(userData => {
           resolve(userData),
           this.updateUserDataCorreo(userData.user,userData.additionalUserInfo["isNewUser"],name)
-
         }).catch(
-
           err => reject(err)
-
           )
     });
   }
@@ -40,7 +37,6 @@ export class AuthService {
       return this.afsAuth.auth.signInWithPopup(new auth.FacebookAuthProvider())
       .then(credential =>
         this.updateUserData(credential.user,credential.additionalUserInfo["isNewUser"])
-
         )
 
   }
@@ -55,8 +51,7 @@ export class AuthService {
   }
 
   resetPassword(email: string) {
-
-    return this.afsAuth.auth.sendPasswordResetEmail(email)
+    return this.afsAuth.auth.sendPasswordResetEmail(email);
   }
 
 
@@ -69,7 +64,8 @@ export class AuthService {
       name:user.displayName,
       email:user.email,
       photoUrl:user.photoURL,
-      telefono:null
+      telefono:null,
+      provider:user.providerData[0].providerId
     }
 
     if(userinfo){
@@ -90,7 +86,8 @@ export class AuthService {
         name:nombre,
         email:user.email,
         photoUrl:"assets/img/foto_perfil.jpg",
-        telefono:null
+        telefono:null,
+        provider:user.providerData[0].providerId
       }
 
       if(userinfo){

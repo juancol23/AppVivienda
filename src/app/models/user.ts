@@ -5,4 +5,5 @@ export interface UserInterface {
   email?: string;
   photoUrl?: string;
   telefono?: string;
+  provider?: string;
 }

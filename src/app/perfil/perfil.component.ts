@@ -1,71 +1,153 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from '../servicios/auth.service';
 import { FirebaseService } from '../servicios/firebase.service';
+import { NgForm } from '@angular/forms';
+import { Router } from '@angular/router';
 
 
 @Component({
   selector: 'app-perfil',
   templateUrl: './perfil.component.html',
-  styleUrls: ['./perfil.component.css']
+  styleUrls: ['./perfil.component.css'],
+  styles:[
+  ]
 })
 
 export class PerfilComponent implements OnInit{
 
-  public nombre_perfil: string = ""
-  public email_perfil: string = "";
-  public telefono_perfil: string ="";
-  public foto_perfil: string ="";
-  public id:String="";
-
+  public photo_profile: string =null;
+  public name_profile: string =null;
 
   public isLogged: boolean = false;
+  public typeUser: boolean = false;
+
+  public modelProfile:any = {};
+  public modelPassword: any = {};
+  public error:any={};
+
+  public data:any;
+
 
   public _message_perfil: boolean = false;
-  public message_text_perfil: String = "";
+  public message_text_perfil: String = null;
 
   public _message_img: boolean = false;
-  public message_text_img: String = "";
+  public message_text_img: String = null;
 
+
+  public message_c_valid:boolean = false;
+  public message_text_contra: String = null;
+
+
+  //public formPerfilContrasena: NgForm;
 
   selectedFiles: FileList;
 
-  constructor( private authService: AuthService , private FirebaseService: FirebaseService) {
+  constructor( private authService: AuthService , private FirebaseService: FirebaseService,private router: Router) {
 
-   }
+  }
 
 
 
   ngOnInit() {
 
     this.getCurrentUser();
-
+    this.getInmueble();
   }
 
 
 
+  getInmueble(){
+
+    this.authService.isAuth().subscribe(auth => {
+      if (auth) {
+
+
+            this.FirebaseService.getInmuebles(auth.uid).subscribe((res) => {
+              this.data=res;
+              console.log(res);
+            })
+
+      }else {
+
+      }
+    });
+  }
+
   getCurrentUser() {
 
     this.authService.isAuth().subscribe(auth => {
-
       if (auth) {
         this.isLogged = true;
-        console.log(auth);
+
+        if(auth.providerData[0].providerId=="facebook.com"){
+          this.typeUser=true;
+        }
+
             this.FirebaseService.getUserById(auth.uid).subscribe((res) => {
-
-              this.nombre_perfil=res['name'];
-              this.email_perfil=res['email'];
-              this.foto_perfil=res["photoUrl"];
-              this.telefono_perfil=res["telefono"];
-
+              this.modelProfile.nameProfile=res['name'];
+              this.name_profile=res['name'];
+              this.modelProfile.email=res['email'];
+              this.modelPassword.email=res['email'];
+              this.photo_profile=res["photoUrl"];
+              this.modelProfile.phoneNumber=res["telefono"];
             })
 
       }else {
         this.isLogged = false;
       }
-
     });
-
   }
+
+
+onlyText(event) {
+    const pattern = /[a-zA-ZñÑ ]/;
+    let inputChar = String.fromCharCode(event.charCode);
+
+    if (!pattern.test(inputChar)) {
+      event.preventDefault();
+    }
+}
+
+
+onlyNumber(event) {
+    const pattern = /[0-9]/;
+    let inputChar = String.fromCharCode(event.charCode);
+
+    if (!pattern.test(inputChar)) {
+      event.preventDefault();
+    }
+}
+
+
+onUpdatePassword(form: NgForm):void{
+
+  this.FirebaseService.verifyPassword(this.modelPassword.email,this.modelPassword.password,this.modelPassword.passwordNew)
+  .then(
+
+    success=> {
+      this.message_c_valid= true,
+      this.error.message="success",
+      this.message_text_contra = success+"",
+      form.reset(),
+      setTimeout(()=>{
+        this.message_c_valid = false;
+        this.error.message = "";
+        }, 5000);
+    }
+
+  ).catch(
+    err=> {
+      this.message_c_valid= true,
+      this.error.message="error",
+      this.message_text_contra = err+""
+    }
+  );
+
+
+
+
+}
 
 
 
@@ -76,15 +158,15 @@ export class PerfilComponent implements OnInit{
       if (auth) {
 
         auth.updateProfile({
-        displayName: this.nombre_perfil,
+        displayName: this.modelProfile.nameProfile,
         photoURL: auth.photoURL
 
       }).then((res) => {
 
         this.FirebaseService.updatePerfil(
           {
-            name: this.nombre_perfil,
-            telefono: this.telefono_perfil,
+            name: this.modelProfile.nameProfile,
+            telefono: this.modelProfile.phoneNumber,
             id:auth.uid
 
           }).then((res) =>{
@@ -117,6 +199,8 @@ export class PerfilComponent implements OnInit{
 detectFiles(event) {
     this.selectedFiles = event.target.files;
 }
+
+
 
 uploadSingle() {
   this.authService.isAuth().subscribe(auth => {

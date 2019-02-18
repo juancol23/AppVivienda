@@ -6,7 +6,7 @@
 
 
             <div class="con">
-                <img src="{{foto_perfil}}" alt="Cinque Terre" class="img_hover_file">
+                <img src="{{photo_profile}}" alt="Cinque Terre" class="img_hover_file">
                 <div class="overlay" (click)="fileInput.click()">
                     <a  class="icon" >
                       <i>Actualizar Imagen</i>
@@ -16,23 +16,23 @@
               </div>
 
             <div class="nombre_perfil">
-                <p class="text-uppercase">{{nombre_perfil}}</p>
+                <p class="text-uppercase">{{name_profile}}</p>
             </div>
             <p  *ngIf="_message_img"  class="text-center " style="padding: 5px;color: green;font-size: 1em">
                 {{message_text_img}}
-             </p>
-            <input type="file"  #fileInput (change)="detectFiles($event)" hidden accept=".png,.jpg" >
+            </p>
+            <input type="file"  #fileInput (change)="detectFiles($event)" hidden accept="image/jpeg,image/png" >
             <button  class="btn btn ds" [disabled]="!selectedFiles" (click)="uploadSingle()">SUBIR FOTO</button>
 
 
 
 
 
-            <div class="nav flex-column nav-pills text-center" id="v-pills-tab" role="tablist" aria-orientation="vertical">
-                <a class="nav-link active" id="v-pills-home-tab" data-toggle="pill" href="#v-pills-home" role="tab" aria-controls="v-pills-home" aria-selected="true">MIS DATOS</a>
-                <a class="nav-link" id="v-pills-profile-tab" data-toggle="pill" href="#v-pills-profile" role="tab" aria-controls="v-pills-profile" aria-selected="false">MI CONTRASEÑA</a>
-                <a class="nav-link" id="v-pills-messages-tab" data-toggle="pill" href="#v-pills-messages" role="tab" aria-controls="v-pills-messages" aria-selected="false">MIS SOLICITUDES</a>
-                <a class="nav-link" id="v-pills-settings-tab" data-toggle="pill" href="#v-pills-settings" role="tab" aria-controls="v-pills-settings" aria-selected="false">MIS INMUEBLES</a>
+            <div class="nav flex-column nav-pills text-center" id="v-pills-tab" role="tablist" aria-orientation="vertical"><br>
+               <a class="nav-link active" id="v-pills-home-tab" data-toggle="pill" href="#v-pills-home" role="tab" aria-controls="v-pills-home" aria-selected="true"><i class="fas fa-align-justify"></i>MIS DATOS</a>
+                <a *ngIf="!typeUser" class="nav-link" id="v-pills-profile-tab" data-toggle="pill" href="#v-pills-profile" role="tab" aria-controls="v-pills-profile" aria-selected="false"><i class="far fa-user"></i>MI CONTRASEÑA</a>
+                <a class="nav-link" id="v-pills-messages-tab" data-toggle="pill" href="#v-pills-messages" role="tab" aria-controls="v-pills-messages" aria-selected="false"><i class="fab fa-telegram-plane"></i>MIS SOLICITUDES</a>
+                <a class="nav-link" id="v-pills-settings-tab" data-toggle="pill" href="#v-pills-settings" role="tab" aria-controls="v-pills-settings" aria-selected="false"><i class="fas fa-home"></i>MIS INMUEBLES</a>
             </div>
 
 
@@ -50,40 +50,50 @@
 
                             <label for="nombre_p" class="col-sm-3 col-form-label ">Nombres:</label>
                             <div class="col-sm-7">
-                                <input 
+
+                                <input
                                 type="text"
-                                #nombre="ngModel"
-                                [(ngModel)]="nombre_perfil"
-                                name="nombre_perfil"
-                                class="form-control input_login" 
-                                value="{{nombre_perfil}}" 
-                                id="nombre_p" 
-                                placeholder="Nombre" minlength="4"
+                                #nameProfile_="ngModel"
+                                [(ngModel)]="modelProfile.nameProfile"
+                                name="nameProfile"
+                                class="form-control input_login"
+                                placeholder="Nombre"
+                                minlength="4"
                                 pattern="[a-zA-Z ]*"
-                                required>
-                            <div *ngIf="nombre.invalid && (nombre.dirty || nombre.touched)" style="color:red;font-size: 13px;">
-                             
-                                        <div *ngIf="nombre.errors.required">
+                                required
+                                (keypress)="onlyText($event)">
+
+                            <div *ngIf="nameProfile_.invalid && (nameProfile_.dirty || nameProfile_.touched)" class="validif">
+
+                                        <div *ngIf="nameProfile_.errors.required">
                                           Nombre es requerido*
                                         </div>
-                                        <div *ngIf="nombre.errors.minlength">
-                                          Nombre debe contener minimo de 4 digitos*
+                                        <div *ngIf="nameProfile_.errors.minlength">
+                                          Nombre debe ser mayor a 4 digitos*
                                         </div>
-                                        <div *ngIf="nombre.errors.pattern">
-                                            Nombre debe contener solo letras*
+                                        <div *ngIf="nameProfile_.errors.pattern">
+                                          Nombre debe contener solo letras*
                                         </div>
-         
-                            </div>
+
                             </div>
 
-                            
+                          </div>
+
+
 
                         </div>
 
                         <div class="form-group row">
                             <label for="email_p" class="col-sm-3 col-form-label ">E-mail:  </label>
                             <div class="col-sm-7">
-                                <input type="email" disabled class="form-control input_login" value="{{email_perfil}}" id="email_p" placeholder="E-mail" required>
+                                <input
+                                type="email"
+                                disabled
+                                class="form-control input_login"
+                                name="email"
+                                [(ngModel)]="modelProfile.email"
+                                placeholder="E-mail"
+                                required>
                             </div>
                         </div>
 
@@ -91,34 +101,40 @@
                             <label for="celular_p" class="col-sm-3 col-form-label ">Teléfono:  </label>
                             <div class="col-sm-7">
 
-                                <input type="text"
-                                 #telefono="ngModel"
-                                 [(ngModel)]="telefono_perfil"
-                                 name="telefono_perfil"
+                                <input
+                                 type="text"
                                  class="form-control input_login"
-                                 value="{{telefono_perfil}}"
-                                 id="celular_p"
+                                 name="phoneNumber"
+                                 [(ngModel)]="modelProfile.phoneNumber"
+                                 #phoneNumber_="ngModel"
                                  pattern="[0-9]*"
-                                 placeholder="Teléfono" minlength="9" maxlength="9"
-                                 >
+                                 placeholder="Teléfono"
+                                 minlength="9"
+                                 maxlength="9"
+                                 required
+                                 (keypress)="onlyNumber($event)">
 
-                            <div *ngIf="telefono.invalid && (telefono.dirty || telefono.touched)" style="color:red;font-size: 13px;">
-                             
-                               
-                               <div *ngIf="telefono.errors.minlength || telefono.errors.maxlength">
+                            <div *ngIf="phoneNumber_.invalid && (phoneNumber_.dirty || phoneNumber_.touched)" class="validif">
+
+                               <div *ngIf="phoneNumber_.errors.minlength || phoneNumber_.errors.maxlength">
                                  Telefono debe contener 9 digitos*
                                </div>
-                               <div *ngIf="telefono.errors.pattern">
+                               <div *ngIf="phoneNumber_.errors.pattern">
                                 Telefono debe contener solo numeros*
+                               </div>
+                               <div *ngIf="phoneNumber_.errors.required">
+                                  Telefono es requerido*
                                </div>
 
                              </div>
-                            </div>
+
+                          </div>
                         </div>
 
                         <div class="text-center">
                             <button type="submit" class="btn bg-blul" [disabled] = "!formPerfil.valid">Guardar</button>
                         </div>
+
                     </form>
 
                     <p  *ngIf="_message_perfil"  class="text-center " style="padding: 5px;background-color: green;color: white;font-size: 1em">
@@ -131,38 +147,90 @@
                 <div class="tab-pane fade" id="v-pills-profile" role="tabpanel" aria-labelledby="v-pills-profile-tab">
                     <h3>MI CONTRASEÑA</h3>
                     <div class="linea"></div>
-                    <form>
+
+                    <form #formPerfilContrasena="ngForm" (submit)="onUpdatePassword(formPerfilContrasena)" [mustMatch]="['passwordNew', 'passwordConfirm']" >
                         <div class="form-group row">
 
-                            <label for="password_p_actual" class="col-sm-4 col-form-label ">Contraseña actual:</label>
+                            <label for="password" class="col-sm-4 col-form-label ">Contraseña actual:</label>
                             <div class="col-sm-6">
-                                <input type="password" class="form-control input_login" id="password_p_actual" required>
+
+                                <input
+                                type="email"
+                                disabled
+                                class="form-control input_login"
+                                name="email"
+                                [(ngModel)]="modelPassword.email"
+                                placeholder="E-mail"
+                                required
+                                hidden>
+
+                                <input
+                                type="password"
+                                class="form-control input_login"
+                                name="password"
+                                [(ngModel)]="modelPassword.password"
+                                #password_="ngModel"
+                                required appPassword>
+
+                                <div *ngIf="password_.invalid && (password_.dirty || password_.touched)"  class="validif">
+                                    <div *ngIf="password_.errors.required">Contraseña nueva es requerido*</div>
+                                </div>
                             </div>
                         </div>
 
 
                         <div class="form-group row">
-                            <label for="password_p" class="col-sm-4 col-form-label ">Contraseña nueva:</label>
+                            <label for="passwordNew" class="col-sm-4 col-form-label ">Contraseña nueva:</label>
                             <div class="col-sm-6">
-                                <input type="password" class="form-control input_login" id="password_p" required>
+                                <input
+                                type="password"
+                                class="form-control input_login"
+                                name="passwordNew"
+                                #passwordNew_="ngModel"
+                                [(ngModel)]="modelPassword.passwordNew"
+                                required
+                                minlength="6" appPassword>
+
+                                <div *ngIf="passwordNew_.invalid && (passwordNew_.dirty || passwordNew_.touched)" class="validif">
+                                    <div *ngIf="passwordNew_.errors.required">Contraseña es requerido*</div>
+                                    <div *ngIf="passwordNew_.errors.minlength">Contraseña debe ser mayor a 6 digitos*</div>
+                                </div>
+
                             </div>
                         </div>
                         <div class="form-group row">
-                            <label for="password_p_2" class="col-sm-4 col-form-label ">Confirmar contraseña:</label>
+                            <label for="passwordConfirm" class="col-sm-4 col-form-label ">Confirmar contraseña:</label>
                             <div class="col-sm-6">
-                                <input type="password" class="form-control input_login" id="password_p_2" required>
+                                <input
+                                type="password"
+                                class="form-control input_login"
+                                name="passwordConfirm"
+                                #passwordConfirm_="ngModel"
+                                [(ngModel)]="modelPassword.passwordConfirm"
+                                required appPassword>
+
+                                <div *ngIf="passwordConfirm_.invalid && (passwordConfirm_.dirty || passwordConfirm_.touched)" class="validif" >
+                                    <div *ngIf="passwordConfirm_.errors.required">Confirmar contraseña nueva es requerido*</div>
+                                    <div *ngIf="passwordConfirm_.errors.mustMatch">Contraseñas no coinciden*</div>
+                                </div>
+
                             </div>
                         </div>
 
 
                         <div class="text-center">
 
-                            <button type="submit" class="btn bg-blul">Actualizar contraseña</button>
+                            <button type="submit" class="btn bg-blul" [disabled] = "!formPerfilContrasena.valid" >Actualizar contraseña</button>
                         </div>
                     </form>
-                    <p  *ngIf="_message_contra"  class="text-center " style="padding: 5px;color: green;font-size: 1.5em">
+
+
+
+                   <p *ngIf="message_c_valid" [ngClass]="{'mesage_valid':error.message === 'success','mesage_invalid':error.message === 'error'}"  class="text-center" >
                       {{message_text_contra}}
                    </p>
+
+
 
                 </div>
                 <div class="tab-pane fade" id="v-pills-messages" role="tabpanel" aria-labelledby="v-pills-messages-tab">
@@ -172,6 +240,75 @@
                 <div class="tab-pane fade" id="v-pills-settings" role="tabpanel" aria-labelledby="v-pills-settings-tab">
                     <h3>MIS INMUEBLES</h3>
                     <div class="linea"></div>
+
+                    <div class="col-sm-12 ">
+                      <!-- <div *ngIf="_rentalPublications != null && _rentalPublications.length > 0" class="col-sm-12"> -->
+                      <div *ngFor="let item of data ">
+                        <br>
+                          <div class="item row">
+
+                              <div class="col-sm-4 padding">
+                                  <agm-map [latitude]="item.latitud" [longitude]="item.longitud" [zoom]="15">
+                                      <agm-marker [latitude]="item.latitud" [longitude]="item.longitud"></agm-marker>
+                                  </agm-map>
+                              </div>
+                              <div class="col-sm-8  padding">
+                                  <div class="maps-renta row" style="margin:0px">
+
+                                          <div class="col-sm-6 margin_p text-left " >
+                                              <div class="name-busca "><i class="fas fa-user"></i> ESTAS OFRECIENDO:</div>
+                                          </div>
+                                          <div class="col-sm-6 margin_p text-right " >
+                                              <div class="estados">{{item.operacion}}</div>
+                                          </div>
+                                          <div class="col-sm-12 margin_p text-right">
+                                              <div class="">{{item.provincia}} / {{item.distrito}} <i class="fas fa-map-marker-alt"></i></div>
+                                          </div>
+
+                                          <div class="col-12 margin_p"  >
+                                            <div class="row" style="margin:0px">
+                                              <div class="col-sm-6 " style="padding-left: 0px;padding-right: 5px">
+                                                <div class="border_s">
+                                                    <i class="fas fa-home"></i><span class="text-right" >{{item.tipo_departamento}}</span>
+                                              </div>
+                                            </div>
+                                              <div class="col-sm-6 " style="padding-right: 0px;padding-left: 5px">
+                                                <div class="border_s">
+                                                <i class="fas fa-bed"></i><span class="text-right" >{{item.cuartos}} DORMITORIOS</span>
+                                              </div>
+                                              </div>
+                                            </div>
+                                          </div >
+                                          <br>
+                                          <div class="col-12 margin_p_10"  >
+                                              <div class="row" style="margin:0px">
+
+                                                <div class="col-sm-3" style="padding-left: 0px">
+                                                  <div class="border_s"><i class="fab fa-medium"></i><span class="text-right" >{{item.area}} M²</span>
+                                                  </div>
+                                                </div>
+
+                                                <div class="col-sm-4 " style="padding-left: 0px;padding-right: 0px">
+                                                  <div class="border_s"><i class="fas fa-toilet"></i><span class="text-right" >{{item.bano}} BAÑOS</span>
+                                                  </div>
+                                                </div>
+
+                                                <div class="col-sm-5" style="padding-right: 0px">
+                                                  <div class="border_s"><i class="fas fa-dollar-sign"></i><span class="text-right" >{{item.presupuesto.precio}} {{item.presupuesto.moneda}}</span>
+                                                  </div>
+                                                </div>
+                                              </div>
+                                            </div>
+
+
+
+                                  </div>
+                              </div>
+                          </div>
+
+                      </div>
+
+                  </div>
                 </div>
             </div>
 

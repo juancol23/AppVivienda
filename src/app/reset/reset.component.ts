@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { AuthService } from '../servicios/auth.service';
 declare var $ :any;
 import { NgForm } from '@angular/forms';
+import { FirebaseService } from '../servicios/firebase.service';
+import { empty } from 'rxjs';
 
 @Component({
   selector: 'app-reset',
@@ -11,17 +13,15 @@ import { NgForm } from '@angular/forms';
 export class ResetComponent implements OnInit {
 
 
+constructor( private authService: AuthService, private FirebaseService: FirebaseService) { }
+
+public reset: any = {};
+public error:any={};
 
 
-  constructor( private authService: AuthService) { }
+public message_c_valid:boolean = false;
+public message_text: String = null;
 
-public email: string = null;
-
-public true_m: boolean = false;
-public message_true: String = "";
-public false_m: boolean = false;
-public message_false: String = "";
-    
 
 
   ngOnInit() {
@@ -30,51 +30,70 @@ public message_false: String = "";
     $(".modal-backdrop").hide();
 
   }
-    
 
 
-  
+
+
   resetPasswordEmail(form: NgForm): void {
-    this.authService.resetPassword(this.email)
-      .then((res) => {
 
-        this.true_m = true;
-        this.message_true="Verificar tu correo electrónico.";
-         
-        setTimeout(()=>{
-          this.true_m = false;
-          this.message_true = "";
-          }, 5000);
+    this.FirebaseService.getUserByEmail(this.reset.email).subscribe(success => {
 
-        form.reset();
+      if(success.length>0){
+        if(success[0]["provider"]=="password"){
 
-      }).catch(
-        err => {
+          this.authService.resetPassword(this.reset.email).then((res) => {
 
-          this.false_m = true;
+            this.message_c_valid= true,
+            this.error.message="success",
+            this.message_text = "Verficar correo electronico.",
+            form.reset();
 
-          switch (err["message"]) {
-            case "The email address is badly formatted.":
-              this.message_false="La dirección de correo electrónico está mal formateada.";
-              break;
-            case "There is no user record corresponding to this identifier. The user may have been deleted.":
-              this.message_false="No existe correo electrónico.";
-                break;
-            case 'sendPasswordResetEmail failed: First argument "email" must be a valid string.':
-              this.message_false="Ingresar correo electrónico.";
-              break
-            default:
-            this.message_false="Error.";
-          }
+          }).catch(
+            err => {
 
-          setTimeout(()=>{
-            this.false_m = false;
-            this.message_false = "";
-            }, 5000);
+              this.message_c_valid= true;
+
+              this.error.message="error";
+
+              switch (err.message) {
+                case "The email address is badly formatted.":
+                  this.message_text="La dirección de correo electrónico está mal formateada.";
+                  break;
+                case "There is no user record corresponding to this identifier. The user may have been deleted.":
+                  this.message_text="No existe correo electrónico.";
+                    break;
+                case 'sendPasswordResetEmail failed: First argument "email" must be a valid string.':
+                  this.message_text="Ingresar correo electrónico.";
+                  break
+                default:
+                this.message_text="Error.";
+              }
 
 
-        });
-  
-  }
+            });
+
+        }else{
+
+        this.message_c_valid= true;
+        this.error.message="error";
+        this.message_text="Se registro por Fb, no puede acceder a la opcion de cambiar contraseña.";
+
+
+        }
+      }else{
+        this.message_c_valid= true;
+        this.error.message="error";
+        this.message_text="No existe correo electrónico.";
+      }
+
+      setTimeout(()=>{
+        this.message_c_valid = false;
+        this.error.message = "";
+        }, 5000);
+
+
+    });
+
+}
 
 }
