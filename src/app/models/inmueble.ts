@@ -13,6 +13,7 @@ export interface inmuebleInterface {
   proyecto?:string;
   presupuesto?:  {moneda?: string , precio?: number};
   mantenimiento?:  {moneda?: string , precio?: number};
+  departamento?:string;
   provincia?:string;
   distrito?:string;
   direccion?:string;

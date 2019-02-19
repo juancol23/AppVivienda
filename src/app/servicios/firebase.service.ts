@@ -105,8 +105,9 @@ getUserByEmail(email){
             moneda:inmueble.man_type,
             precio:inmueble.man_price
           },
-          provincia:         inmueble.departamento,
-          distrito:          inmueble.distrito,
+          departamento:      inmueble.departamento_,
+          provincia:         inmueble.provincia_,
+          distrito:          inmueble.distrito_,
           direccion:         inmueble.direccion,
           latitud:           inmueble.latitud,
           longitud:          inmueble.longitud,

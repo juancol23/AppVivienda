@@ -322,7 +322,7 @@
                [(ngModel)]="register.man_price"
                pattern="[0-9.]*"
                required
-               (keypress)="onlyNumber($event)">
+               (keypress)="onlyNumber($event)" >
 
                 <label style="color:red ;margin-top: 8px;font-weight: bold;margin-left: 2px" >*</label>
 
@@ -345,21 +345,50 @@
 
 
 
-     <div class="col-md-6 " >  <br>
+     <div class="col-md-6 " >
 
        <div class="form-group row" style="margin-left: 0px;margin-right: 0px;">
 
+        <label  class="col-6 label_text">Departamento :</label>   
+        <div class="col-12">
+
+          <select
+              name="departamento"
+              [(ngModel)]="register.departamento"
+              class="form-control input_login"
+              style="display: inline-block"
+              (change)="selDepart();"
+              id="department"
+              #departamento_="ngModel"
+              required>
+              <option *ngFor="let kdpt of keyDeparts" [selected]="kdpt === departSeleccionado"  [attr.value]="kdpt">{{objDepart[kdpt].name}}</option>
+            
+          </select>
+          <div *ngIf="departamento_.invalid && (departamento_.dirty)" class="validif" >
+            <div *ngIf="departamento_.errors.required">Departamento es requerido*</div>
+        </div>
+
+         
+
+      </div>
+      <label  class="col-6 label_text">Provincia :</label> <label  class="col-6 label_text">Distrito :</label> 
            <div class="col-6">
 
                <select
-                   name="departamento"
-                   [(ngModel)]="register.departamento"
+                   name="provincia"
+                   [(ngModel)]="register.provincia"
                    class="form-control input_login"
-                   style="display: inline-block;">
-
-                 <option value="LIMA" selected>Lima</option>
-                 <option value="CALLAO">Callao</option>
+                   style="display: inline-block;"
+                   id="city"
+                   (change)="selCity();"
+                   #provincia_="ngModel"
+                   required>
+                   <option *ngFor="let prov of showProvs;" [selected]="prov.sku === proviSeleccionado" value="{{prov.sku}}">{{prov.name}}</option>
                </select>
+
+               <div *ngIf="provincia_.invalid && (provincia_.dirty)" class="validif" >
+                <div *ngIf="provincia_.errors.required">Provincia es requerido*</div>
+            </div>
 
            </div>
 
@@ -371,15 +400,23 @@
                   name="distrito"
                   [(ngModel)]="register.distrito"
                   class="form-control input_login"
-                  style="display: inline-block;">
-
-                <option value="MIRAFLORES" selected>Miraflores</option>
-                <option value="SURQUILLO">Surquillo</option>
+                  style="display: inline-block;"
+                  id="district"
+                  (change)="selDistrict();"
+                  #distrito_="ngModel"
+                  required>
+                  <option *ngFor="let distrito of showDists;" [selected]="distrito.sku === districSeleccionado" value="{{distrito.sku}}">{{distrito.name}}</option>
+						
               </select>
+
+              <div *ngIf="distrito_.invalid && (distrito_.dirty)" class="validif" >
+                <div *ngIf="distrito_.errors.required">Distrito es requerido*</div>
+            </div>
 
            </div>
 
            <label style="color:red ;position: absolute;right: 15px;font-weight: bold;margin-top: 6px" >*</label>
+           <label style="color:red ;position: absolute;right: 15px;font-weight: bold;margin-top: 65px" >*</label>
 
        </div>
 
