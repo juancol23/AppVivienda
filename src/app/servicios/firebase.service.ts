@@ -84,7 +84,10 @@ getUserByEmail(email){
 
   register_inmueble(inmueble) {
 
+    const id = this.afs.createId();
+
     const data: inmuebleInterface = {
+          id_inmueble:       id,
           id_user:           inmueble.user,
           tipo_departamento: inmueble.type_apar,
           operacion:         inmueble.operation,
@@ -105,8 +108,9 @@ getUserByEmail(email){
             moneda:inmueble.man_type,
             precio:inmueble.man_price
           },
-          provincia:      inmueble.departamento,
-          distrito:          inmueble.distrito,
+          departamento:      inmueble.departamento_,
+          provincia:         inmueble.provincia_,
+          distrito:          inmueble.distrito_,
           direccion:         inmueble.direccion,
           latitud:           inmueble.latitud,
           longitud:          inmueble.longitud,
@@ -129,7 +133,7 @@ getUserByEmail(email){
 
     }
 
-    return this.afs.collection(`inmuebles`).add(data);
+    return this.afs.collection(`inmuebles`).doc(`${id}`).set(data);
 
   }
 

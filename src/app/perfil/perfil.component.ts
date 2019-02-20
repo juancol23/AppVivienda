@@ -3,6 +3,7 @@ import { AuthService } from '../servicios/auth.service';
 import { FirebaseService } from '../servicios/firebase.service';
 import { NgForm } from '@angular/forms';
 import { Router } from '@angular/router';
+import { MapsAPILoader } from '@agm/core';
 
 
 @Component({
@@ -38,12 +39,16 @@ export class PerfilComponent implements OnInit{
   public message_c_valid:boolean = false;
   public message_text_contra: String = null;
 
+  public latitud:string;
+  public longitud:string;
+
 
   //public formPerfilContrasena: NgForm;
 
   selectedFiles: FileList;
 
-  constructor( private authService: AuthService , private FirebaseService: FirebaseService,private router: Router) {
+  constructor( private authService: AuthService ,
+    private mapsAPILoader: MapsAPILoader, private FirebaseService: FirebaseService,private router: Router) {
 
   }
 
@@ -65,7 +70,6 @@ export class PerfilComponent implements OnInit{
 
             this.FirebaseService.getInmuebles(auth.uid).subscribe((res) => {
               this.data=res;
-              console.log(res);
             })
 
       }else {

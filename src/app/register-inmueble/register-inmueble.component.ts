@@ -1,10 +1,17 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit,ElementRef,ViewChild,NgZone } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { AuthService } from '../servicios/auth.service';
 import { FirebaseService } from '../servicios/firebase.service';
 import { Router } from '@angular/router';
-
+import * as globals from '../globals/globals';
+import { MapsAPILoader } from '@agm/core';
+import { GoogleMap } from '@agm/core/services/google-maps-types';
+declare var google;
 declare var $ :any;
+class RequestDepartment {
+	id: string
+	value: any
+}
 
 @Component({
   selector: 'app-register-inmueble',
@@ -18,12 +25,84 @@ export class RegisterInmuebleComponent implements OnInit {
   public user:string;
 
 
+  public objDepart: any;
+	public keyDeparts: string[];
+  public selectDepart: any;
+  public departSeleccionado  = 0;
+
+  public objProvs: any;
+	public showProvs = new Array();
+	public keyProvs: string[];
+	public selectProv: any;
+  public proviSeleccionado = 0;
+
+  public objDists: any;
+	public showDists = new Array();
+	public selectDistric: any;
+	public keyDistrs: string[];
+  public districSeleccionado = 0;
+
+  public latitude: number;
+  public longitude: number;
+  public latitude_m: number;
+  public longitude_m: number;
+  public zoom:number;
+
+  @ViewChild("search")
+  public searchElementRef: ElementRef;
 
 
-  constructor(private authService: AuthService , private FirebaseService: FirebaseService,private router: Router) { }
+
+
+
+  constructor(private authService: AuthService ,
+     private FirebaseService: FirebaseService,
+     private router: Router,
+     private mapsAPILoader: MapsAPILoader,
+     private ngZone: NgZone) { }
 
   ngOnInit() {
     this.reset();
+    this.obtenerDepartamentos();
+    this.getCurrentUser();
+    this.zoom=12;
+
+    this.mapsAPILoader.load().then(() => {
+      let autocomplete = new google.maps.places.Autocomplete(this.searchElementRef.nativeElement, {
+        types: ["address"],
+        componentRestrictions: { country: 'PE'}
+      });
+      autocomplete.addListener("place_changed", () => {
+        this.ngZone.run(() => {
+          //get the place result
+          let place = google.maps.places.PlaceResult = autocomplete.getPlace();
+          //verify result
+          if (place.geometry === undefined || place.geometry === null) {
+            return;
+          }
+
+          //set latitude, longitude and zoom
+          this.latitude = place.geometry.location.lat();
+          this.longitude = place.geometry.location.lng();
+
+          this.latitude_m = place.geometry.location.lat();
+          this.longitude_m = place.geometry.location.lng();
+
+          this.zoom=15;
+
+          this.register.latitud=this.latitude
+          this.register.longitud=this.longitude
+
+
+
+
+        });
+      });
+    });
+
+
+
+
 
   }
 
@@ -33,13 +112,17 @@ export class RegisterInmuebleComponent implements OnInit {
     this.authService.isAuth().subscribe(auth => {
       if (auth) {
         this.isLogged = true;
-        this.user=auth.uid
+        console.log(this.isLogged);
+        this.user=auth.uid;
 
       }else {
         this.isLogged = false;
+        console.log(this.isLogged);
+        this.user="";
       }
     });
   }
+
 
   reset(){
     this.register.type_apar="DEPARTAMENTO"
@@ -66,8 +149,9 @@ export class RegisterInmuebleComponent implements OnInit {
     this.register.gym=false
     this.register.parrilla=false
     this.register.juego=false
-    this.register.departamento="LIMA"
-    this.register.distrito="MIRAFLORES"
+    this.register.departamento=""
+    this.register.distrito=""
+    this.register.provincia=""
     this.register.area=""
     this.register.pre_price=""
     this.register.man_price=""
@@ -75,9 +159,11 @@ export class RegisterInmuebleComponent implements OnInit {
     this.register.latitud=-12.114090;
     this.register.longitud=-77.027842;
 
+
+
   }
 
-  onlyNumber(event) {
+onlyNumber(event) {
     const pattern = /[0-9]/;
     let inputChar = String.fromCharCode(event.charCode);
 
@@ -85,6 +171,7 @@ export class RegisterInmuebleComponent implements OnInit {
       event.preventDefault();
     }
 }
+
 onlyDireccion(event) {
   const pattern = /[a-zA-ZñÑ 0-9.-]/;
   let inputChar = String.fromCharCode(event.charCode);
@@ -97,14 +184,16 @@ onlyDireccion(event) {
 
   registerInmueble(form: NgForm){
 
-    this.authService.isAuth().subscribe(auth => {
-      if (auth) {
+      if (this.isLogged) {
 
         this.register.fecha=new Date();
-        this.register.user=auth.uid;
+        this.register.user=this.user;
+        this.register.departamento_=globals.DEPARTMENTS_DIRECTION[this.register.departamento].name;
+        this.register.provincia_=globals.PROVINCE_DIRECTION[this.register.departamento+this.register.provincia].name;
+        this.register.distrito_=globals.DISTRICT_DIRECTION[this.register.departamento+this.register.provincia+this.register.distrito].name;
+
 
         this.FirebaseService.register_inmueble(this.register).then((res) =>{
-
 
           this.reset()
           $("#modal_ok").modal('show');
@@ -121,7 +210,6 @@ onlyDireccion(event) {
         $("#exampleModalCenter").modal('show');
 
       }
-    });
 
 
 
@@ -135,5 +223,94 @@ onlyDireccion(event) {
 
     this.router.navigate(['perfil']);
   }
+
+  sortByTwoProperty = () => {
+		return (x, y) => {
+			return ((x["value"]["name"] === y["value"]["name"]) ? 0 : ((x["value"]["name"] > y["value"]["name"]) ? 1 : -1));
+		}
+  }
+
+  sortByProperty = (property) => {
+		return (x, y) => {
+			return ((x[property] === y[property]) ? 0 : ((x[property] > y[property]) ? 1 : -1));
+		}
+	}
+
+  obtenerDepartamentos() {
+    this.objDepart = globals.DEPARTMENTS_DIRECTION;
+		let arrayDepartments: RequestDepartment[] = Array()
+		this.keyDeparts = []
+		for (let i in this.objDepart) {
+			let obj = new RequestDepartment()
+			obj.id = i
+			obj.value = this.objDepart[i]
+			arrayDepartments.push(obj)
+		}
+		arrayDepartments.sort(this.sortByTwoProperty())
+		for (let i = 0; i < arrayDepartments.length; i++) {
+			this.keyDeparts.push(arrayDepartments[i]["id"])
+		}
+  }
+
+  selDepart() {
+		this.selectDepart = document.getElementById("department");
+    this.departSeleccionado = this.selectDepart.value;
+    this.listarProvincias(this.departSeleccionado);
+
+    this.selCity();
+
+
+	}
+
+  listarProvincias(skuDep) {
+    this.objProvs = globals.PROVINCE_DIRECTION;
+		this.showProvs.length = 0;
+		this.keyProvs = Object.keys(this.objProvs);
+		this.keyProvs.forEach((item, index) => {
+			if (this.objProvs[item].skuDep == skuDep) {
+				this.showProvs.push(this.objProvs[item]);
+			}
+
+		})
+  }
+
+  selCity() {
+
+		this.selectProv = document.getElementById("city");
+    this.proviSeleccionado = this.selectProv.value;
+    this.listarDistritos(this.departSeleccionado + this.proviSeleccionado);
+
+
+   /*if($("district").text()=="" || $("district").text()== null){
+
+    $("#direccion").prop('disabled', true);
+   }*/
+
+  }
+
+  listarDistritos(skuDepPro) {
+
+    this.objDists = globals.DISTRICT_DIRECTION;
+		this.showDists.length = 0;
+		this.keyDistrs = Object.keys(this.objDists);
+		this.keyDistrs.forEach((item, index) => {
+
+			if (this.objDists[item].skuDepPro == skuDepPro) {
+				this.showDists.push(this.objDists[item]);
+
+			}
+			this.showDists.sort(this.sortByProperty("name"))
+		})
+
+  }
+
+  selDistrict() {
+		this.selectDistric = document.getElementById("district");
+    this.districSeleccionado = this.selectDistric.value;
+    //$("#direccion").prop('disabled', false);
+	}
+
+
+
 
 }
