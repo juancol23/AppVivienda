@@ -22,6 +22,7 @@ import { AppPasswordDirectiveLogin } from './validationForm/app-password-login.d
 import { RegisterInmuebleComponent } from './register-inmueble/register-inmueble.component';
 import {AgmCoreModule} from '@agm/core';
 import { CommonModule } from '@angular/common';
+import { RegisterSolicitudComponent } from './register-solicitud/register-solicitud.component';
 
 
 
@@ -37,7 +38,8 @@ import { CommonModule } from '@angular/common';
     MustMatchDirective,
     AppPasswordDirective,
     AppPasswordDirectiveLogin,
-    RegisterInmuebleComponent
+    RegisterInmuebleComponent,
+    RegisterSolicitudComponent
   ],
   imports: [
     BrowserModule,

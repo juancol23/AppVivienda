@@ -5,6 +5,7 @@ import { VehiculoComponent } from './vehiculo/vehiculo.component';
 import { PerfilComponent } from './perfil/perfil.component';
 import { ResetComponent } from './reset/reset.component';
 import { RegisterInmuebleComponent } from './register-inmueble/register-inmueble.component';
+import { RegisterSolicitudComponent } from './register-solicitud/register-solicitud.component';
 import { AuthGuard } from './observador/auth.guard';
 
 const app_routes: Routes = [
@@ -12,6 +13,7 @@ const app_routes: Routes = [
   {path: 'vehiculo', component: VehiculoComponent},
   {path: 'reset', component: ResetComponent},
   {path: 'registro-inmueble', component: RegisterInmuebleComponent},
+  {path: 'registro-solicitud', component: RegisterSolicitudComponent},
   {path: 'perfil', component: PerfilComponent,canActivate: [AuthGuard]},
   {path: '**', redirectTo: 'home',pathMatch: 'full' }
 ]

@@ -1,10 +1,11 @@
 import { Component, OnInit,ElementRef,ViewChild,NgZone } from '@angular/core';
+import * as globals from '../globals/globals';
 import { NgForm } from '@angular/forms';
 import { AuthService } from '../servicios/auth.service';
 import { FirebaseService } from '../servicios/firebase.service';
 import { Router } from '@angular/router';
-import * as globals from '../globals/globals';
 import { MapsAPILoader } from '@agm/core';
+import { empty } from 'rxjs';
 declare var google;
 declare var $ :any;
 class RequestDepartment {
@@ -13,11 +14,11 @@ class RequestDepartment {
 }
 
 @Component({
-  selector: 'app-register-inmueble',
-  templateUrl: './register-inmueble.component.html',
-  styleUrls: ['./register-inmueble.component.css']
+  selector: 'app-register-solicitud',
+  templateUrl: './register-solicitud.component.html',
+  styleUrls: ['./register-solicitud.component.css']
 })
-export class RegisterInmuebleComponent implements OnInit {
+export class RegisterSolicitudComponent implements OnInit {
 
   public register:any = {};
   public isLogged: boolean = false;
@@ -43,71 +44,22 @@ export class RegisterInmuebleComponent implements OnInit {
 
   public latitude: number;
   public longitude: number;
-  public latitude_m: number;
-  public longitude_m: number;
   public zoom:number;
 
-  @ViewChild("search")
-  public searchElementRef: ElementRef;
-
-
-
-
-
   constructor(private authService: AuthService ,
-     private FirebaseService: FirebaseService,
-     private router: Router,
-     private mapsAPILoader: MapsAPILoader,
-     private ngZone: NgZone) { }
+    private FirebaseService: FirebaseService,
+    private router: Router,
+    private mapsAPILoader: MapsAPILoader,
+    private ngZone: NgZone) { }
 
   ngOnInit() {
+    this.getCurrentUser();
     this.reset();
     this.obtenerDepartamentos();
-    this.getCurrentUser();
-    this.zoom=12;
-
-    this.mapsAPILoader.load().then(() => {
-      let autocomplete = new google.maps.places.Autocomplete(this.searchElementRef.nativeElement, {
-        types: ["address"],
-        componentRestrictions: { country: 'PE'}
-      });
-      autocomplete.addListener("place_changed", () => {
-        this.ngZone.run(() => {
-          //get the place result
-          let place = google.maps.places.PlaceResult = autocomplete.getPlace();
-          //verify result
-          if (place.geometry === undefined || place.geometry === null) {
-            return;
-          }
-
-          //set latitude, longitude and zoom
-          this.latitude = place.geometry.location.lat();
-          this.longitude = place.geometry.location.lng();
-
-          this.latitude_m = place.geometry.location.lat();
-          this.longitude_m = place.geometry.location.lng();
-
-          this.zoom=15;
-
-          this.register.latitud=this.latitude
-          this.register.longitud=this.longitude
-
-
-
-
-        });
-      });
-    });
-
-
-
-
-
   }
 
 
   getCurrentUser() {
-
     this.authService.isAuth().subscribe(auth => {
       if (auth) {
         this.isLogged = true;
@@ -122,12 +74,11 @@ export class RegisterInmuebleComponent implements OnInit {
     });
   }
 
-
   reset(){
     this.register.type_apar="DEPARTAMENTO"
     this.register.operation="ALQUILER"
     this.register.door="1"
-    this.register.bano="NO"
+    this.register.bano="1"
     this.register.cochera="1"
     this.register.vista="INTERNA"
     this.register.tipo="FLAT"
@@ -154,72 +105,11 @@ export class RegisterInmuebleComponent implements OnInit {
     this.register.area=""
     this.register.pre_price=""
     this.register.man_price=""
-    this.register.direccion=""
-    this.register.latitud=-12.114090;
-    this.register.longitud=-77.027842;
-
+    this.latitude=-12.114090;
+    this.longitude=-77.027842;
+    this.zoom=14;
   }
 
-onlyNumber(event) {
-    const pattern = /[0-9]/;
-    let inputChar = String.fromCharCode(event.charCode);
-
-    if (!pattern.test(inputChar)) {
-      event.preventDefault();
-    }
-}
-
-onlyDireccion(event) {
-  const pattern = /[a-zA-ZñÑ 0-9.-]/;
-  let inputChar = String.fromCharCode(event.charCode);
-
-  if (!pattern.test(inputChar)) {
-    event.preventDefault();
-  }
-}
-
-
-  registerInmueble(form: NgForm){
-
-      if (this.isLogged) {
-
-        this.register.fecha=new Date();
-        this.register.user=this.user;
-        this.register.departamento_=globals.DEPARTMENTS_DIRECTION[this.register.departamento].name;
-        this.register.provincia_=globals.PROVINCE_DIRECTION[this.register.departamento+this.register.provincia].name;
-        this.register.distrito_=globals.DISTRICT_DIRECTION[this.register.departamento+this.register.provincia+this.register.distrito].name;
-
-
-        this.FirebaseService.register_inmueble(this.register).then((res) =>{
-
-          this.reset()
-          $("#modal_ok").modal('show');
-
-       }).catch((err)=>
-
-         alert("error")
-
-       );
-
-
-      }else {
-
-        $("#exampleModalCenter").modal('show');
-
-      }
-
-
-
-  }
-
-
-  cerrar():void{
-
-    $("#modal_ok").hide();
-    $(".modal-backdrop").hide();
-
-    this.router.navigate(['perfil']);
-  }
 
   sortByTwoProperty = () => {
 		return (x, y) => {
@@ -302,6 +192,38 @@ onlyDireccion(event) {
     this.districSeleccionado = this.selectDistric.value;
 	}
 
+
+  addDistrito(){
+    if(this.register.distrito==""){
+
+      alert("vacio");
+
+    }else{
+
+      let distrito = globals.DISTRICT_DIRECTION[this.register.departamento+this.register.provincia+this.register.distrito].name;
+      let count = $(".show_dis .col-4 a").toArray().length;
+      let input = "<div class='col-4' style='padding:0px' (click)='eliminarDis(dis"+count+")' ><a class='dis-d'  id='dis"+count+"' >"+distrito+"</a></div>"
+      let encontro = $(".show_dis .col-4 a").text().indexOf(distrito);
+
+      if(count<3){
+
+             if(encontro == - 1){
+               $(".show_dis").append(input);
+             }else{
+               alert("ya selecciono dsitrito");
+             }
+
+      }else{
+        alert("3 distritos;")
+      }
+    }
+  }
+
+  eliminarDis(parametro){
+
+    alert("dasd")
+
+  }
 
 
 

@@ -138,7 +138,7 @@ getUserByEmail(email){
   }
 
   getInmuebles(uid){
-    return this.afs.collection(`inmuebles`, ref => ref.where("id_user", '==', uid)).valueChanges();
+    return this.afs.collection(`inmuebles`, ref => ref.where("id_user", '==', uid , ).orderBy('fecha','desc') ).valueChanges();
  }
 
 
