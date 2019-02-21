@@ -600,33 +600,41 @@ input[type="radio"]{
 .sm{
   width: 100px;
   display: inline-block;
-  height: calc(2.25rem + 2px);
+  height: 34px !important;
     padding: .375rem .75rem;
     margin-left: 5px;
+    margin-top: 3px !important;
 }
 .sm-2{
   width: 100px;
   display: inline-block;
-  height: calc(2.25rem + 2px);
+
+  height: 34px !important;
     padding: .375rem .75rem;
 }
 
 .sm-3{
   width: 150px;
   display: inline-block;
-  height: calc(2.25rem + 2px);
+  height: 34px !important;
     padding: .375rem .75rem;
 }
 
+.sm-4{
+  height: 34px !important;
+    padding: .375rem .75rem;
+    margin-top: 1px;
+    margin-bottom: 8px;
+}
 
 .sm-1{
   width: 80px;
   display: inline-block;
-  margin-top: 0px;
   font-size: 13px;
-  height: calc(2.25rem + 2px);
+  height: 32px !important;
   padding: .375rem .75rem;
 }
+
 
 .registre{
   padding-top: 30px;
@@ -637,7 +645,7 @@ input[type="radio"]{
 }
 
 .button_red{
-  padding: 30px 10px;
+  padding: 30px 10px !important;
   border-radius: 50%;
   font-weight: bold;
   font-family: volteR;
@@ -765,6 +773,79 @@ input:checked .btn-primary  {
   color:white !important;
  }
 
+
+ .register_tab{
+   border:  1px solid #3f4dda  !important;
+
+ }
+.pad{
+  padding: 0 15% !important;
+}
+.bor-t{
+  padding: 10px 0px !important;
+}
+.bodr{
+
+  border: 1px solid rgb(24, 52, 207) !important;
+}
+.bord{
+
+  border-radius: 0px !important;
+  border: 1px solid rgb(24, 52, 207) !important;
+  margin-top: 23px;
+}
+
+.bord .nav-link {
+  border-radius: 0px !important;
+  font-size: 14px;
+  font-family: volteR;
+}
+
+.agregar span{
+  font-family: volteM;
+  color: rgb(24, 52, 207) !important;
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.agregar a{
+  font-family: volteM;
+  color: white !important;;
+  font-weight: bold;
+  background-color: rgb(24, 52, 207) !important;
+  border-radius: 50%;
+  transition: 0.5s;
+}
+
+.agregar a:hover{
+  color: white !important;
+  background-color:rgb(24, 52, 207,0.9) !important;
+  border:1px solid rgb(24, 52, 207) !important;
+}
+
+.bord .nav-link.active {
+  border-radius: 0px !important;
+  background-color: rgb(24, 52, 207) !important;
+  font-weight: bold;
+}
+
+.dis-d{
+ background-color:  rgb(24, 52, 207) !important;
+ font-family: volteM;
+ color: white !important;
+ padding: 5px 10px;
+ border-radius: 30px;
+ font-size: 15px;
+ cursor:pointer !important;
+ transition: 0.5s;
+
+}
+
+.dis-d:hover{
+  background-color:  rgb(24, 52, 207,0.8) !important;
+  text-decoration: none;
+ }
+ 
 
 
 @media (min-width: 1px){

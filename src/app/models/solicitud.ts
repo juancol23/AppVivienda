@@ -1,5 +1,5 @@
-export interface inmuebleInterface {
-  id_inmueble?: string;
+export interface SolicitudInterface {
+  id_solicitud?: string;
   id_user?: string;
   tipo_departamento?: string;
   operacion?: string;
@@ -14,6 +14,8 @@ export interface inmuebleInterface {
   proyecto?:string;
   presupuesto?:  {moneda?: string , precio?: number};
   mantenimiento?:  {moneda?: string , precio?: number};
+  comentario?:string;
+
   departamento?:string;
   provincia?:string;
   distrito?:string;

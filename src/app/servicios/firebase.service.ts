@@ -84,7 +84,10 @@ getUserByEmail(email){
 
   register_inmueble(inmueble) {
 
+    const id = this.afs.createId();
+
     const data: inmuebleInterface = {
+          id_inmueble:       id,
           id_user:           inmueble.user,
           tipo_departamento: inmueble.type_apar,
           operacion:         inmueble.operation,
@@ -130,12 +133,12 @@ getUserByEmail(email){
 
     }
 
-    return this.afs.collection(`inmuebles`).add(data);
+    return this.afs.collection(`inmuebles`).doc(`${id}`).set(data);
 
   }
 
   getInmuebles(uid){
-    return this.afs.collection(`inmuebles`, ref => ref.where("id_user", '==', uid)).valueChanges();
+    return this.afs.collection(`inmuebles`, ref => ref.where("id_user", '==', uid , ).orderBy('fecha','desc') ).valueChanges();
  }
 
 
