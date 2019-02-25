@@ -1,10 +1,16 @@
-import { Injectable } from '@angular/core';
-import { AngularFirestore, AngularFirestoreDocument,AngularFirestoreCollection, } from '@angular/fire/firestore';
+import { Injectable, Pipe } from '@angular/core';
+import { AngularFirestore, AngularFirestoreDocument,AngularFirestoreCollection} from '@angular/fire/firestore';
 import { UserInterface } from '../models/user';
 import { inmuebleInterface } from '../models/inmueble';
+import { SolicitudInterface } from '../models/solicitud';
+
 import { AngularFireStorage, AngularFireStorageReference, AngularFireUploadTask } from 'angularfire2/storage';
 import { Observable } from 'rxjs';
 import { AngularFireAuth } from '@angular/fire/auth';
+import { Query } from '@firebase/firestore-types'
+import { firestore } from 'firebase';
+import { map } from 'rxjs/operators';
+
 
 
 @Injectable({
@@ -18,6 +24,9 @@ export class FirebaseService {
   user: Observable<UserInterface[]>;
   userDoc: AngularFirestoreDocument<UserInterface>;
 
+
+  items: Observable<any[]>;
+  itemsCollection: AngularFirestoreCollection<any>;
 
 
   constructor(private afs: AngularFirestore,private afStorage: AngularFireStorage,private afsAuth: AngularFireAuth) {
@@ -61,6 +70,7 @@ getUserByEmail(email){
           name:     user.name,
           telefono: user.telefono
         }
+
 
     return userRef.update(data);
   }
@@ -140,6 +150,73 @@ getUserByEmail(email){
   getInmuebles(uid){
     return this.afs.collection(`inmuebles`, ref => ref.where("id_user", '==', uid , ).orderBy('fecha','desc') ).valueChanges();
  }
+
+
+ register_solicitud(solicitud) {
+
+  const id = this.afs.createId();
+
+  const data: SolicitudInterface = {
+        id_solicitud:       id,
+        id_user:           solicitud.user,
+        tipo_departamento: solicitud.type_apar,
+        operacion:         solicitud.operation,
+        cuartos:           solicitud.door,
+        bano:              solicitud.bano,
+        cochera:           solicitud.cochera,
+        vista:             solicitud.vista,
+        tipo_depa:         solicitud.tipo,
+        amoblado:          solicitud.amoblado,
+        area:              solicitud.area,
+        estreno:           solicitud.estreno,
+        proyecto:          solicitud.proyecto,
+        presupuesto:{
+          moneda:solicitud.pre_type,
+          precio:solicitud.pre_price
+        },
+        mantenimiento:{
+          moneda:solicitud.man_type,
+          precio:solicitud.man_price
+        },
+        distrito:          solicitud.distrito,
+        radio:             solicitud.radius,
+        rango: {
+          de:solicitud.fromDate,
+          hasta:solicitud.toDate
+        },
+        fecha:             solicitud.fecha,
+        comentario:        solicitud.comentario,
+        adicionales:{
+          terraza:solicitud.terraza,
+          mascota:solicitud.mascota,
+          deposito:solicitud.deposito,
+          ascensor:solicitud.ascensor,
+          vigilancia:solicitud.vigilancia,
+          servicio:solicitud.servicio,
+          dscp:solicitud.dscp,
+          reunion:solicitud.reunion,
+          piscina:solicitud.piscina,
+          gym:solicitud.gym,
+          parrilla:solicitud.parrilla,
+          juego:solicitud.juego,
+        }
+
+  }
+
+  return this.afs.collection(`solicitudes`).doc(`${id}`).set(data);
+
+}
+
+
+getSolicitudesHome(){
+
+  return this.afs.collection(`solicitudes`, ref => ref.orderBy('fecha','desc').limit(3)).valueChanges();
+
+  }
+
+
+
+
 
 
 
