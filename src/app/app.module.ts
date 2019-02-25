@@ -23,6 +23,7 @@ import { RegisterInmuebleComponent } from './register-inmueble/register-inmueble
 import {AgmCoreModule} from '@agm/core';
 import { CommonModule } from '@angular/common';
 import { RegisterSolicitudComponent } from './register-solicitud/register-solicitud.component';
+import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 
 
 
@@ -50,7 +51,8 @@ import { RegisterSolicitudComponent } from './register-solicitud/register-solici
     AngularFireDatabaseModule,
     AngularFireStorageModule,
     ReactiveFormsModule,
-    AgmCoreModule.forRoot({apiKey: 'AIzaSyDc2AdGnT2qtKTMHxa-5yupJd-m46NGPCI', libraries: ['places']})
+    AgmCoreModule.forRoot({apiKey: 'AIzaSyDc2AdGnT2qtKTMHxa-5yupJd-m46NGPCI', libraries: ['places']}),
+    NgbModule
   ],
   providers: [AngularFireAuth, AngularFirestore],
   bootstrap: [AppComponent]

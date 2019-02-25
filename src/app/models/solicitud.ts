@@ -15,14 +15,9 @@ export interface SolicitudInterface {
   presupuesto?:  {moneda?: string , precio?: number};
   mantenimiento?:  {moneda?: string , precio?: number};
   comentario?:string;
+  distrito?:any;
+  radio?:any;
 
-  departamento?:string;
-  provincia?:string;
-  distrito?:string;
-  direccion?:string;
-  latitud?:number;
-  longitud?:number;
-  fecha?:string;
   adicionales?:{
     terraza?:boolean,
     mascota?:boolean,
@@ -37,6 +32,13 @@ export interface SolicitudInterface {
     parrilla?:boolean,
     juego?:boolean
   }
+
+  fecha?:string;
+  rango?:{
+    de?:string;
+    hasta?:string;
+  }
+
 }
 
 

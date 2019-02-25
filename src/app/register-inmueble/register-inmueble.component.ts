@@ -100,7 +100,7 @@ export class RegisterInmuebleComponent implements OnInit {
     });
 
 
-
+     this.changeCheckbox();
 
 
   }
@@ -125,6 +125,7 @@ export class RegisterInmuebleComponent implements OnInit {
 
   reset(){
     this.register.type_apar="DEPARTAMENTO"
+
     this.register.operation="ALQUILER"
     this.register.door="1"
     this.register.bano="NO"
@@ -155,8 +156,15 @@ export class RegisterInmuebleComponent implements OnInit {
     this.register.pre_price=""
     this.register.man_price=""
     this.register.direccion=""
-    this.register.latitud=-12.114090;
-    this.register.longitud=-77.027842;
+    this.latitude=-12.114090
+    this.longitude=-77.027842
+    this.latitude_m = null
+    this.longitude_m = null
+
+    this.register.latitud= null
+    this.register.longitud= null
+
+    $(".chb").removeClass("pintar");
 
   }
 
@@ -189,10 +197,15 @@ onlyDireccion(event) {
         this.register.provincia_=globals.PROVINCE_DIRECTION[this.register.departamento+this.register.provincia].name;
         this.register.distrito_=globals.DISTRICT_DIRECTION[this.register.departamento+this.register.provincia+this.register.distrito].name;
 
+      if(this.register.latitud== null || this.register.longitud==null){
+        alert("Debe buscar direccion");
+        return false;
+      }
 
         this.FirebaseService.register_inmueble(this.register).then((res) =>{
 
-          this.reset()
+          form.reset();
+          this.reset();
           $("#modal_ok").modal('show');
 
        }).catch((err)=>
@@ -302,6 +315,23 @@ onlyDireccion(event) {
     this.districSeleccionado = this.selectDistric.value;
 	}
 
+  changeCheckbox(){
+
+
+    //Ten en cuenta que estamos seleccionando por clase label-cliente. Como estamos jugando con los children (en este caso los input) no deberías tener problemas si tienes varios label/input pero tenlo en cuenta.
+    $(".chb").click(function(){
+      //Si el hijo está checked le ponemos a la label el color #2d89ef si no el #5e5e5e
+      if($(this).children().is(":checked"))
+      {
+        $(this).addClass("pintar");
+      }
+      else
+      {
+        $(this).removeClass("pintar");
+      }
+    });
+
+  }
 
 
 

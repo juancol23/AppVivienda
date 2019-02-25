@@ -251,6 +251,35 @@ uploadSingle() {
 }
 
 
+redireccionar(href):void{
+
+  this.router.navigate([href]);
+}
+
+
+editarInmueble(id){
+
+  
+
+  alert(id)
+}
+
+eliminarInmueble(id){
+
+ 
+  if (confirm("Estas seguro de eliminar el inmueble ?")) {
+    this.FirebaseService.deleteInmueble(id).then(res => {
+
+      alert("Inmueble se elimino");
+
+    }).catch(err => {
+       console.log(err)
+    })
+
+  } else {
+    
+  }
+}
 
 
 

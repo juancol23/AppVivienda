@@ -21,11 +21,11 @@
 <div class="container registre" >
   <form class="row" #FormRegisterInmueble="ngForm" (submit)="registerInmueble(FormRegisterInmueble)" autocomplete="of">
 
-       <div class="col-md-6">
+       <div class="col-lg-6">
 
-           <div class="form-group ">
-              <label  class="col-6 label_text">Tipo :</label>
-             <div class="col-12">
+           <div class="form-group row ">
+              <label  class="col-2 label_text ">Tipo :</label>
+             <div class="col-10">
               <input type="text"  value={{user}} hidden>
 
                <div class="btn-group style_toggle " data-toggle="buttons"  style="width: 100%" >
@@ -62,9 +62,9 @@
               </div>
            </div>
 
-           <div class="form-group ">
-              <label  class="col-6 label_text">Operación :</label>
-             <div class="col-12">
+           <div class="form-group row ">
+              <label  class="col-2 label_text ">Operación :</label>
+             <div class="col-10">
               <div class="btn-group style_toggle" data-toggle="buttons" style="width: 100%">
                   <label class="btn btn-primary active" (click)="register.operation = 'ALQUILER'">
                     <input
@@ -92,9 +92,9 @@
               </div>
            </div>
 
-           <div class="form-group ">
-              <label  class="col-6 label_text">Dormitorios :</label>
-             <div class="col-12">
+           <div class="form-group row ">
+              <label  class="col-2 label_text ">Dormitorios :</label>
+             <div class="col-10">
               <div class="btn-group style_toggle" data-toggle="buttons" style="width: 70%">
                   <label class="btn btn-primary active" (click)="register.door = '1'">
                     <input type="radio" name="door" value="1" [(ngModel)]="register.door" >1
@@ -116,9 +116,9 @@
               </div>
            </div>
 
-           <div class="form-group ">
-              <label  class="col-6 label_text">Baños :</label>
-             <div class="col-12">
+           <div class="form-group row ">
+              <label  class="col-2 label_text ">Baños :</label>
+             <div class="col-10">
               <div class="btn-group style_toggle" data-toggle="buttons" style="width: 70%">
                   <label class="btn btn-primary active" (click)="register.bano = '1'">
                     <input type="radio" name="bano" value="1" checked [(ngModel)]="register.bano">1
@@ -140,9 +140,9 @@
               </div>
            </div>
 
-           <div class="form-group ">
-              <label  class="col-6 label_text">Cocheras :</label>
-             <div class="col-12">
+           <div class="form-group row ">
+              <label  class="col-2 label_text ">Cocheras :</label>
+             <div class="col-10">
               <div class="btn-group style_toggle" data-toggle="buttons" style="width: 70%">
                   <label class="btn btn-primary active" (click)="register.cochera = '1'">
                     <input type="radio" name="cochera" checked value="1" [(ngModel)]="register.cochera">1
@@ -164,9 +164,9 @@
               </div>
            </div>
 
-           <div class="form-group ">
-              <label  class="col-6 label_text">Vista :</label>
-             <div class="col-12">
+           <div class="form-group row">
+              <label  class="col-2 label_text ">Vista :</label>
+             <div class="col-10">
               <div class="btn-group style_toggle" data-toggle="buttons" style="width: 50%">
                   <label class="btn btn-primary active" (click)="register.vista = 'INTERNA'">
                     <input type="radio" name="vista" checked value="INTERNA" [(ngModel)]="register.vista">INTERNA
@@ -180,9 +180,9 @@
               </div>
            </div>
 
-           <div class="form-group ">
-              <label  class="col-6 label_text">Tipo :</label>
-             <div class="col-12">
+           <div class="form-group row">
+              <label  class="col-2 label_text ">Tipo :</label>
+             <div class="col-10">
               <div class="btn-group style_toggle" data-toggle="buttons"  style="width: 50%">
                   <label class="btn btn-primary active" (click)="register.tipo = 'FLAT'">
                     <input type="radio" name="tipo" checked value="FLAT" [(ngModel)]="register.tipo">FLAT
@@ -196,9 +196,9 @@
               </div>
            </div>
 
-           <div class="form-group ">
-              <label  class="col-6 label_text">Amoblado :</label>
-             <div class="col-12">
+           <div class="form-group row">
+              <label  class="col-2 label_text ">Amoblado :</label>
+             <div class="col-10">
               <div class="btn-group style_toggle" data-toggle="buttons"  style="width: 50%">
                   <label class="btn btn-primary active" (click)="register.amoblado = 'FULL'">
                     <input type="radio" name="amoblado" checked value="FULL" [(ngModel)]="register.amoblado">FULL
@@ -215,9 +215,9 @@
               </div>
            </div>
 
-           <div class="form-group ">
-              <label  class="col-6 label_text">Estreno :</label>
-             <div class="col-12">
+           <div class="form-group row">
+              <label  class="col-2 label_text ">Estreno :</label>
+             <div class="col-10">
               <div class="btn-group style_toggle" data-toggle="buttons"  style="width: 30%">
                   <label class="btn btn-primary active" (click)="register.estreno = 'SI'">
                     <input type="radio" name="estreno" checked value="Si" [(ngModel)]="register.estreno">SI
@@ -231,9 +231,9 @@
               </div>
            </div>
 
-           <div class="form-group ">
-              <label  class="col-6 label_text">Proyecto :</label>
-             <div class="col-12">
+           <div class="form-group row">
+              <label  class="col-2 label_text ">Proyecto :</label>
+             <div class="col-10">
               <div class="btn-group style_toggle" data-toggle="buttons"  style="width: 30%">
                   <label class="btn btn-primary active" (click)="register.proyecto = 'SI'">
                     <input type="radio" name="proyecto" checked value="SI" [(ngModel)]="register.proyecto">SI
@@ -247,9 +247,9 @@
               </div>
            </div>
 
-           <div class="form-group ">
-              <label  class="col-6 label_text">Área :</label>
-             <div class="col-12">
+           <div class="form-group row">
+              <label  class="col-2 label_text ">Área :</label>
+             <div class="col-10">
                <input type="text"
                class="form-control input_login sm-2"
                name="area"
@@ -271,9 +271,9 @@
               </div>
            </div>
 
-           <div class="form-group ">
-              <label  class="col-6 label_text">Presupuesto :</label>
-             <div class="col-12">
+           <div class="form-group row">
+              <label  class="col-2 label_text ">Presupuesto :</label>
+             <div class="col-10">
                 <select name="type_p"
                  class="form-control input_login sm-1"
                  name="pre_type"
@@ -304,9 +304,9 @@
            </div>
 
 
-           <div class="form-group ">
-              <label  class="col-6 label_text">Mantenimiento :</label>
-             <div class="col-12">
+           <div class="form-group row">
+              <label  class="col-2 label_text ">Mantenimiento :</label>
+             <div class="col-10">
                 <select
                 name="man_type"
                 [(ngModel)]="register.man_type"
@@ -349,8 +349,8 @@
 
        <div class="form-group row" style="margin-left: 0px;margin-right: 0px;">
 
-        <label  class="col-6 label_text">Departamento :</label>
-        <div class="col-12">
+        <label  class="col-2 label_text">Departamento :</label>
+        <div class="col-10">
 
           <select
               name="departamento"
@@ -371,8 +371,8 @@
 
 
       </div>
-      <label  class="col-6 label_text">Provincia :</label> <label  class="col-6 label_text">Distrito :</label>
-           <div class="col-6">
+      <label  class="col-2 label_text" style="margin-top: 8px">Provincia :</label>
+           <div class=" col-10" style="margin-top: 8px">
 
                <select
                    name="provincia"
@@ -389,12 +389,12 @@
                <div *ngIf="provincia_.invalid && (provincia_.dirty)" class="validif" >
                 <div *ngIf="provincia_.errors.required">Provincia es requerido*</div>
             </div>
-
+            <br>
            </div>
 
 
-
-           <div class="col-6">
+           <label  class="col-2 label_text " style="margin-top: 8px">Distrito :</label>
+           <div class="col-10" style="margin-top: 8px">
 
               <select
                   name="distrito"
@@ -415,15 +415,16 @@
 
            </div>
 
-           <label style="color:red ;position: absolute;right: 15px;font-weight: bold;margin-top: 35px" >*</label>
-
+           <label style="color:red ;position: absolute;right: 15px;font-weight: bold;margin-top: 8px" >*</label>
+           <label style="color:red ;position: absolute;right: 15px;font-weight: bold;margin-top: 50px" >*</label>
+           <label style="color:red ;position: absolute;right: 15px;font-weight: bold;margin-top: 105px" >*</label>
        </div>
 
        <div class="form-group row " style="margin-left: 0px;margin-right: 0px; margin-top: 7px">
 
-          <label  class="col-6 label_text">Direccion :</label>
+          <label  class="col-2 label_text">Direccion :</label>
 
-         <div class="col-12">
+         <div class="col-10">
            <input type="text"
            class="form-control input_login sm-4"
            name="direccion"
@@ -450,14 +451,14 @@
 
 
 
-          <label style="color:red ;position: absolute;right: 15px;font-weight: bold;margin-top: 35px" >*</label>
+          <label style="color:red ;position: absolute;right: 15px;font-weight: bold;margin-top: 8px" >*</label>
 
 
 
        </div>
 
-       <div class="form-group" style="margin-top: 20px">
-          <div class="col-12">
+       <div class="form-group " style="margin-top: 20px">
+          <div class="col-12" style="padding:0px">
 
               <agm-map [latitude]="latitude" [longitude]="longitude" [zoom]="zoom">
                   <agm-marker [latitude]="latitude_m"  [longitude]="longitude_m" ></agm-marker>
@@ -465,19 +466,19 @@
         </div>
        </div>
 
-       <div class="form-group row " style="margin-left: 0px;margin-right: 0px; margin-top: 20px">
+       <div class="form-group  " style="margin-top: 20px">
 
-        <div class="col-12">
-
-          <div class="btn-group style_toggle "   style="width: 100%;margin:0px" >
-              <label  class="btn btn-primary  margin0 border-b"  >
+        <div class="col-12"style="padding:0px" >
+          <label style="color:red ;position: absolute;right: -10px;font-weight: bold; top:10px" >*</label>
+          <div class="btn-group style_toggle "   style="width: 100%" >
+              <label  class="btn btn-primary  margin0 border-b chb"  >
                   <i style="font-size: 40px" class="fas fa-pallet"></i> <br>
                 <input
                 type="checkbox"
                 name="terraza"
                 [(ngModel)]="register.terraza">TERRAZA
               </label>
-              <label  class="btn btn-primary margin0 border-b border-r" >
+              <label  class="btn btn-primary margin0 border-b border-r chb" >
 
                   <i style="font-size: 40px" class="fas fa-paw"></i><br>
                 <input
@@ -485,14 +486,14 @@
                 name="mascota"
                 [(ngModel)]="register.mascota">MASCOTAS
               </label>
-              <label  class="btn btn-primary margin0 border-b " >
+              <label  class="btn btn-primary margin0 border-b  chb" >
                   <i style="font-size: 40px" class="fas fa-dolly"></i><br>
                 <input
                 type="checkbox"
                 name="deposito"
                 [(ngModel)]="register.deposito">DEPOSITO
               </label>
-              <label  class="btn btn-primary margin0 border-b" >
+              <label  class="btn btn-primary margin0 border-b chb" >
                   <i style="font-size: 40px" class="fas fa-grip-vertical"></i><br>
                 <input
                 type="checkbox"
@@ -501,14 +502,14 @@
               </label>
             </div>
             <div class="btn-group style_toggle "   style="width: 100%;margin:0px ;border-bottom: 0px"  >
-                <label  class="btn btn-primary  margin0 border-b" >
+                <label  class="btn btn-primary  margin0 border-b chb" >
                     <i style="font-size: 40px" class="fas fa-eye"></i> <br>
                   <input
                   type="checkbox"
                   name="vigilancia"
                   [(ngModel)]="register.vigilancia">VIGILANCIA
                 </label>
-                <label  class="btn btn-primary margin0 border-b border-r" >
+                <label  class="btn btn-primary margin0 border-b border-r chb" >
 
                     <i style="font-size: 40px" class="fas fa-door-closed"></i><br>
                   <input
@@ -516,14 +517,14 @@
                   name="servicio"
                   [(ngModel)]="register.servicio">SERVICIO
                 </label>
-                <label  class="btn btn-primary margin0 border-b" >
+                <label  class="btn btn-primary margin0 border-b chb" >
                     <i  style="font-size: 40px" class="fas fa-wheelchair"></i> <br>
                   <input
                   type="checkbox"
                   name="dscp"
                   [(ngModel)]="register.dscp">DSCSDOS
                 </label>
-                <label  class="btn btn-primary margin0 border-b" >
+                <label  class="btn btn-primary margin0 border-b chb" >
                     <i style="font-size: 40px" class="fas fa-wine-glass-alt"></i> <br>
                   <input
                   type="checkbox"
@@ -533,14 +534,14 @@
 
               </div>
               <div class="btn-group style_toggle "      style="width: 100%"  >
-                  <label  class="btn btn-primary  margin0" >
+                  <label  class="btn btn-primary  margin0 chb" >
                       <i style="font-size: 40px" class="fas fa-swimmer"></i><br>
                     <input
                     type="checkbox"
                     name="piscina"
                     [(ngModel)]="register.piscina">PISCINA
                   </label>
-                  <label  class="btn btn-primary margin0 border-r" >
+                  <label  class="btn btn-primary margin0 border-r chb" >
 
                       <i style="font-size: 40px" class="fas fa-dumbbell"></i> <br>
                     <input
@@ -548,14 +549,14 @@
                     name="gym"
                     [(ngModel)]="register.gym">GIMNASIO
                   </label>
-                  <label  class="btn btn-primary margin0" >
+                  <label  class="btn btn-primary margin0 chb" >
                       <i style="font-size: 40px" class="fas fa-utensils"></i> <br>
                     <input
                     type="checkbox"
                     name="parrilla"
                     [(ngModel)]="register.parrilla">PARRILLA
                   </label>
-                  <label  class="btn btn-primary margin0"   >
+                  <label  class="btn btn-primary margin0 chb"   >
                       <i style="font-size:40px" class="fas fa-volleyball-ball"></i><br>
                     <input
                     type="checkbox"

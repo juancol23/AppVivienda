@@ -6,4 +6,5 @@ export interface UserInterface {
   photoUrl?: string;
   telefono?: string;
   provider?: string;
+  id?:string;
 }

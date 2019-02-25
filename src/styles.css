@@ -329,9 +329,8 @@ form {
 }
 
 .mod_pub {
-    height: 500px;
     padding-top: 30px;
-    padding-bottom: 30px;
+    padding-bottom: 40px;
 }
 
 .footer {
@@ -567,7 +566,7 @@ input[type="radio"]{
 
 
 .style_toggle .btn-primary{
-    color: rgb(24, 52, 207) !important;
+    color: rgb(24, 52, 207) ;
     background-color:white;
     border-color:  rgb(24, 52, 207) !important;
     border-radius: 0px;
@@ -578,6 +577,12 @@ input[type="radio"]{
 
 .style_toggle .btn{
   border-radius: 0px;
+}
+
+.registre .row{
+     margin-right: -5px !important;
+     margin-left: -5px !important;
+     margin-bottom: 10px !important;
 }
 
 
@@ -593,7 +598,7 @@ input[type="radio"]{
   margin-top: 7px;
   color: rgb(24, 52, 207) !important;
   font-family: volteR;
-  font-size: 13px;
+  font-size: 12px;
   font-weight: bold;
   padding: 0px;
 }
@@ -642,6 +647,11 @@ input[type="radio"]{
 }
 .registre .form-group{
   margin-bottom: 0px;
+}
+
+.solicitud{
+  padding: 0px 50px;
+  transition: 0.5s;
 }
 
 .button_red{
@@ -720,7 +730,6 @@ input:checked .btn-primary  {
   font-size: 15px;
   font-weight: bold;
   transition: 0.2s
-
   }
 
 .padding{
@@ -782,7 +791,8 @@ input:checked .btn-primary  {
   padding: 0 15% !important;
 }
 .bor-t{
-  padding: 10px 0px !important;
+  padding-top: 30px;
+  padding-bottom: 20px;
 }
 .bodr{
 
@@ -799,6 +809,7 @@ input:checked .btn-primary  {
   border-radius: 0px !important;
   font-size: 14px;
   font-family: volteR;
+  transition: 0.5s;
 }
 
 .agregar span{
@@ -845,7 +856,96 @@ input:checked .btn-primary  {
   background-color:  rgb(24, 52, 207,0.8) !important;
   text-decoration: none;
  }
- 
+
+ #legend{
+
+margin: 0px  !important;
+ }
+
+ .span_hover{
+  cursor: pointer;
+  position: absolute;
+  bottom: 30px;
+  right: 50px;
+}
+
+.span_hover:hover{
+   opacity: 0.8;
+   cursor: pointer;
+
+}
+
+.custom-day {
+  text-align: center;
+  padding: 0.185rem 0.25rem;
+  display: inline-block;
+  height: 2rem;
+  width: 2rem;
+  color: rgb(24, 52, 207) ;
+}
+.custom-day.focused {
+  background-color: #e6e6e6;
+}
+.custom-day.range, .custom-day:hover {
+  background-color: rgb(24, 52, 207) ;
+  color: white;
+}
+.custom-day.faded {
+  background-color: rgb(24, 52, 207,1) ;
+}
+
+.ngb-dp-weekday {
+  color: rgb(24, 52, 207,1)!important;
+  color: var(--info);
+
+}
+
+.ngb-dp-month-name {
+  color: rgb(24, 52, 207,1)!important;
+}
+
+.ngb-dp-arrow-btn {
+  color: rgb(24, 52, 207,1)!important;
+}
+
+.ngb-dp-arrow-btn:hover {
+  color: rgb(24, 52, 207,0.8)!important;
+}
+
+.ngb-dp-navigation-select {
+  display: none !important;
+}
+
+.ngb-dp-day.hidden{
+  width: 2rem;
+  height: 0px !important;
+}
+
+.disabled {
+  cursor: no-drop !important;
+}
+
+.disabled:hover .custom-day{
+  background-color: white !important;
+  color: rgb(24, 52, 207,1)!important;
+}
+
+ngb-datepicker {
+  border: 1px solid rgb(24, 52, 207,1) !important;
+  border-radius: 0px !important;
+  display: inline-block;
+  margin-bottom: 10px;
+}
+
+.ngb-dp-weekdays {
+  border-top: 1px solid rgb(24, 52, 207,1) !important;
+  border-bottom: 1px solid rgb(24, 52, 207,1) !important;
+  border-radius: 0;
+}
+
+.ngb-dp-arrow {
+  height: 0px !important;
+}
 
 
 @media (min-width: 1px){
@@ -878,6 +978,8 @@ input:checked .btn-primary  {
 }
 
 @media (max-width: 576px) {
+
+
 
     .foot_prin {
         text-align: center !important;
@@ -912,6 +1014,9 @@ input:checked .btn-primary  {
 }
 
 @media (max-width: 768px) {
+  .solicitud{
+    padding: 0px 10px !important;
+  }
     .container {
         max-width: 100%;
     }
@@ -934,6 +1039,11 @@ input:checked .btn-primary  {
 
 }
 @media (max-width: 768px) {
+
+.item{
+  font-size: 13px !important;
+
+  }
   .datos_perfil .nav-link {
     font-size: 12px !important;
     padding-left: 5px !important;
@@ -958,6 +1068,22 @@ input:checked .btn-primary  {
 }
 
 @media (max-width: 575px) {
+
+  .nuevo_i{
+    top:30px !important;
+  }
+
+  .bord .nav-link {
+    font-size: 12px !important;
+  }
+
+  .maps-renta {
+   position: relative !important;
+}
+  .item{
+    font-size: 11px !important;
+
+    }
   .datos_perfil .nav-link {
    font-size: 14px !important;
    padding-left: 20px !important;
@@ -977,19 +1103,97 @@ input:checked .btn-primary  {
 
 
 .margin0 i{
- font-size: 30px !important;
-
+ font-size: 25px !important;
 }
 
 
 
  .style_toggle .btn-primary{
-  font-size: 12px !important;
+  font-size: 10px !important;
+  padding-left: 2px !important;
+  padding-right: 2px !important;
+}
+
+.label_text{
+  font-size: 10px !important;
+}
+.pd-l{
+  padding-left: 0px !important;
 }
 
 
 
+}
+
+@media (max-width: 450px) {
+  .nuevo_i{
+    top:60px !important;
+    padding: 3px 20px !important;
+  }
+  .ngb-dp-months {
+    display: block !important;
+
+  }
+
+  .span_hover{
+    font-size: 12px !important;
+  }
+
 
 }
 
 
+.pintar{
+  background-color: rgb(24, 52, 207) !important;
+  color: white !important;
+}
+
+input[type="checkbox"] {
+  display: none;
+}
+
+
+.ngb-dp-day.disabled:hover{
+  background-color: white !important;
+}
+
+
+.nuevo_i{
+  position: absolute !important;
+  top: 0;
+  right: 20px;
+  background-color: rgb(24, 52, 207) !important;
+  transition: 0.5s;
+  color: white !important;
+  font-family: volteR !important;
+  padding: 5px 30px;
+  border-radius: 30px;
+  font-size: 13px;
+  z-index: 9;
+}
+
+.nuevo_i:hover{
+  background-color: rgb(24, 52, 207,.9) !important;
+}
+
+
+.botones_funcionales{
+  position: absolute;
+  top: -30px;
+  right: -20px;
+}
+
+.botones_funcionales a{
+  color: rgb(24, 52, 207) !important;
+  padding: 5px 10px;
+  cursor: pointer;
+  transition: 0.5s;
+  margin: 0px 5px;
+  border-radius: 30px;
+}
+
+.botones_funcionales a:hover{
+  padding: 2px 5px;
+  color: white !important;
+  background-color: rgb(24, 52, 207,1) !important;
+}
