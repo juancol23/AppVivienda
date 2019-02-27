@@ -7,10 +7,6 @@ import { SolicitudInterface } from '../models/solicitud';
 import { AngularFireStorage, AngularFireStorageReference, AngularFireUploadTask } from 'angularfire2/storage';
 import { Observable } from 'rxjs';
 import { AngularFireAuth } from '@angular/fire/auth';
-import { Query } from '@firebase/firestore-types'
-import { firestore } from 'firebase';
-import { map } from 'rxjs/operators';
-
 
 
 @Injectable({
@@ -54,6 +50,10 @@ getUserByEmail(email){
 
   return this.afs.collection(`users`, ref => ref.where("email", '==', email))
   .valueChanges();
+}
+
+deleteInmueble(id){
+  return this.afs.collection(`inmuebles`).doc(`${id}`).delete();
 }
 
   updatePhotoUrl(user){
@@ -214,8 +214,14 @@ getSolicitudesHome(){
 
   }
 
+getallUser(){
 
+return  this.afs.collection(`users`).valueChanges();
+}
 
+getSolicitudesByUser(uid){
+  return this.afs.collection(`solicitudes`, ref => ref.where("id_user", '==', uid , ).orderBy('fecha','desc') ).valueChanges();
+}
 
 
 

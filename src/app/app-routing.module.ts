@@ -9,7 +9,7 @@ import { RegisterSolicitudComponent } from './register-solicitud/register-solici
 import { AuthGuard } from './observador/auth.guard';
 
 const app_routes: Routes = [
-  {path: 'home', component: InmuebleComponent },
+  {path: 'home', component: InmuebleComponent},
   {path: 'vehiculo', component: VehiculoComponent},
   {path: 'reset', component: ResetComponent},
   {path: 'registro-inmueble', component: RegisterInmuebleComponent},

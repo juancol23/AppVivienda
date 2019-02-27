@@ -1069,6 +1069,10 @@ ngb-datepicker {
 
 @media (max-width: 575px) {
 
+  .nuevo_i{
+    top:30px !important;
+  }
+
   .bord .nav-link {
     font-size: 12px !important;
   }
@@ -1122,6 +1126,10 @@ ngb-datepicker {
 }
 
 @media (max-width: 450px) {
+  .nuevo_i{
+    top:60px !important;
+    padding: 3px 20px !important;
+  }
   .ngb-dp-months {
     display: block !important;
 
@@ -1147,4 +1155,43 @@ input[type="checkbox"] {
 
 .ngb-dp-day.disabled:hover{
   background-color: white !important;
+}
+
+
+.nuevo_i{
+  position: absolute !important;
+  top: 0;
+  right: 20px;
+  background-color: rgb(24, 52, 207) !important;
+  transition: 0.5s;
+  color: white !important;
+  font-family: volteR !important;
+  padding: 5px 30px;
+  border-radius: 30px;
+  font-size: 13px;
+  z-index: 9;
+}
+
+.nuevo_i:hover{
+  background-color: rgb(24, 52, 207,.9) !important;
+}
+
+
+.botones_funcionales{
+  position: absolute;
+  top: -30px;
+  right: -20px;
+}
+
+.botones_funcionales a{
+  color: rgb(24, 52, 207) !important;
+  padding: 5px 10px;
+  cursor: pointer;
+  transition: 0.5s;
+  margin: 0px 5px;
+}
+
+.botones_funcionales a:hover{
+  color: white !important;
+  background-color: rgb(24, 52, 207,1) !important;
 }

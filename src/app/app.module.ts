@@ -24,6 +24,10 @@ import {AgmCoreModule} from '@agm/core';
 import { CommonModule } from '@angular/common';
 import { RegisterSolicitudComponent } from './register-solicitud/register-solicitud.component';
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
+import { NgxSpinnerModule } from 'ngx-spinner';
+
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+
 
 
 
@@ -52,9 +56,16 @@ import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
     AngularFireStorageModule,
     ReactiveFormsModule,
     AgmCoreModule.forRoot({apiKey: 'AIzaSyDc2AdGnT2qtKTMHxa-5yupJd-m46NGPCI', libraries: ['places']}),
-    NgbModule
+    NgbModule,
+    NgxSpinnerModule,
+    BrowserAnimationsModule
   ],
   providers: [AngularFireAuth, AngularFirestore],
   bootstrap: [AppComponent]
 })
-export class AppModule { }
+
+export class AppModule {
+  getState(outlet) {
+    return outlet.activatedRouteData.state;
+  }
+}

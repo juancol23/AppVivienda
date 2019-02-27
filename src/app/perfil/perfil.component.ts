@@ -27,6 +27,7 @@ export class PerfilComponent implements OnInit{
   public error:any={};
 
   public data:any;
+  public solicitudata:any;
 
 
   public _message_perfil: boolean = false;
@@ -42,13 +43,9 @@ export class PerfilComponent implements OnInit{
   public latitud:string;
   public longitud:string;
 
-
-  //public formPerfilContrasena: NgForm;
-
   selectedFiles: FileList;
 
-  constructor( private authService: AuthService ,
-    private mapsAPILoader: MapsAPILoader, private FirebaseService: FirebaseService,private router: Router) {
+  constructor( private authService: AuthService , private FirebaseService: FirebaseService,private router: Router) {
 
   }
 
@@ -61,7 +58,6 @@ export class PerfilComponent implements OnInit{
   }
 
 
-
   getInmueble(){
 
     this.authService.isAuth().subscribe(auth => {
@@ -70,6 +66,10 @@ export class PerfilComponent implements OnInit{
 
             this.FirebaseService.getInmuebles(auth.uid).subscribe((res) => {
               this.data=res;
+            })
+
+            this.FirebaseService.getSolicitudesByUser(auth.uid).subscribe((res) => {
+              this.solicitudata=res;
             })
 
       }else {
@@ -147,9 +147,6 @@ onUpdatePassword(form: NgForm):void{
       this.message_text_contra = err+""
     }
   );
-
-
-
 
 }
 
@@ -251,6 +248,34 @@ uploadSingle() {
 }
 
 
+redireccionar(href):void{
+
+  this.router.navigate([href]);
+}
+
+
+editarInmueble(id){
+
+  alert(id)
+}
+
+
+eliminarInmueble(id){
+
+
+  if (confirm("Estas seguro de eliminar el inmueble ?")) {
+    this.FirebaseService.deleteInmueble(id).then(res => {
+
+      alert("Inmueble se elimino");
+
+    }).catch(err => {
+       console.log(err)
+    })
+
+  } else {
+
+  }
+}
 
 
 

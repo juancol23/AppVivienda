@@ -235,44 +235,60 @@
                 </div>
                 <div class="tab-pane fade" id="v-pills-messages" role="tabpanel" aria-labelledby="v-pills-messages-tab">
                     <h3>MIS SOLICITUDES</h3>
-                    <div class="linea"></div>
-                </div>
-                <div class="tab-pane fade" id="v-pills-settings" role="tabpanel" aria-labelledby="v-pills-settings-tab">
-                    <h3>MIS INMUEBLES</h3>
+                    <a class="btn nuevo_i" (click)="redireccionar('registro-solicitud')">NUEVA SOLICITUD</a>
                     <div class="linea"></div>
 
-                    <div class="col-sm-12 ">
-                      <!-- <div *ngIf="_rentalPublications != null && _rentalPublications.length > 0" class="col-sm-12"> -->
-                      <div *ngFor="let item of data ">
-                        <br>
+                    <div class="col-sm-12">
+
+                      <div *ngFor="let item of solicitudata ">
+                        <br><br>
+                        <div  class="col-12">
+                          <div class="botones_funcionales">
+
+                              <a  >Editar</a>
+                              <a >Eliminar</a>
+                          </div>
+                        </div>
                           <div class="item row">
 
-                              <div class="col-sm-4 padding">
-                                  <agm-map [latitude]="item.latitud" [longitude]="item.longitud" [zoom]="15">
-                                      <agm-marker [latitude]="item.latitud" [longitude]="item.longitud"></agm-marker>
+                              <div class="col-sm-4 padding" *ngIf="item.radio.length > 0">
+                                  <agm-map [latitude]="item.radio[0].lat" [longitude]="item.radio[0].lng" [zoom]="13" >
+                                      <agm-circle *ngFor="let m of item.radio" [latitude]="m.lat" [longitude]="m.lng"
+                                     [radius]="500"
+                                     [fillColor]="m.color">
+                                     </agm-circle>
                                   </agm-map>
                               </div>
+                              <div class="col-sm-4 padding" *ngIf="item.radio.length === 0">
+                                  <agm-map [latitude]="-12.114090" [longitude]="-77.027842" [zoom]="13" >
+                                  </agm-map>
+                              </div>
+
+
                               <div class="col-sm-8  padding">
                                   <div class="maps-renta row" style="margin:0px">
 
-                                          <div class="col-sm-6 margin_p text-left " >
-                                              <div class="name-busca "><i class="fas fa-user"></i> ESTAS OFRECIENDO:</div>
+                                          <div class="col-6 margin_p text-left " >
+                                              <div class="name-busca "><i class="fas fa-user"></i>ESTÁS BUSCANDO:</div>
                                           </div>
-                                          <div class="col-sm-6 margin_p text-right " >
+                                          <div class="col-6 margin_p text-right " >
                                               <div class="estados">{{item.operacion}}</div>
                                           </div>
-                                          <div class="col-sm-12 margin_p text-right">
-                                              <div class="">{{item.provincia}} / {{item.distrito}} <i class="fas fa-map-marker-alt"></i></div>
+                                          <div class="col-12 margin_p text-right" *ngIf="item.distrito.length>0" >
+                                              <div class="d-inline-flex" *ngFor="let m of item.distrito" > {{m.nombre}} - </div><i class="fas fa-map-marker-alt"></i>
+                                          </div>
+                                          <div class="col-12 margin_p text-right" *ngIf="item.distrito.length===0" >
+                                              <div class="d-inline-flex">Seleccion por Area     <i class="fas fa-map-marker-alt"></i></div>
                                           </div>
 
                                           <div class="col-12 margin_p"  >
                                             <div class="row" style="margin:0px">
-                                              <div class="col-sm-6 " style="padding-left: 0px;padding-right: 5px">
+                                              <div class="col-6 " style="padding-left: 0px;padding-right: 5px">
                                                 <div class="border_s">
                                                     <i class="fas fa-home"></i><span class="text-right" >{{item.tipo_departamento}}</span>
                                               </div>
                                             </div>
-                                              <div class="col-sm-6 " style="padding-right: 0px;padding-left: 5px">
+                                              <div class="col-6 " style="padding-right: 0px;padding-left: 5px">
                                                 <div class="border_s">
                                                 <i class="fas fa-bed"></i><span class="text-right" >{{item.cuartos}} DORMITORIOS</span>
                                               </div>
@@ -283,17 +299,101 @@
                                           <div class="col-12 margin_p_10"  >
                                               <div class="row" style="margin:0px">
 
-                                                <div class="col-sm-3" style="padding-left: 0px">
+                                                <div class="col-3" style="padding-left: 0px">
                                                   <div class="border_s"><i class="fab fa-medium"></i><span class="text-right" >{{item.area}} M²</span>
                                                   </div>
                                                 </div>
 
-                                                <div class="col-sm-4 " style="padding-left: 0px;padding-right: 0px">
+                                                <div class="col-4 " style="padding-left: 0px;padding-right: 0px">
                                                   <div class="border_s"><i class="fas fa-toilet"></i><span class="text-right" >{{item.bano}} BAÑOS</span>
                                                   </div>
                                                 </div>
 
-                                                <div class="col-sm-5" style="padding-right: 0px">
+                                                <div class="col-5" style="padding-right: 0px">
+                                                  <div class="border_s"><i class="fas fa-dollar-sign"></i><span class="text-right" >{{item.presupuesto.precio}} {{item.presupuesto.moneda}}</span>
+                                                  </div>
+                                                </div>
+                                              </div>
+                                            </div>
+
+
+
+                                  </div>
+                              </div>
+                          </div>
+
+                      </div>
+
+                    </div>
+                </div>
+                <div class="tab-pane fade" id="v-pills-settings" role="tabpanel" aria-labelledby="v-pills-settings-tab">
+                    <h3>MIS INMUEBLES</h3>
+                    <a class="btn nuevo_i" (click)="redireccionar('registro-inmueble')">NUEVO INMUEBLE</a>
+                    <div class="linea"></div>
+
+                    <div class="col-sm-12 ">
+
+                      <!-- <div *ngIf="_rentalPublications != null && _rentalPublications.length > 0" class="col-sm-12"> -->
+                      <div *ngFor="let item of data ">
+                        <br><br>
+                        <div  class="col-12">
+                          <div class="botones_funcionales">
+
+                              <a  (click)="editarInmueble(item.id_inmueble)">Editar</a>
+                              <a (click)="eliminarInmueble(item.id_inmueble)" >Eliminar</a>
+                          </div>
+                        </div>
+                          <div class="item row">
+
+                              <div class="col-sm-4 padding">
+
+
+                                <agm-map [latitude]="-12.114090" [longitude]="-77.027842" [zoom]="14" >
+                              </agm-map>
+
+                              </div>
+                              <div class="col-sm-8  padding">
+                                  <div class="maps-renta row" style="margin:0px">
+
+                                          <div class="col-6 margin_p text-left " >
+                                              <div class="name-busca "><i class="fas fa-user"></i> ESTAS OFRECIENDO:</div>
+                                          </div>
+                                          <div class="col-6 margin_p text-right " >
+                                              <div class="estados">{{item.operacion}}</div>
+                                          </div>
+                                          <div class="col-12 margin_p text-right">
+                                              <div class="">{{item.provincia}} / {{item.distrito}} <i class="fas fa-map-marker-alt"></i></div>
+                                          </div>
+
+                                          <div class="col-12 margin_p"  >
+                                            <div class="row" style="margin:0px">
+                                              <div class="col-6 " style="padding-left: 0px;padding-right: 5px">
+                                                <div class="border_s">
+                                                    <i class="fas fa-home"></i><span class="text-right" >{{item.tipo_departamento}}</span>
+                                              </div>
+                                            </div>
+                                              <div class="col-6 " style="padding-right: 0px;padding-left: 5px">
+                                                <div class="border_s">
+                                                <i class="fas fa-bed"></i><span class="text-right" >{{item.cuartos}} DORMITORIOS</span>
+                                              </div>
+                                              </div>
+                                            </div>
+                                          </div >
+                                          <br>
+                                          <div class="col-12 margin_p_10"  >
+                                              <div class="row" style="margin:0px">
+
+                                                <div class="col-3" style="padding-left: 0px">
+                                                  <div class="border_s"><i class="fab fa-medium"></i><span class="text-right" >{{item.area}} M²</span>
+                                                  </div>
+                                                </div>
+
+                                                <div class="col-4 " style="padding-left: 0px;padding-right: 0px">
+                                                  <div class="border_s"><i class="fas fa-toilet"></i><span class="text-right" >{{item.bano}} BAÑOS</span>
+                                                  </div>
+                                                </div>
+
+                                                <div class="col-5" style="padding-right: 0px">
                                                   <div class="border_s"><i class="fas fa-dollar-sign"></i><span class="text-right" >{{item.presupuesto.precio}} {{item.presupuesto.moneda}}</span>
                                                   </div>
                                                 </div>

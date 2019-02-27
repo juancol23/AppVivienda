@@ -6,10 +6,10 @@
         <div class="navbar-collapse collapse dual-nav w-50 ww-0 order-1 order-md-0">
             <ul class="navbar-nav">
                 <li class="nav-item menu-li " routerLinkActive="active">
-                    <a class="nav-link pl-0" routerLink="home"><img src="assets/img/home-png.png" alt="" height="16px">INMUEBLE</a>
+                    <a class="nav-link pl-0" routerLink="/home"><img src="assets/img/home-png.png" alt="" height="16px">INMUEBLE</a>
                 </li>
                 <li class="nav-item menu-li" routerLinkActive="active">
-                    <a class="nav-link" routerLink="vehiculo"><img src="assets/img/vehiculo-png.png" alt="" height="16px">VEHÍCULO</a>
+                    <a class="nav-link" routerLink="/vehiculo"><img src="assets/img/vehiculo-png.png" alt="" height="16px">VEHÍCULO</a>
                 </li>
             </ul>
         </div>
@@ -28,7 +28,7 @@
                         <img src="assets/img/persona-png.png" alt="" height="16px">{{nameUser}} <span class="online">•</span>
                     </a>
                     <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                      <a routerLinkActive="active" class="dropdown-item" routerLink="perfil">PERFIL</a>
+                      <a routerLinkActive="active" class="dropdown-item" routerLink="/perfil">PERFIL</a>
                       <a class="dropdown-item"  (click)="onLogout()">CERRAR SESION</a>
                     </div>
                 </li>

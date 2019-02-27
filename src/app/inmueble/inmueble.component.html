@@ -1,3 +1,14 @@
+<ngx-spinner
+bdOpacity = 0.5
+bdColor = "rgba(0,0,0,0.9)"
+size = "large"
+color = "#ffffff"
+type = "ball-clip-rotate-multiple"
+fullScreen = "true"
+>
+</ngx-spinner>
+
+
 
         <div id="carouselExampleSlidesOnly" class="carousel slide" data-ride="carousel">
                 <div class="carousel-inner">
@@ -31,8 +42,8 @@
 
 <div class="container mod_pub">
     <div class="row" style="margin :0px">
-      <div class="col-md-2"></div>
-<div class="col-md-8" >
+      <div class="col-lg-2"></div>
+<div class="col-lg-8" >
 
     <!-- <div *ngIf="_rentalPublications != null && _rentalPublications.length > 0" class="col-sm-12"> -->
     <div *ngFor="let item of data ">
@@ -57,7 +68,7 @@
                 <div class="maps-renta row" style="margin:0px">
 
                         <div class="col-6 margin_p text-left " >
-                            <div class="name-busca "><i class="fas fa-user"></i> {{item.nombre}} ESTA BUSCANDO:</div>
+                            <div class="name-busca "><i class="fas fa-user"></i>{{user[item.id_user]}} ESTA BUSCANDO:</div>
                         </div>
                         <div class="col-6 margin_p text-right " >
                             <div class="estados">{{item.operacion}}</div>
@@ -113,7 +124,7 @@
     </div>
 
 </div>
-<div class="col-md-2"></div>
+<div class="col-lg-2"></div>
 </div>
 
 </div>
