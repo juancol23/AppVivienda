@@ -42,6 +42,7 @@ export class PerfilComponent implements OnInit{
 
   public latitud:string;
   public longitud:string;
+  public p: number;
 
   selectedFiles: FileList;
 
@@ -55,6 +56,7 @@ export class PerfilComponent implements OnInit{
 
     this.getCurrentUser();
     this.getInmueble();
+    this.p=1;
   }
 
 
@@ -199,6 +201,7 @@ onUpdatePassword(form: NgForm):void{
 
 detectFiles(event) {
     this.selectedFiles = event.target.files;
+    console.log(this.selectedFiles);
 }
 
 

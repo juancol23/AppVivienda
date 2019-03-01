@@ -25,8 +25,7 @@ import { CommonModule } from '@angular/common';
 import { RegisterSolicitudComponent } from './register-solicitud/register-solicitud.component';
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import { NgxSpinnerModule } from 'ngx-spinner';
-
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import {NgxPaginationModule} from 'ngx-pagination';
 
 
 
@@ -58,7 +57,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     AgmCoreModule.forRoot({apiKey: 'AIzaSyDc2AdGnT2qtKTMHxa-5yupJd-m46NGPCI', libraries: ['places']}),
     NgbModule,
     NgxSpinnerModule,
-    BrowserAnimationsModule
+    NgxPaginationModule
   ],
   providers: [AngularFireAuth, AngularFirestore],
   bootstrap: [AppComponent]

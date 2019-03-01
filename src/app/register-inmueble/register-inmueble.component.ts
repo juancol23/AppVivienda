@@ -46,6 +46,9 @@ export class RegisterInmuebleComponent implements OnInit {
   public latitude_m: number;
   public longitude_m: number;
   public zoom:number;
+  public urls = [];
+  public urlsdb = [];
+  public posicion : any;
 
   @ViewChild("search")
   public searchElementRef: ElementRef;
@@ -102,6 +105,12 @@ export class RegisterInmuebleComponent implements OnInit {
 
      this.changeCheckbox();
 
+     window.onkeyup = function (event) {
+      if (event.keyCode == 27) {
+        $(".visualizar").removeClass("mostrar");
+      }
+     }
+
 
   }
 
@@ -125,10 +134,9 @@ export class RegisterInmuebleComponent implements OnInit {
 
   reset(){
     this.register.type_apar="DEPARTAMENTO"
-
     this.register.operation="ALQUILER"
     this.register.door="1"
-    this.register.bano="NO"
+    this.register.bano="1"
     this.register.cochera="1"
     this.register.vista="INTERNA"
     this.register.tipo="FLAT"
@@ -158,13 +166,23 @@ export class RegisterInmuebleComponent implements OnInit {
     this.register.direccion=""
     this.latitude=-12.114090
     this.longitude=-77.027842
-    this.latitude_m = null
-    this.longitude_m = null
+    this.latitude_m = 0
+    this.longitude_m = 0
 
-    this.register.latitud= null
-    this.register.longitud= null
+    this.register.latitud= 0
+    this.register.longitud= 0
 
     $(".chb").removeClass("pintar");
+    $('input:radio[name="type_apar"][value="DEPARTAMENTO"]').click();
+    $('input:radio[name="operation"][value="ALQUILER"]').click();
+    $('input:radio[name="door"][value="1"]').click();
+    $('input:radio[name="bano"][value="1"]').click();
+    $('input:radio[name="cochera"][value="1"]').click();
+    $('input:radio[name="vista"][value="INTERNA"]').click();
+    $('input:radio[name="tipo"][value="FLAT"]').click();
+    $('input:radio[name="amoblado"][value="FULL"]').click();
+    $('input:radio[name="estreno"][value="SI"]').click();
+    $('input:radio[name="proyecto"][value="SI"]').click();
 
   }
 
@@ -197,7 +215,7 @@ onlyDireccion(event) {
         this.register.provincia_=globals.PROVINCE_DIRECTION[this.register.departamento+this.register.provincia].name;
         this.register.distrito_=globals.DISTRICT_DIRECTION[this.register.departamento+this.register.provincia+this.register.distrito].name;
 
-      if(this.register.latitud== null || this.register.longitud==null){
+      if(this.register.latitud== 0 || this.register.longitud==0){
         alert("Debe buscar direccion");
         return false;
       }
@@ -330,6 +348,98 @@ onlyDireccion(event) {
         $(this).removeClass("pintar");
       }
     });
+
+  }
+
+  onSelectFile(event) {
+    if (event.target.files && event.target.files[0]) {
+        var filesAmount = event.target.files.length;
+        for (let i = 0; i < filesAmount; i++) {
+
+            var isjpgopng= event.target.files[i]["name"];
+
+            var existejpg = isjpgopng.search(".jpg");
+            var existepng = isjpgopng.search(".png");
+            var existejpeg = isjpgopng.search(".jpeg");
+
+            if(existejpg!=-1  || existepng!=-1 || existejpeg!=-1){
+
+              if(this.urlsdb.length<10){
+
+                console.log("Es imagen");
+
+                var reader = new FileReader();
+
+                  reader.onload = (events) => {
+                     this.urls.push(events.target.result);
+                  }
+
+                  this.urlsdb.push(event.target.files);
+
+                  reader.readAsDataURL(event.target.files[i]);
+
+              }else{
+
+                console.log("Solo puede Seleccionar 10 imagenes");
+
+              }
+
+
+
+            }else{
+
+              console.log("No es imagen");
+            }
+
+
+        }
+    }
+  }
+
+  abrirImagen(pos){
+
+
+
+    $(".visualizar").addClass("mostrar");
+    this.posicion=pos;
+
+  }
+
+  eliminarImagen(pos){
+    event.stopPropagation();
+
+    this.urlsdb.splice(pos, 1);
+    this.urls.splice(pos, 1);
+
+    alert(pos);
+  }
+
+  cerrra_visualizar(){
+
+    $(".visualizar").removeClass("mostrar");
+
+  }
+
+
+  btn_galeria(valor){
+
+    let count = this.urls.length;
+
+    if(valor== 'l' && this.posicion==0){
+      return false;
+    }
+     if(valor == 'r' && this.posicion==count-1){
+      return false;
+     }
+
+    if(valor=='l'){
+      this.posicion=this.posicion-1;
+    }
+
+    if(valor=='r'){
+      this.posicion=this.posicion+1;
+    }
+
 
   }
 

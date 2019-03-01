@@ -220,7 +220,7 @@
              <div class="col-10">
               <div class="btn-group style_toggle" data-toggle="buttons"  style="width: 30%">
                   <label class="btn btn-primary active" (click)="register.estreno = 'SI'">
-                    <input type="radio" name="estreno" checked value="Si" [(ngModel)]="register.estreno">SI
+                    <input type="radio" name="estreno" checked value="SI" [(ngModel)]="register.estreno">SI
                   </label>
                   <label class="btn btn-primary" (click)="register.estreno = 'NO'">
                     <input type="radio" name="estreno" value="NO" [(ngModel)]="register.estreno">NO
@@ -345,7 +345,7 @@
 
 
 
-     <div class="col-md-6 " >
+     <div class="col-lg-6 " >
 
        <div class="form-group row" style="margin-left: 0px;margin-right: 0px;">
 
@@ -574,6 +574,38 @@
      </div>
 
 
+     <div class="linea col-md-12"></div>
+
+     <div class="col-12 galeria_fotos" >
+       <div class="row"  style="margin: 0px;">
+
+      <div class="col-4"><h4>Galería de Fotos: <span>*</span></h4></div>
+      <div class="col-4 text-center" >
+
+          <input type="file" (change)="onSelectFile($event)" multiple  #fileInput  hidden accept="image/jpeg,image/png" >
+        <a  class="btn btn-m"   (click)="fileInput.click()">SUBIR FOTOS</a>
+
+      </div>
+      <div class="col-4"> <p>HASTA 10 FOTOS EN JPEG O PNG, PESO LÍMITE POR MEGAS</p></div>
+
+       </div>
+
+       <div class="row galeria_f"  style="margin: 0px;">
+         <div class="modi col" *ngFor='let url of urls;let indice=index'>
+            <img  class="img-fluid"  [src]="url"  >
+            <div class="eliminarimg" title="Visualizar Imagen" (click)="abrirImagen(indice)">
+
+            <span title="Eliminar" (click)="eliminarImagen(indice)">x</span>
+
+            </div>
+        </div>
+       </div>
+     </div>
+
+     <div class="alerta text-center col-12" >
+       <img src="assets/img/alerta.png" alt="">
+       <p>Es importante para nosotros que completes todos los campos.</p>
+     </div>
 
 
 
@@ -588,6 +620,8 @@
 
 
     </form>
+
+
 </div>
 
 
@@ -612,4 +646,24 @@
           </div>
       </div>
   </div>
+</div>
+
+<div class="visualizar">
+<div class="fondo_b " >
+
+  <div class="row justify-content-md-center align-items-center">
+    <div class="col-1 "><img class="puntero" src="assets/img/left.png" (click)="btn_galeria('l')" alt="" style="float:right" width="30px"></div>
+  <div class="col-8 text-center ">
+
+      <img [src]="urls[posicion]"  class="img-fluid resp" alt="" >
+
+  </div>
+  <div class="col-1 "><img class="puntero" src="assets/img/right.png" (click)="btn_galeria('r')" alt="" width="30px"></div>
+</div>
+<span (click)="cerrra_visualizar()" title="Cerrar">x</span>
+</div>
+
+
+
+
 </div>

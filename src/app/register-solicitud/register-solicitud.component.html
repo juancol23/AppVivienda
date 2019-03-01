@@ -26,7 +26,7 @@
               <input type="text"  value={{user}} hidden>
 
                <div class="btn-group style_toggle " data-toggle="buttons"  style="width: 100%" >
-                  <label  class="btn btn-primary active" (click)="register.type_apar = 'DEPARTAMENTO'" >
+                  <label  class="btn btn-primary " (click)="register.type_apar = 'DEPARTAMENTO'" >
                     <input
                     type="radio"
                     name="type_apar"
@@ -245,7 +245,7 @@
              <div class="col-10">
               <div class="btn-group style_toggle" data-toggle="buttons"  style="width: 40%">
                   <label class="btn btn-primary active" (click)="register.estreno = 'SI'">
-                    <input type="radio" name="estreno" checked value="Si" [(ngModel)]="register.estreno">SI
+                    <input type="radio" name="estreno" checked value="SI" [(ngModel)]="register.estreno">SI
                   </label>
                   <label class="btn btn-primary" (click)="register.estreno = 'NO'">
                     <input type="radio" name="estreno" value="NO" [(ngModel)]="register.estreno">NO
@@ -302,12 +302,19 @@
                 <select name="type_p"
                  class="form-control input_login sm-1"
                  name="pre_type"
-                [(ngModel)]="register.pre_type">
+                 #type_pre="ngModel"
+                [(ngModel)]="register.pre_type"
+                required>
 
                     <option value="SOLES" selected>S/.</option>
                     <option value="DOLARES">$USD</option>
 
                 </select>
+
+                <div *ngIf="type_pre.invalid && (type_pre.dirty)" class="validif" >
+                    <div *ngIf="type_pre.errors.required"></div>
+                </div>
+
                <input
                type="text"
                class="form-control input_login sm"
@@ -335,10 +342,16 @@
                 <select
                 name="man_type"
                 [(ngModel)]="register.man_type"
-                class="form-control input_login sm-1">
+                class="form-control input_login sm-1"
+                #type_man="ngModel"
+                required>
                     <option value="SOLES" selected>S/.</option>
                     <option value="DOLARES">$USD</option>
                 </select>
+
+                <div *ngIf="type_man.invalid && (type_man.dirty)" class="validif" >
+                    <div *ngIf="type_man.errors.required"></div>
+                </div>
 
                <input type="text"
                class="form-control input_login sm"

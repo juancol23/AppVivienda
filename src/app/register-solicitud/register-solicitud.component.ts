@@ -148,15 +148,13 @@ getCurrentUser() {
 
 resetear(){
     this.register.type_apar="DEPARTAMENTO"
-    this.register.operation="DEPARTAMENTO"
+    this.register.operation="ALQUILER"
     this.register.door="1"
     this.register.bano="1"
     this.register.cochera="NO"
     this.register.vista="INTERNA"
     this.register.tipo="FLAT"
     this.register.amoblado="FULL"
-    this.register.man_type="SOLES"
-    this.register.pre_type="SOLES"
     this.register.proyecto="SI"
     this.register.estreno="SI"
     this.register.terraza=false
@@ -189,6 +187,16 @@ resetear(){
     this.register.fromDate = ""
     this.register.toDate = ""
     $(".chb").removeClass("pintar");
+    $('input:radio[name="type_apar"][value="DEPARTAMENTO"]').click();
+    $('input:radio[name="operation"][value="ALQUILER"]').click();
+    $('input:radio[name="door"][value="1"]').click();
+    $('input:radio[name="bano"][value="1"]').click();
+    $('input:radio[name="cochera"][value="NO"]').click();
+    $('input:radio[name="vista"][value="INTERNA"]').click();
+    $('input:radio[name="tipo"][value="FLAT"]').click();
+    $('input:radio[name="amoblado"][value="FULL"]').click();
+    $('input:radio[name="estreno"][value="SI"]').click();
+    $('input:radio[name="proyecto"][value="SI"]').click();
 }
 
 sortByTwoProperty = () => {
@@ -225,8 +233,6 @@ selDepart() {
     this.listarProvincias(this.departSeleccionado);
 
     this.selCity();
-
-
 }
 
 listarProvincias(skuDep) {
@@ -246,9 +252,6 @@ selCity() {
 		this.selectProv = document.getElementById("city");
     this.proviSeleccionado = this.selectProv.value;
     this.listarDistritos(this.departSeleccionado + this.proviSeleccionado);
-
-
-
 }
 
 listarDistritos(skuDepPro) {
@@ -531,9 +534,12 @@ cerrar():void{
 }
 
 
+
+
+
+
+
 changeCheckbox(){
-
-
     //Ten en cuenta que estamos seleccionando por clase label-cliente. Como estamos jugando con los children (en este caso los input) no deberías tener problemas si tienes varios label/input pero tenlo en cuenta.
     $(".chb").click(function(){
       //Si el hijo está checked le ponemos a la label el color #2d89ef si no el #5e5e5e
