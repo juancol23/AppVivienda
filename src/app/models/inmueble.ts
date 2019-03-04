@@ -21,6 +21,7 @@ export interface inmuebleInterface {
   latitud?:number;
   longitud?:number;
   fecha?:string;
+  image?:any;
   adicionales?:{
     terraza?:boolean,
     mascota?:boolean,

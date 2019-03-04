@@ -30,6 +30,10 @@ export class PerfilComponent implements OnInit{
   public solicitudata:any;
 
 
+  public img:any;
+  public array:any;
+
+
   public _message_perfil: boolean = false;
   public message_text_perfil: String = null;
 
@@ -57,6 +61,7 @@ export class PerfilComponent implements OnInit{
     this.getCurrentUser();
     this.getInmueble();
     this.p=1;
+
   }
 
 
@@ -68,6 +73,19 @@ export class PerfilComponent implements OnInit{
 
             this.FirebaseService.getInmuebles(auth.uid).subscribe((res) => {
               this.data=res;
+
+              for(let img of this.data){
+
+                this.FirebaseService.getImageFromInmueble(img["id_inmueble"]).subscribe((res)=>{
+
+                  this.img = res[0]["url"]
+
+                })
+
+
+              }
+
+
             })
 
             this.FirebaseService.getSolicitudesByUser(auth.uid).subscribe((res) => {
@@ -201,7 +219,6 @@ onUpdatePassword(form: NgForm):void{
 
 detectFiles(event) {
     this.selectedFiles = event.target.files;
-    console.log(this.selectedFiles);
 }
 
 
@@ -266,18 +283,33 @@ editarInmueble(id){
 eliminarInmueble(id){
 
 
-  if (confirm("Estas seguro de eliminar el inmueble ?")) {
-    this.FirebaseService.deleteInmueble(id).then(res => {
 
-      alert("Inmueble se elimino");
+    if (confirm("Estas seguro de eliminar el inmueble ?")) {
+      this.FirebaseService.deleteInmueble(id).then(res => {
 
-    }).catch(err => {
-       console.log(err)
-    })
+        alert("Inmueble se elimino");
 
-  } else {
+      }).catch(err => {
+         console.log(err)
+      })
 
-  }
+    } else {
+
+
+
+}
+
+}
+
+
+
+getImage(id){
+
+  this.FirebaseService.getImageFromInmueble(id).subscribe((res)=>{
+
+  return res[0]["url"]
+
+  })
 }
 
 

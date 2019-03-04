@@ -22,9 +22,6 @@ export class InmuebleComponent implements OnInit {
   constructor(private router: Router,
     private FirebaseService: FirebaseService,
     private afs: AngularFirestore,private spinner: NgxSpinnerService) {
-
-
-
   }
 
   ngOnInit() {
@@ -52,10 +49,7 @@ export class InmuebleComponent implements OnInit {
 
 
       this.FirebaseService.getallUser().subscribe((res) => {
-
-          console.log("No existe");
-
-          let name = "";
+       let name = "";
 
           for (let index = 0; index < res.length; index++) {
 

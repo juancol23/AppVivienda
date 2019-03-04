@@ -5,6 +5,8 @@ import { FirebaseService } from '../servicios/firebase.service';
 import { Router } from '@angular/router';
 import * as globals from '../globals/globals';
 import { MapsAPILoader } from '@agm/core';
+import { AngularFirestore} from '@angular/fire/firestore';
+
 declare var google;
 declare var $ :any;
 class RequestDepartment {
@@ -47,28 +49,26 @@ export class RegisterInmuebleComponent implements OnInit {
   public longitude_m: number;
   public zoom:number;
   public urls = [];
-  public urlsdb = [];
+  public urlsdb : FileList[]=[];
   public posicion : any;
+
+  selectedFiles: FileList;
 
   @ViewChild("search")
   public searchElementRef: ElementRef;
-
-
-
 
 
   constructor(private authService: AuthService ,
      private FirebaseService: FirebaseService,
      private router: Router,
      private mapsAPILoader: MapsAPILoader,
-     private ngZone: NgZone) { }
+     private ngZone: NgZone,private afs: AngularFirestore) { }
 
   ngOnInit() {
     this.reset();
     this.obtenerDepartamentos();
     this.getCurrentUser();
     this.zoom=12;
-
     this.mapsAPILoader.load().then(() => {
       let autocomplete = new google.maps.places.Autocomplete(this.searchElementRef.nativeElement, {
         types: ["address"],
@@ -95,12 +95,12 @@ export class RegisterInmuebleComponent implements OnInit {
           this.register.latitud=this.latitude
           this.register.longitud=this.longitude
 
-
-
-
         });
       });
     });
+
+
+
 
 
      this.changeCheckbox();
@@ -172,6 +172,9 @@ export class RegisterInmuebleComponent implements OnInit {
     this.register.latitud= 0
     this.register.longitud= 0
 
+    this.urls= []
+    this.urlsdb=[]
+
     $(".chb").removeClass("pintar");
     $('input:radio[name="type_apar"][value="DEPARTAMENTO"]').click();
     $('input:radio[name="operation"][value="ALQUILER"]').click();
@@ -183,6 +186,8 @@ export class RegisterInmuebleComponent implements OnInit {
     $('input:radio[name="amoblado"][value="FULL"]').click();
     $('input:radio[name="estreno"][value="SI"]').click();
     $('input:radio[name="proyecto"][value="SI"]').click();
+
+
 
   }
 
@@ -205,7 +210,7 @@ onlyDireccion(event) {
 }
 
 
-  registerInmueble(form: NgForm){
+registerInmueble(form: NgForm){
 
       if (this.isLogged) {
 
@@ -214,21 +219,30 @@ onlyDireccion(event) {
         this.register.departamento_=globals.DEPARTMENTS_DIRECTION[this.register.departamento].name;
         this.register.provincia_=globals.PROVINCE_DIRECTION[this.register.departamento+this.register.provincia].name;
         this.register.distrito_=globals.DISTRICT_DIRECTION[this.register.departamento+this.register.provincia+this.register.distrito].name;
+        this.register.id = this.afs.createId();
 
       if(this.register.latitud== 0 || this.register.longitud==0){
         alert("Debe buscar direccion");
         return false;
       }
 
-        this.FirebaseService.register_inmueble(this.register).then((res) =>{
+      if(this.urlsdb.length<5){
 
-          form.reset();
-          this.reset();
-          $("#modal_ok").modal('show');
+        alert("Debe agregar un minimo de 5 fotos.");
+        return false;
+      }
+
+        this.FirebaseService.register_inmueble(this.register,this.urlsdb).then((res) =>{
+
+              console.log(res)
+
+            form.reset();
+            this.reset();
+            $("#modal_ok").modal('show');
 
        }).catch((err)=>
 
-         alert("error")
+         console.log("error")
 
        );
 
@@ -241,7 +255,7 @@ onlyDireccion(event) {
 
 
 
-  }
+}
 
 
   cerrar():void{
@@ -359,10 +373,13 @@ onlyDireccion(event) {
             var isjpgopng= event.target.files[i]["name"];
 
             var existejpg = isjpgopng.search(".jpg");
+            var existeJPG = isjpgopng.search(".JPG");
             var existepng = isjpgopng.search(".png");
+            var existePNG = isjpgopng.search(".PNG");
+            var existeJPEG = isjpgopng.search(".JPEG");
             var existejpeg = isjpgopng.search(".jpeg");
 
-            if(existejpg!=-1  || existepng!=-1 || existejpeg!=-1){
+            if(existejpg!=-1  || existepng!=-1 || existejpeg!=-1 || existeJPG!=-1 || existeJPEG!=-1 || existePNG!=-1  ){
 
               if(this.urlsdb.length<10){
 
@@ -370,11 +387,14 @@ onlyDireccion(event) {
 
                 var reader = new FileReader();
 
-                  reader.onload = (events) => {
+                  reader.onload = (events:any) => {
                      this.urls.push(events.target.result);
                   }
 
-                  this.urlsdb.push(event.target.files);
+
+                  this.urlsdb.push(event.target.files[i]);
+
+                  console.log(this.urlsdb);
 
                   reader.readAsDataURL(event.target.files[i]);
 
@@ -397,27 +417,18 @@ onlyDireccion(event) {
   }
 
   abrirImagen(pos){
-
-
-
     $(".visualizar").addClass("mostrar");
     this.posicion=pos;
-
   }
 
   eliminarImagen(pos){
     event.stopPropagation();
-
     this.urlsdb.splice(pos, 1);
     this.urls.splice(pos, 1);
-
-    alert(pos);
   }
 
   cerrra_visualizar(){
-
     $(".visualizar").removeClass("mostrar");
-
   }
 
 

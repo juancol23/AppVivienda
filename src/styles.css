@@ -1275,8 +1275,25 @@ textarea{
   background-color: rgb(24, 52, 207,0.8) !important;
 }
 
+@media (max-width: 991px){
+
+  .resp{
+    height: 50vh !important;
+    }
+
+    .fondo_b .row{
+
+      margin-top: 25vh !important;
+     }
+
+  }
+
 @media (max-width: 576px){
 
+  .fondo_b .row{
+
+    margin-top: 35vh !important;
+   }
 
 
   .galeria_fotos h4{
@@ -1340,6 +1357,10 @@ textarea{
 
 }
 
+.foto_normal{
+  border-radius: 0px !important;
+}
+
 .alerta p{
 
   font-size: 15px;
@@ -1399,7 +1420,7 @@ display: block !important;
 
 .fondo_b .row{
 
- margin-top: 30vh;
+ margin-top: 15vh;
  justify-content: center;
  align-items: center;
 }
@@ -1429,7 +1450,10 @@ display: block !important;
  }
 
 .resp{
-height: 300px;
+height: 70vh;
+width: 100%;
+min-width: 100%;
+max-width: 100%;
 transition: 0.5s;
 }
 

@@ -7,6 +7,8 @@ import { SolicitudInterface } from '../models/solicitud';
 import { AngularFireStorage, AngularFireStorageReference, AngularFireUploadTask } from 'angularfire2/storage';
 import { Observable } from 'rxjs';
 import { AngularFireAuth } from '@angular/fire/auth';
+import { finalize } from 'rxjs/operators';
+
 
 
 @Injectable({
@@ -53,14 +55,15 @@ getUserByEmail(email){
 }
 
 deleteInmueble(id){
+
   return this.afs.collection(`inmuebles`).doc(`${id}`).delete();
 }
 
-  updatePhotoUrl(user){
+updatePhotoUrl(user){
     this.afs.doc(`users/${user.id}`).update({
       photoUrl : user.image
     })
-  }
+}
 
 
   updatePerfil(user) {
@@ -92,12 +95,32 @@ deleteInmueble(id){
   }
 
 
-  register_inmueble(inmueble) {
+  register_inmueble(inmueble ,images) {
 
-    const id = this.afs.createId();
+
+    for (const file of images) {
+
+      const path = `inmuebles/${inmueble.id}/${file.name}`;
+      const ref = this.afStorage.ref(path);
+      const task = this.afStorage.upload(path, file);
+
+      let id = this.afs.createId();
+
+      task.then((f) => {
+        return f.ref.getDownloadURL().then((url) => {
+          return this.afs.collection('files_images').doc(`${id}`).set({
+            id_image:id,
+            id_inmueble:inmueble.id,
+            name: f.metadata.name,
+            url: url
+          });
+        })
+      })
+   }
+
 
     const data: inmuebleInterface = {
-          id_inmueble:       id,
+          id_inmueble:       inmueble.id,
           id_user:           inmueble.user,
           tipo_departamento: inmueble.type_apar,
           operacion:         inmueble.operation,
@@ -143,9 +166,22 @@ deleteInmueble(id){
 
     }
 
-    return this.afs.collection(`inmuebles`).doc(`${id}`).set(data);
+
+    return this.afs.collection(`inmuebles`).doc(`${inmueble.id}`).set(data);
 
   }
+
+
+  getImageFromInmueble(id){
+
+
+
+    return this.afs.collection(`files_images`, ref => ref.where("id_inmueble", '==', id)).valueChanges();
+
+  }
+
+
+
 
   getInmuebles(uid){
     return this.afs.collection(`inmuebles`, ref => ref.where("id_user", '==', uid , ).orderBy('fecha','desc') ).valueChanges();
