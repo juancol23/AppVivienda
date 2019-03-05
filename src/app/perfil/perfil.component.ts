@@ -74,18 +74,6 @@ export class PerfilComponent implements OnInit{
             this.FirebaseService.getInmuebles(auth.uid).subscribe((res) => {
               this.data=res;
 
-              for(let img of this.data){
-
-                this.FirebaseService.getImageFromInmueble(img["id_inmueble"]).subscribe((res)=>{
-
-                  this.img = res[0]["url"]
-
-                })
-
-
-              }
-
-
             })
 
             this.FirebaseService.getSolicitudesByUser(auth.uid).subscribe((res) => {
@@ -283,7 +271,6 @@ editarInmueble(id){
 eliminarInmueble(id){
 
 
-
     if (confirm("Estas seguro de eliminar el inmueble ?")) {
       this.FirebaseService.deleteInmueble(id).then(res => {
 
@@ -295,27 +282,9 @@ eliminarInmueble(id){
 
     } else {
 
-
-
 }
 
 }
-
-
-
-getImage(id){
-
-  this.FirebaseService.getImageFromInmueble(id).subscribe((res)=>{
-
-  return res[0]["url"]
-
-  })
-}
-
-
-
-
-
 
 
 

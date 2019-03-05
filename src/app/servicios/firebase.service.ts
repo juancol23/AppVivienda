@@ -95,10 +95,10 @@ updatePhotoUrl(user){
   }
 
 
-  register_inmueble(inmueble ,images) {
+  register_inmueble(inmueble ) {
 
 
-    for (const file of images) {
+    /*for (const file of images) {
 
       const path = `inmuebles/${inmueble.id}/${file.name}`;
       const ref = this.afStorage.ref(path);
@@ -116,7 +116,7 @@ updatePhotoUrl(user){
           });
         })
       })
-   }
+   }*/
 
 
     const data: inmuebleInterface = {
@@ -172,13 +172,7 @@ updatePhotoUrl(user){
   }
 
 
-  getImageFromInmueble(id){
 
-
-
-    return this.afs.collection(`files_images`, ref => ref.where("id_inmueble", '==', id)).valueChanges();
-
-  }
 
 
 

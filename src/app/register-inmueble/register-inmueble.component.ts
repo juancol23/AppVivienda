@@ -232,7 +232,7 @@ registerInmueble(form: NgForm){
         return false;
       }
 
-        this.FirebaseService.register_inmueble(this.register,this.urlsdb).then((res) =>{
+        this.FirebaseService.register_inmueble(this.register).then((res) =>{
 
               console.log(res)
 
