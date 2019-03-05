@@ -3,7 +3,6 @@ import { AuthService } from '../servicios/auth.service';
 import { FirebaseService } from '../servicios/firebase.service';
 import { NgForm } from '@angular/forms';
 import { Router } from '@angular/router';
-import { MapsAPILoader } from '@agm/core';
 
 
 @Component({
@@ -47,6 +46,7 @@ export class PerfilComponent implements OnInit{
   public latitud:string;
   public longitud:string;
   public p: number;
+  public a: number;
 
   selectedFiles: FileList;
 
@@ -61,7 +61,7 @@ export class PerfilComponent implements OnInit{
     this.getCurrentUser();
     this.getInmueble();
     this.p=1;
-
+    this.a=1;
   }
 
 
@@ -285,6 +285,31 @@ eliminarInmueble(id){
 }
 
 }
+
+eliminarSolicitud(id){
+
+
+  if (confirm("Estas seguro de eliminar la solicitud ?")) {
+    this.FirebaseService.deleteSolicitud(id).then(res => {
+
+      alert("Solicitud se elimino");
+
+    }).catch(err => {
+       console.log(err)
+    })
+
+  } else {
+
+}
+
+}
+
+editarSolicitud(id){
+
+  this.router.navigate([`editar-solicitud/${id}`]);
+
+}
+
 
 
 

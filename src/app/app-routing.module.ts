@@ -6,6 +6,8 @@ import { PerfilComponent } from './perfil/perfil.component';
 import { ResetComponent } from './reset/reset.component';
 import { RegisterInmuebleComponent } from './register-inmueble/register-inmueble.component';
 import { RegisterSolicitudComponent } from './register-solicitud/register-solicitud.component';
+import { EditSolicitudComponent } from './edit-solicitud/edit-solicitud.component';
+import { EditInmuebleComponent } from './edit-inmueble/edit-inmueble.component';
 import { AuthGuard } from './observador/auth.guard';
 
 const app_routes: Routes = [
@@ -15,6 +17,8 @@ const app_routes: Routes = [
   {path: 'registro-inmueble', component: RegisterInmuebleComponent},
   {path: 'registro-solicitud', component: RegisterSolicitudComponent},
   {path: 'perfil', component: PerfilComponent,canActivate: [AuthGuard]},
+  {path: 'editar-solicitud/:id', component: EditSolicitudComponent,canActivate: [AuthGuard]},
+  {path: 'editar-inmueble/:id', component: EditInmuebleComponent,canActivate: [AuthGuard]},
   {path: '**', redirectTo: 'home',pathMatch: 'full' }
 ]
 

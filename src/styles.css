@@ -1361,6 +1361,7 @@ textarea{
   border-radius: 0px !important;
 }
 
+
 .alerta p{
 
   font-size: 15px;
@@ -1466,3 +1467,27 @@ html, body{
   overflow-x:hidden !important;
   max-width: 100% !important;
 }
+
+
+.h4 h4{
+  font-size: 20px;
+  font-family: volteR !important;
+  color: rgb(24, 52, 207,1) !important;
+
+  transition: 0.5s;
+}
+
+
+
+.h4:hover h4{
+  font-weight: bold !important;
+  animation: none !important;
+}
+
+
+.h4{
+  transition: 0.5s;
+  cursor: pointer;
+}
+
+

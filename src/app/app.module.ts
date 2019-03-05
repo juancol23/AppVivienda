@@ -26,6 +26,8 @@ import { RegisterSolicitudComponent } from './register-solicitud/register-solici
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import { NgxSpinnerModule } from 'ngx-spinner';
 import {NgxPaginationModule} from 'ngx-pagination';
+import { EditInmuebleComponent } from './edit-inmueble/edit-inmueble.component';
+import { EditSolicitudComponent } from './edit-solicitud/edit-solicitud.component';
 
 
 
@@ -43,7 +45,9 @@ import {NgxPaginationModule} from 'ngx-pagination';
     AppPasswordDirective,
     AppPasswordDirectiveLogin,
     RegisterInmuebleComponent,
-    RegisterSolicitudComponent
+    RegisterSolicitudComponent,
+    EditInmuebleComponent,
+    EditSolicitudComponent
   ],
   imports: [
     BrowserModule,

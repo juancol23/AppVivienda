@@ -233,20 +233,25 @@
 
 
                 </div>
+
+
+
                 <div class="tab-pane fade" id="v-pills-messages" role="tabpanel" aria-labelledby="v-pills-messages-tab">
                     <h3>MIS SOLICITUDES</h3>
                     <a class="btn nuevo_i" (click)="redireccionar('registro-solicitud')">NUEVA SOLICITUD</a>
                     <div class="linea"></div>
 
-                    <div class="col-sm-12 scroll_s">
+
+
+                    <div class="col-sm-12  " >
 
                       <div *ngFor="let item of solicitudata | paginate: { itemsPerPage: 3, currentPage: p } ">
                         <br><br>
                         <div  class="col-12">
                           <div class="botones_funcionales">
 
-                              <a  >Editar</a>
-                              <a >Eliminar</a>
+                              <a (click)="editarSolicitud(item.id_solicitud)"  >Editar</a>
+                              <a (click)="eliminarSolicitud(item.id_solicitud)" >Eliminar</a>
                           </div>
                         </div>
                           <div class="item row">
@@ -335,15 +340,22 @@
 
                     </div>
                 </div>
+
+
+
                 <div class="tab-pane fade" id="v-pills-settings" role="tabpanel" aria-labelledby="v-pills-settings-tab">
                     <h3>MIS INMUEBLES</h3>
                     <a class="btn nuevo_i" (click)="redireccionar('registro-inmueble')">NUEVO INMUEBLE</a>
                     <div class="linea"></div>
 
-                    <div class="col-sm-12 ">
+
+
+
+
+                    <div class="col-sm-12 " >
 
                       <!-- <div *ngIf="_rentalPublications != null && _rentalPublications.length > 0" class="col-sm-12"> -->
-                      <div *ngFor="let item of data ">
+                      <div *ngFor="let item of data  | paginate: { itemsPerPage: 3, currentPage: a } ">
                         <br><br>
                         <div  class="col-12">
                           <div class="botones_funcionales">
@@ -415,6 +427,17 @@
                           </div>
 
                       </div>
+
+                      <br>
+                      <div class="col-12 text-center" >
+                        <pagination-controls
+                       (pageChange)="a = $event"
+                       previousLabel="<"
+                       nextLabel=">"
+                       >
+                      </pagination-controls>
+                    </div>
+
 
                   </div>
                 </div>

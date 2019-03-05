@@ -8,6 +8,8 @@ import { AngularFireStorage, AngularFireStorageReference, AngularFireUploadTask 
 import { Observable } from 'rxjs';
 import { AngularFireAuth } from '@angular/fire/auth';
 import { finalize } from 'rxjs/operators';
+import { query } from '@angular/animations';
+
 
 
 
@@ -58,6 +60,12 @@ deleteInmueble(id){
 
   return this.afs.collection(`inmuebles`).doc(`${id}`).delete();
 }
+
+deleteSolicitud(id){
+
+  return this.afs.collection(`solicitudes`).doc(`${id}`).delete();
+}
+
 
 updatePhotoUrl(user){
     this.afs.doc(`users/${user.id}`).update({
@@ -250,11 +258,22 @@ return  this.afs.collection(`users`).valueChanges();
 }
 
 getSolicitudesByUser(uid){
-  return this.afs.collection(`solicitudes`, ref => ref.where("id_user", '==', uid , ).orderBy('fecha','desc') ).valueChanges();
+  return this.afs.collection(`solicitudes`, ref => ref.where("id_user", '==', uid  ).orderBy('fecha','desc') ).valueChanges();
 }
 
 
+geteditSolicitud(id1,id2){
 
+return this.afs.collection(`solicitudes`, ref => {
+
+  let query : firebase.firestore.Query = ref;
+  query = query.where('id_user', '==', id1)
+  query = query.where('id_solicitud', '==', id2)
+  return query
+  }).valueChanges();
+
+
+}
 
 
 }
