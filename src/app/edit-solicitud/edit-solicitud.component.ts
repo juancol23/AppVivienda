@@ -5,6 +5,7 @@ import { MapsAPILoader } from '@agm/core';
 declare var $ :any;
 import { AuthService } from '../servicios/auth.service';
 import * as globals from '../globals/globals';
+import { NgForm } from '@angular/forms';
 import {NgbDate, NgbCalendar,NgbDatepickerConfig,NgbDatepickerI18n,NgbDateStruct} from '@ng-bootstrap/ng-bootstrap';
 
 
@@ -97,6 +98,8 @@ export class EditSolicitudComponent implements OnInit {
   public de:Date;
   public hasta:Date;
 
+  public istrue:boolean;
+
 
 
   constructor(private authService: AuthService ,
@@ -169,7 +172,14 @@ export class EditSolicitudComponent implements OnInit {
 
       this.data="";
 
+      this.istrue=false;
+
+      this.router.navigate(['/perfil']);
+
+
       }else{
+
+        this.istrue = true;
 
         this.data = res;
 
@@ -221,6 +231,8 @@ export class EditSolicitudComponent implements OnInit {
       this.distric=this.data[0]["distrito"]
 
       if(this.distric.length==0 ){}else{
+        this.ub_dis= true
+        this.ub_area= false
         $("#v-pills-home-tab").click();
       }
 
@@ -228,96 +240,150 @@ export class EditSolicitudComponent implements OnInit {
 
       if(this.markers.length==0 ){}
       else{
+
+        this.ub_dis= false
+        this.ub_area= true
         $("#v-pills-profile-tab").click();
       }
 
+
       if(this.data[0]["adicionales"]["terraza"]){
-      $(`input:checkbox[name="terraza"]`).click();
-      this.register.terraza=this.data[0]["adicionales"]["terraza"]
-      }else{
-      this.register.terraza=false
-      }
+        $(`input:checkbox[name="terraza"]`).prop('checked',true)
+        $(`input:checkbox[name="terraza"]`).parent().addClass("pintar");
+        this.register.terraza=this.data[0]["adicionales"]["terraza"]
+        }else{
+        $(`input:checkbox[name="terraza"]`).prop('checked',false)
+        this.register.terraza=false
+        }
+
+
 
       if(this.data[0]["adicionales"]["mascota"]){
-        $(`input:checkbox[name="mascota"]`).click();
+        $(`input:checkbox[name="mascota"]`).prop('checked',true)
+        $(`input:checkbox[name="mascota"]`).parent().addClass("pintar");
         this.register.mascota=this.data[0]["adicionales"]["mascota"]
         }else{
+        $(`input:checkbox[name="mascota"]`).prop('checked',false)
         this.register.mascota=false
         }
 
         if(this.data[0]["adicionales"]["deposito"]){
-          $(`input:checkbox[name="deposito"]`).click();
+
+        $(`input:checkbox[name="deposito"]`).prop('checked',true)
+        $(`input:checkbox[name="deposito"]`).parent().addClass("pintar");
           this.register.deposito=this.data[0]["adicionales"]["deposito"]
           }else{
+            $(`input:checkbox[name="deposito"]`).prop('checked',false)
           this.register.deposito=false
           }
 
           if(this.data[0]["adicionales"]["ascensor"]){
-            $(`input:checkbox[name="ascensor"]`).click();
+
+        $(`input:checkbox[name="ascensor"]`).prop('checked',true)
+        $(`input:checkbox[name="ascensor"]`).parent().addClass("pintar");
             this.register.ascensor=this.data[0]["adicionales"]["ascensor"]
             }else{
+
+        $(`input:checkbox[name="ascensor"]`).prop('checked',false)
             this.register.ascensor=false
             }
 
             if(this.data[0]["adicionales"]["vigilancia"]){
-              $(`input:checkbox[name="vigilancia"]`).click();
+
+        $(`input:checkbox[name="vigilancia"]`).prop('checked',true)
+        $(`input:checkbox[name="vigilancia"]`).parent().addClass("pintar");
               this.register.vigilancia=this.data[0]["adicionales"]["vigilancia"]
               }else{
+                $(`input:checkbox[name="vigilancia"]`).prop('checked',false)
               this.register.vigilancia=false
               }
 
               if(this.data[0]["adicionales"]["servicio"]){
-                $(`input:checkbox[name="servicio"]`).click();
+
+        $(`input:checkbox[name="servicio"]`).prop('checked',true)
+        $(`input:checkbox[name="servicio"]`).parent().addClass("pintar");
                 this.register.servicio=this.data[0]["adicionales"]["servicio"]
                 }else{
+
+        $(`input:checkbox[name="servicio"]`).prop('checked',false)
                 this.register.servicio=false
                 }
 
                 if(this.data[0]["adicionales"]["dscp"]){
-                  $(`input:checkbox[name="dscp"]`).click();
+
+        $(`input:checkbox[name="dscp"]`).prop('checked',true)
+        $(`input:checkbox[name="dscp"]`).parent().addClass("pintar");
                   this.register.dscp=this.data[0]["adicionales"]["dscp"]
                   }else{
+
+        $(`input:checkbox[name="dscp"]`).prop('checked',false)
                   this.register.dscp=false
                   }
 
                   if(this.data[0]["adicionales"]["reunion"]){
-                    $(`input:checkbox[name="reunion"]`).click();
+
+        $(`input:checkbox[name="reunion"]`).prop('checked',true)
+        $(`input:checkbox[name="reunion"]`).parent().addClass("pintar");
                     this.register.reunion=this.data[0]["adicionales"]["reunion"]
                     }else{
+
+        $(`input:checkbox[name="reunion"]`).prop('checked',false)
                     this.register.reunion=false
                     }
 
                     if(this.data[0]["adicionales"]["piscina"]){
-                      $(`input:checkbox[name="piscina"]`).click();
+
+        $(`input:checkbox[name="piscina"]`).prop('checked',true)
+        $(`input:checkbox[name="piscina"]`).parent().addClass("pintar");
                       this.register.piscina=this.data[0]["adicionales"]["piscina"]
                       }else{
+
+        $(`input:checkbox[name="piscina"]`).prop('checked',false)
                       this.register.piscina=false
                       }
 
 
                       if(this.data[0]["adicionales"]["gym"]){
-                        $(`input:checkbox[name="gym"]`).click();
+
+        $(`input:checkbox[name="gym"]`).prop('checked',true)
+        $(`input:checkbox[name="gym"]`).parent().addClass("pintar");
                         this.register.gym=this.data[0]["adicionales"]["gym"]
                         }else{
+
+        $(`input:checkbox[name="gym"]`).prop('checked',false)
                         this.register.gym=false
                         }
 
                         if(this.data[0]["adicionales"]["parrilla"]){
-                          $(`input:checkbox[name="parrilla"]`).click();
+
+        $(`input:checkbox[name="parrilla"]`).prop('checked',true)
+        $(`input:checkbox[name="parrilla"]`).parent().addClass("pintar");
                           this.register.parrilla=this.data[0]["adicionales"]["parrilla"]
                           }else{
+
+        $(`input:checkbox[name="parrilla"]`).prop('checked',false)
                           this.register.parrilla=false
                           }
 
                           if(this.data[0]["adicionales"]["juego"]){
-                            $(`input:checkbox[name="juego"]`).click();
+
+        $(`input:checkbox[name="juego"]`).prop('checked',true)
+        $(`input:checkbox[name="juego"]`).parent().addClass("pintar");
                             this.register.juego=this.data[0]["adicionales"]["juego"]
                             }else{
+
+        $(`input:checkbox[name="juego"]`).prop('checked',false)
                             this.register.juego=false
                             }
 
-                            const date: NgbDate = new NgbDate(this.data[0]["rango"]["de"].toDate().getFullYear(), this.data[0]["rango"]["de"].toDate().getMonth() + 1, this.data[0]["rango"]["de"].toDate().getDate());
-                            const date2: NgbDate = new NgbDate(this.data[0]["rango"]["hasta"].toDate().getFullYear(), this.data[0]["rango"]["hasta"].toDate().getMonth() + 1, this.data[0]["rango"]["hasta"].toDate().getDate());
+                          if(this.data[0]["rango"]["de"]=="" || this.data[0]["rango"]["hasta"]==""){
+
+
+
+                          }else{
+
+                            let date: NgbDate = new NgbDate(this.data[0]["rango"]["de"].toDate().getFullYear(), this.data[0]["rango"]["de"].toDate().getMonth() + 1, this.data[0]["rango"]["de"].toDate().getDate());
+                            let date2: NgbDate = new NgbDate(this.data[0]["rango"]["hasta"].toDate().getFullYear(), this.data[0]["rango"]["hasta"].toDate().getMonth() + 1, this.data[0]["rango"]["hasta"].toDate().getDate());
                             this.fromDate=date
                             this.toDate=date2
 
@@ -325,6 +391,11 @@ export class EditSolicitudComponent implements OnInit {
 
                             this.de=this.data[0]["rango"]["de"].toDate()
                             this.hasta=this.data[0]["rango"]["hasta"].toDate()
+
+
+                          }
+
+
 
 
 
@@ -596,6 +667,98 @@ changeCheckbox(){
       $(this).removeClass("pintar");
     }
   });
+
+}
+
+editSolicitud(form: NgForm){
+
+  if (this.isLogged) {
+
+
+    this.register.user=this.id_usuario;
+    this.register.inmueble=this.id_solicitud;
+
+
+      if(this.register.operation =="VACACIONAL"){
+
+        if(this.fromDate==null ||  this.toDate == null){
+
+          alert("Seleccionar rango de fechas");
+          return false;
+
+        }else{
+
+          this.register.fromDate = this.de;
+          this.register.toDate = this.hasta;
+
+        }
+      }else{
+
+         this.register.fromDate = ""
+         this.register.toDate = ""
+      }
+
+
+
+      if(this.ub_dis){
+
+        if(this.distric.length>0){
+
+          this.register.distrito= this.distric;
+
+        }else{
+
+          alert("Debe seleccionar un distrito.");
+
+          return false;
+
+        }
+
+      }else{
+
+        this.register.distrito=[]
+
+      }
+
+      if(this.ub_area){
+
+        if(this.markers.length>0){
+
+          this.register.radius=this.markers;
+
+
+        }else{
+
+           alert("Debe seleccionar una area.");
+           return false;
+        }
+
+      }else{
+
+        this.register.radius=[];
+
+      }
+
+
+      this.FirebaseService.edit_solicitud(this.register).then((res) =>{
+
+        $(".modal-edit").modal('show');
+
+     }).catch((err)=>
+
+       alert("error")
+
+     );
+
+
+    return false;
+
+
+  }else {
+
+    $("#exampleModalCenter").modal('show');
+
+  }
 
 }
 

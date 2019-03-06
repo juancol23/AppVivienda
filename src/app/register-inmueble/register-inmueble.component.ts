@@ -52,6 +52,8 @@ export class RegisterInmuebleComponent implements OnInit {
   public urlsdb : FileList[]=[];
   public posicion : any;
 
+  public isvacacional:boolean=true;
+
   selectedFiles: FileList;
 
   @ViewChild("search")
@@ -232,7 +234,7 @@ registerInmueble(form: NgForm){
         return false;
       }
 
-        this.FirebaseService.register_inmueble(this.register).then((res) =>{
+        this.FirebaseService.register_inmueble(this.register,this.urlsdb).then((res) =>{
 
               console.log(res)
 
@@ -451,6 +453,27 @@ registerInmueble(form: NgForm){
       this.posicion=this.posicion+1;
     }
 
+
+  }
+
+
+  changeExit(valor){
+
+    this.register.type_apar=valor;
+
+    $('input:radio[name="operation"][value="ALQUILER"]').click();
+
+    if(valor == "OFICINA" || valor == "TERRENO" ){
+
+
+      this.isvacacional=false;
+
+
+    }else{
+
+      this.isvacacional=true;
+
+    }
 
   }
 

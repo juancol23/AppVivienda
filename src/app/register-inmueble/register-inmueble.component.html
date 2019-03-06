@@ -29,28 +29,28 @@
               <input type="text"  value={{user}} hidden>
 
                <div class="btn-group style_toggle " data-toggle="buttons"  style="width: 100%" >
-                  <label  class="btn btn-primary active" (click)="register.type_apar = 'DEPARTAMENTO'" >
+                  <label  class="btn btn-primary active" (click)="changeExit('DEPARTAMENTO')" >
                     <input
                     type="radio"
                     name="type_apar"
                     [(ngModel)]="register.type_apar"
                     value="DEPARTAMENTO">DEPARTAMENTO
                   </label>
-                  <label  class="btn btn-primary" (click)="register.type_apar = 'CASA'">
+                  <label  class="btn btn-primary" (click)="changeExit('CASA')" >
                     <input
                     type="radio"
                     name="type_apar"
                     [(ngModel)]="register.type_apar"
                     value="CASA">CASA
                   </label>
-                  <label  class="btn btn-primary" (click)="register.type_apar = 'OFICINA'">
+                  <label  class="btn btn-primary" (click)="changeExit('OFICINA')">
                     <input
                     type="radio"
                     name="type_apar"
                     [(ngModel)]="register.type_apar"
                     value="OFICINA">OFICINA
                   </label>
-                  <label  class="btn btn-primary" (click)="register.type_apar = 'TERRENO'">
+                  <label  class="btn btn-primary" (click)="changeExit('TERRENO')">
                     <input
                     type="radio"
                     name="type_apar"
@@ -80,7 +80,7 @@
                     value="VENTA"
                     [(ngModel)]="register.operation">VENTA
                   </label>
-                  <label class="btn btn-primary" (click)="register.operation = 'VACACIONAL'">
+                  <label *ngIf="isvacacional" class="btn btn-primary" (click)="register.operation = 'VACACIONAL'">
                     <input
                     type="radio"
                     name="operation"
@@ -144,8 +144,8 @@
               <label  class="col-2 label_text ">Cocheras :</label>
              <div class="col-10">
               <div class="btn-group style_toggle" data-toggle="buttons" style="width: 70%">
-                  <label class="btn btn-primary active" (click)="register.cochera = '1'">
-                    <input type="radio" name="cochera" checked value="1" [(ngModel)]="register.cochera">1
+                  <label class="btn btn-primary active" (click)="register.cochera = 'NO'">
+                    <input type="radio" name="cochera" checked value="NO" [(ngModel)]="register.cochera">NO
                   </label>
                   <label class="btn btn-primary" (click)="register.cochera = '2'">
                     <input type="radio" name="cochera" value="2" [(ngModel)]="register.cochera">2
@@ -272,7 +272,7 @@
            </div>
 
            <div class="form-group row">
-              <label  class="col-2 label_text ">Presupuesto :</label>
+              <label  class="col-2 label_text ">Precio :</label>
              <div class="col-10">
                 <select name="type_p"
                  class="form-control input_login sm-1"
@@ -294,9 +294,9 @@
                (keypress)="onlyNumber($event)"> <label style="color:red ;margin-top: 8px;font-weight: bold;margin-left: 2px" >*</label>
 
                <div *ngIf="price_pre.invalid && (price_pre.dirty)" class="validif" >
-                <div *ngIf="price_pre.errors.required">Presupuesto es requerido*</div>
+                <div *ngIf="price_pre.errors.required">Precio es requerido*</div>
                 <div *ngIf="price_pre.errors.pattern">
-                  Presupuesto debe contener solo numeros*
+                  Precio debe contener solo numeros*
                  </div>
             </div>
 
@@ -476,7 +476,7 @@
                 <input
                 type="checkbox"
                 name="terraza"
-                [(ngModel)]="register.terraza">TERRAZA
+                [(ngModel)]="register.terraza">BALCÓN Ó TERRAZA
               </label>
               <label  class="btn btn-primary margin0 border-b border-r chb" >
 
@@ -491,7 +491,7 @@
                 <input
                 type="checkbox"
                 name="deposito"
-                [(ngModel)]="register.deposito">DEPOSITO
+                [(ngModel)]="register.deposito">DEPÓSITO
               </label>
               <label  class="btn btn-primary margin0 border-b chb" >
                   <i style="font-size: 40px" class="fas fa-grip-vertical"></i><br>
@@ -515,21 +515,21 @@
                   <input
                   type="checkbox"
                   name="servicio"
-                  [(ngModel)]="register.servicio">SERVICIO
+                  [(ngModel)]="register.servicio">CUARTO DE SERVICIO
                 </label>
                 <label  class="btn btn-primary margin0 border-b chb" >
                     <i  style="font-size: 40px" class="fas fa-wheelchair"></i> <br>
                   <input
                   type="checkbox"
                   name="dscp"
-                  [(ngModel)]="register.dscp">DSCSDOS
+                  [(ngModel)]="register.dscp">ACCESO DSCSDOS
                 </label>
                 <label  class="btn btn-primary margin0 border-b chb" >
                     <i style="font-size: 40px" class="fas fa-wine-glass-alt"></i> <br>
                   <input
                   type="checkbox"
                   name="reunion"
-                  [(ngModel)]="register.reunion">REUNION
+                  [(ngModel)]="register.reunion">SALA DE REUNIÓN
                 </label>
 
               </div>

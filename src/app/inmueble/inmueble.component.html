@@ -51,7 +51,7 @@ fullScreen = "true"
         <div class="item row">
 
             <div class="col-sm-4 padding" *ngIf="item.radio.length > 0">
-                <agm-map [latitude]="-12.114090" [longitude]="-77.027842" [zoom]="14" >
+                <agm-map [latitude]="item.radio[0]['lat']" [longitude]="item.radio[0]['lng']" [zoom]="13" >
                     <agm-circle *ngFor="let m of item.radio" [latitude]="m.lat" [longitude]="m.lng"
                    [radius]="500"
                    [fillColor]="m.color">
@@ -121,6 +121,12 @@ fullScreen = "true"
             </div>
         </div>
 
+    </div>
+
+    <div class="col-12 text-center ver_s">
+      <br><br>
+      <span title="Ver Más" (click)="redireccionar('search')">Ver Solicitudes</span><br>
+      <img  class="animation"  src="assets/img/btn_b.png" alt="" width="30px">
     </div>
 
 </div>

@@ -9,6 +9,7 @@ import { RegisterSolicitudComponent } from './register-solicitud/register-solici
 import { EditSolicitudComponent } from './edit-solicitud/edit-solicitud.component';
 import { EditInmuebleComponent } from './edit-inmueble/edit-inmueble.component';
 import { AuthGuard } from './observador/auth.guard';
+import { SolicitudComponent } from './solicitud/solicitud.component';
 
 const app_routes: Routes = [
   {path: 'home', component: InmuebleComponent},
@@ -19,6 +20,7 @@ const app_routes: Routes = [
   {path: 'perfil', component: PerfilComponent,canActivate: [AuthGuard]},
   {path: 'editar-solicitud/:id', component: EditSolicitudComponent,canActivate: [AuthGuard]},
   {path: 'editar-inmueble/:id', component: EditInmuebleComponent,canActivate: [AuthGuard]},
+  {path: 'search', component: SolicitudComponent},
   {path: '**', redirectTo: 'home',pathMatch: 'full' }
 ]
 

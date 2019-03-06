@@ -1,0 +1,300 @@
+<style>
+.ngb-dp-months {
+  display: block !important;
+}
+</style>
+
+<div id="carouselExampleSlidesOnly" class="carousel slide" data-ride="carousel">
+  <div class="carousel-inner">
+      <div class="carousel-item active">
+          <img src="assets/img/bg_solicitud.png" class="d-block w-100 imgslide">
+      </div>
+  </div>
+</div>
+
+<div class="text-publica ">
+  <div class="container">
+
+  <span><a routerLink="home">Home</a> / <a >Solicitudes</a></span>
+
+  <h4 class="register_in_h4">Solicitudes</h4>
+</div>
+</div>
+
+
+<div class="container mod_pub">
+  <div class="row" style="margin :0px">
+    <div class="col-lg-3" >
+        <br>
+
+      <label  class="col-12 label_text ">Tipo :</label>
+<div class="btn-group style_toggle " data-toggle="buttons"  style="width: 100%;display: block" >
+        <label  class="btn btn-primary "   style="width: 50%;font-size: 11px" (click)="changeExit('DEPARTAMENTO')"   >
+          <input
+          type="radio"
+          name="type_apar"
+          [(ngModel)]="register.type_apar"
+          value="DEPARTAMENTO">DEPARTAMENTO
+        </label>
+        <label  class="btn btn-primary" style="width: 50%;font-size: 11px" (click)="changeExit('CASA')"   >
+          <input
+          type="radio"
+          name="type_apar"
+          [(ngModel)]="register.type_apar"
+          value="CASA">CASA
+        </label>
+        <label  class="btn btn-primary" style="width: 50%;font-size: 11px" (click)="changeExit('OFICINA')"   >
+          <input
+          type="radio"
+          name="type_apar"
+          [(ngModel)]="register.type_apar"
+          value="OFICINA">OFICINA
+        </label>
+        <label  class="btn btn-primary" style="width: 50%;font-size: 11px" (click)="changeExit('TERRENO')"   >
+          <input
+          type="radio"
+          name="type_apar"
+          [(ngModel)]="register.type_apar"
+          value="TERRENO">TERRENO
+        </label>
+      </div>
+
+      <label  class="col-12 label_text ">Tipo :</label>
+      <div class="btn-group style_toggle" data-toggle="buttons" style="width: 100%">
+          <label class="btn btn-primary " style="font-size: 11px" (click)="changeVacacional('ALQUILER')" >
+            <input
+            type="radio"
+            name="operation"
+            value="ALQUILER"
+
+            [(ngModel)]="register.operation">ALQUILER
+          </label>
+          <label class="btn btn-primary" style="font-size: 11px" (click)="changeVacacional('VENTA')" >
+            <input
+            type="radio"
+            name="operation"
+            value="VENTA"
+            [(ngModel)]="register.operation">VENTA
+          </label>
+          <label *ngIf="isvacacional" style="font-size: 11px"  class="btn btn-primary" (click)="changeVacacional('VACACIONAL')" >
+            <input
+            type="radio"
+            name="operation"
+            value="VACACIONAL"
+            [(ngModel)]="register.operation">VACACIONAL
+          </label>
+        </div>
+
+        <label  class="col-12 label_text ">Departamento :</label>
+        <select
+                    name="departamento"
+                    [(ngModel)]="register.departamento"
+                    class="form-control input_login sm-4 "
+                    style="display: inline-block"
+                    (change)="selDepart();"
+                    id="department"
+                    #departamento_="ngModel"
+                    >
+                    <option *ngFor="let kdpt of keyDeparts" [selected]="kdpt === departSeleccionado"  [attr.value]="kdpt">{{objDepart[kdpt].name}}</option>
+
+                </select>
+
+                <label  class="col-12 label_text ">Provincia :</label>
+                <select
+                name="provincia"
+                [(ngModel)]="register.provincia"
+                class="form-control input_login sm-4"
+                style="display: inline-block;"
+                id="city"
+                (change)="selCity();"
+                #provincia_="ngModel"
+                >
+                <option *ngFor="let prov of showProvs;" [selected]="prov.sku === proviSeleccionado" value="{{prov.sku}}">{{prov.name}}</option>
+            </select>
+
+            <label  class="col-12 label_text ">Distrito :</label>
+
+            <select
+                        name="distrito"
+                        [(ngModel)]="register.distrito"
+                        class="form-control input_login sm-4"
+                        style="display: inline-block;"
+                        id="district"
+                        (change)="selDistrict();"
+                        #distrito_="ngModel"
+                        >
+            <option *ngFor="let distrito of showDists;" [selected]="distrito.sku === districSeleccionado" value="{{distrito.sku}}">{{distrito.name}}</option>
+
+                    </select>
+
+                    <label  class="col-12 label_text " *ngIf="rangeDate">Tiempo :</label>
+
+                    <div class="text-center" *ngIf="rangeDate" >
+                        <ngb-datepicker #dp id="dp" (select)="onDateSelection($event)" [lang]="es" [displayMonths]="2" [dayTemplate]="t" outsideDays="hidden">
+                        </ngb-datepicker>
+                        <ng-template #t let-date let-focused="focused">
+                            <span class="custom-day"
+                                  [class.focused]="focused"
+                                  [class.range]="isRange(date)"
+                                  [class.faded]="isHovered(date) || isInside(date)"
+                                  (mouseenter)="hoveredDate = date"
+                                  (mouseleave)="hoveredDate = null">
+                              {{ date.day }}
+                            </span>
+                          </ng-template><br>
+                      </div>
+
+                      <label  class="col-12 label_text " >Dormitorios :</label>
+                      <div class="btn-group style_toggle" data-toggle="buttons" style="width:100%">
+                          <label class="btn btn-primary " style="font-size: 11px" (click)="register.door = '1'">
+                            <input type="radio" name="door" value="1" [(ngModel)]="register.door" >1+
+                          </label>
+                          <label class="btn btn-primary"  style="font-size: 11px" (click)="register.door = '2'">
+                            <input type="radio" name="door" value="2" [(ngModel)]="register.door" >2+
+                          </label>
+                          <label class="btn btn-primary" style="font-size: 11px" (click)="register.door = '3'">
+                            <input type="radio" name="door" value="3" [(ngModel)]="register.door" >3+
+                          </label>
+                          <label class="btn btn-primary" style="font-size: 11px" (click)="register.door = '4'">
+                              <input type="radio" name="door" value="4" [(ngModel)]="register.door" >4+
+                            </label>
+                            <label class="btn btn-primary" style="font-size: 11px" (click)="register.door = '5'">
+                                <input type="radio" name="door" value="5" [(ngModel)]="register.door">5+
+                              </label>
+                        </div>
+                      <label  class="col-12 label_text " >Baños :</label>
+                      <div class="btn-group style_toggle" data-toggle="buttons" style="width: 100%">
+                          <label class="btn btn-primary " style="font-size: 11px" (click)="register.bano = '1'">
+                            <input type="radio" name="bano" value="1" checked [(ngModel)]="register.bano">1+
+                          </label>
+                          <label class="btn btn-primary" style="font-size: 11px" (click)="register.bano = '2'">
+                            <input type="radio" name="bano" value="2" [(ngModel)]="register.bano">2+
+                          </label>
+                          <label class="btn btn-primary" style="font-size: 11px" (click)="register.bano = '3'">
+                            <input type="radio" name="bano" value="3" [(ngModel)]="register.bano" >3+
+                          </label>
+                          <label class="btn btn-primary" style="font-size: 11px" (click)="register.bano = '4'">
+                              <input type="radio" name="bano" value="4" [(ngModel)]="register.bano" >4+
+                            </label>
+                            <label class="btn btn-primary" style="font-size: 11px" (click)="register.bano = '5'">
+                                <input type="radio" name="bano" value="5" [(ngModel)]="register.bano" >5+
+                              </label>
+                        </div>
+                      <label  class="col-12 label_text " >Cochera :</label>
+
+                      <div class="btn-group style_toggle" data-toggle="buttons" style="width:100%">
+                          <label class="btn btn-primary " style="font-size: 11px" (click)="register.cochera = 'NO'">
+                            <input type="radio" name="cochera" checked value="NO" [(ngModel)]="register.cochera">NO
+                          </label>
+                          <label class="btn btn-primary" style="font-size: 11px" (click)="register.cochera = '1'">
+                            <input type="radio" name="cochera" value="1" [(ngModel)]="register.cochera">1+
+                          </label>
+                          <label class="btn btn-primary" style="font-size: 11px" (click)="register.cochera = '2'">
+                            <input type="radio" name="cochera" value="2" [(ngModel)]="register.cochera">2+
+                          </label>
+                          <label class="btn btn-primary" style="font-size: 11px" (click)="register.cochera = '3'">
+                              <input type="radio" name="cochera" value="3" [(ngModel)]="register.cochera">3+
+                            </label>
+                            <label class="btn btn-primary" style="font-size: 11px" (click)="register.cochera = '4'">
+                                <input type="radio" name="cochera" value="4" [(ngModel)]="register.cochera">4+
+                              </label>
+                        </div>
+
+    </div>
+
+<div class="col-lg-9"  style="border-left: 1px solid lightgray">
+
+  <!-- <div *ngIf="_rentalPublications != null && _rentalPublications.length > 0" class="col-sm-12"> -->
+  <div *ngFor="let item of data | paginate: {id: 'search', itemsPerPage: 5, currentPage: p } ">
+    <br>
+      <div class="item row" style="margin: 0px">
+
+          <div class="col-sm-4 padding" *ngIf="item.radio.length > 0">
+              <agm-map [latitude]="item.radio[0]['lat']" [longitude]="item.radio[0]['lng']" [zoom]="13" >
+                  <agm-circle *ngFor="let m of item.radio" [latitude]="m.lat" [longitude]="m.lng"
+                 [radius]="500"
+                 [fillColor]="m.color">
+                 </agm-circle>
+              </agm-map>
+          </div>
+          <div class="col-sm-4 padding" *ngIf="item.radio.length === 0">
+              <agm-map [latitude]="-12.114090" [longitude]="-77.027842" [zoom]="13" >
+              </agm-map>
+          </div>
+
+
+          <div class="col-sm-8  padding">
+              <div class="maps-renta row" style="margin:0px">
+
+                      <div class="col-6 margin_p text-left " >
+                          <div class="name-busca "><i class="fas fa-user"></i>{{user[item.id_user]}} ESTA BUSCANDO:</div>
+                      </div>
+                      <div class="col-6 margin_p text-right " >
+                          <div class="estados">{{item.operacion}}</div>
+                      </div>
+                      <div class="col-12 margin_p text-right" *ngIf="item.distrito.length>0" >
+                          <div class="d-inline-flex" *ngFor="let m of item.distrito" > {{m.nombre}} - </div><i class="fas fa-map-marker-alt"></i>
+                      </div>
+                      <div class="col-12 margin_p text-right" *ngIf="item.distrito.length===0" >
+                          <div class="d-inline-flex">Seleccion por Area     <i class="fas fa-map-marker-alt"></i></div>
+                      </div>
+
+                      <div class="col-12 margin_p"  >
+                        <div class="row" style="margin:0px">
+                          <div class="col-6 " style="padding-left: 0px;padding-right: 5px">
+                            <div class="border_s">
+                                <i class="fas fa-home"></i><span class="text-right" >{{item.tipo_departamento}}</span>
+                          </div>
+                        </div>
+                          <div class="col-6 " style="padding-right: 0px;padding-left: 5px">
+                            <div class="border_s">
+                            <i class="fas fa-bed"></i><span class="text-right" >{{item.cuartos}} DORMITORIOS</span>
+                          </div>
+                          </div>
+                        </div>
+                      </div >
+                      <br>
+                      <div class="col-12 margin_p_10"  >
+                          <div class="row" style="margin:0px">
+
+                            <div class="col-3" style="padding-left: 0px">
+                              <div class="border_s"><i class="fab fa-medium"></i><span class="text-right" >{{item.area}} M²</span>
+                              </div>
+                            </div>
+
+                            <div class="col-4 " style="padding-left: 0px;padding-right: 0px">
+                              <div class="border_s"><i class="fas fa-toilet"></i><span class="text-right" >{{item.bano}} BAÑOS</span>
+                              </div>
+                            </div>
+
+                            <div class="col-5" style="padding-right: 0px">
+                              <div class="border_s"><i class="fas fa-dollar-sign"></i><span class="text-right" >{{item.presupuesto.precio}} {{item.presupuesto.moneda}}</span>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+
+
+
+              </div>
+          </div>
+      </div>
+
+  </div>
+
+  <br>
+  <div class="col-12 text-center" >
+    <pagination-controls
+   (pageChange)="p = $event"
+   previousLabel="<"
+   nextLabel=">"
+   id="search"
+   >
+  </pagination-controls>
+</div>
+
+
+
+</div>
+
+</div>

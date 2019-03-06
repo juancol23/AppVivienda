@@ -26,28 +26,28 @@
               <input type="text"  value={{user}} hidden>
 
                <div class="btn-group style_toggle " data-toggle="buttons"  style="width: 100%" >
-                  <label  class="btn btn-primary " (click)="register.type_apar = 'DEPARTAMENTO'" >
+                  <label  class="btn btn-primary "  (click)="changeExit('DEPARTAMENTO')" >
                     <input
                     type="radio"
                     name="type_apar"
                     [(ngModel)]="register.type_apar"
                     value="DEPARTAMENTO">DEPARTAMENTO
                   </label>
-                  <label  class="btn btn-primary" (click)="register.type_apar = 'CASA'">
+                  <label  class="btn btn-primary" (click)="changeExit('CASA')">
                     <input
                     type="radio"
                     name="type_apar"
                     [(ngModel)]="register.type_apar"
                     value="CASA">CASA
                   </label>
-                  <label  class="btn btn-primary" (click)="register.type_apar = 'OFICINA'">
+                  <label  class="btn btn-primary" (click)="changeExit('OFICINA')">
                     <input
                     type="radio"
                     name="type_apar"
                     [(ngModel)]="register.type_apar"
                     value="OFICINA">OFICINA
                   </label>
-                  <label  class="btn btn-primary" (click)="register.type_apar = 'TERRENO'">
+                  <label  class="btn btn-primary" (click)="changeExit('TERRENO')">
                     <input
                     type="radio"
                     name="type_apar"
@@ -78,7 +78,7 @@
                     value="VENTA"
                     [(ngModel)]="register.operation">VENTA
                   </label>
-                  <label class="btn btn-primary" (click)="changeVacacional('VACACIONAL')" >
+                  <label *ngIf="isvacacional"  class="btn btn-primary" (click)="changeVacacional('VACACIONAL')" >
                     <input
                     type="radio"
                     name="operation"
@@ -111,21 +111,21 @@
            <div class="form-group  row">
               <label  class="col-2 label_text ">Dormitorios :</label>
              <div class="col-10">
-              <div class="btn-group style_toggle" data-toggle="buttons" style="width: 70%">
+              <div class="btn-group style_toggle" data-toggle="buttons" style="width: 80%">
                   <label class="btn btn-primary active" (click)="register.door = '1'">
-                    <input type="radio" name="door" value="1" [(ngModel)]="register.door" >1
+                    <input type="radio" name="door" value="1" [(ngModel)]="register.door" >1 a +
                   </label>
                   <label class="btn btn-primary" (click)="register.door = '2'">
-                    <input type="radio" name="door" value="2" [(ngModel)]="register.door" >2
+                    <input type="radio" name="door" value="2" [(ngModel)]="register.door" >2 a +
                   </label>
                   <label class="btn btn-primary" (click)="register.door = '3'">
-                    <input type="radio" name="door" value="3" [(ngModel)]="register.door" >3
+                    <input type="radio" name="door" value="3" [(ngModel)]="register.door" >3 a +
                   </label>
                   <label class="btn btn-primary" (click)="register.door = '4'">
-                      <input type="radio" name="door" value="4" [(ngModel)]="register.door" >4
+                      <input type="radio" name="door" value="4" [(ngModel)]="register.door" >4 a +
                     </label>
                     <label class="btn btn-primary" (click)="register.door = '5'">
-                        <input type="radio" name="door" value="5" [(ngModel)]="register.door">5+
+                        <input type="radio" name="door" value="5" [(ngModel)]="register.door">5 a +
                       </label>
                 <label style="color:red ;margin-top: 8px;font-weight: bold;margin-left: 2px" >*</label>
                 </div>
@@ -135,21 +135,21 @@
            <div class="form-group row">
               <label  class="col-2 label_text ">Baños :</label>
              <div class="col-10">
-              <div class="btn-group style_toggle" data-toggle="buttons" style="width: 70%">
+              <div class="btn-group style_toggle" data-toggle="buttons" style="width: 80%">
                   <label class="btn btn-primary active" (click)="register.bano = '1'">
-                    <input type="radio" name="bano" value="1" checked [(ngModel)]="register.bano">1
+                    <input type="radio" name="bano" value="1" checked [(ngModel)]="register.bano">1 a +
                   </label>
                   <label class="btn btn-primary" (click)="register.bano = '2'">
-                    <input type="radio" name="bano" value="2" [(ngModel)]="register.bano">2
+                    <input type="radio" name="bano" value="2" [(ngModel)]="register.bano">2 a +
                   </label>
                   <label class="btn btn-primary" (click)="register.bano = '3'">
-                    <input type="radio" name="bano" value="3" [(ngModel)]="register.bano" >3
+                    <input type="radio" name="bano" value="3" [(ngModel)]="register.bano" >3 a +
                   </label>
                   <label class="btn btn-primary" (click)="register.bano = '4'">
-                      <input type="radio" name="bano" value="4" [(ngModel)]="register.bano" >4
+                      <input type="radio" name="bano" value="4" [(ngModel)]="register.bano" >4 a +
                     </label>
                     <label class="btn btn-primary" (click)="register.bano = '5'">
-                        <input type="radio" name="bano" value="5" [(ngModel)]="register.bano" >5+
+                        <input type="radio" name="bano" value="5" [(ngModel)]="register.bano" >5 a +
                       </label>
                 <label style="color:red ;margin-top: 8px;font-weight: bold;margin-left: 2px" >*</label>
                 </div>
@@ -159,21 +159,21 @@
            <div class="form-group  row">
               <label  class="col-2 label_text ">Cocheras :</label>
              <div class="col-10">
-              <div class="btn-group style_toggle" data-toggle="buttons" style="width: 70%">
+              <div class="btn-group style_toggle" data-toggle="buttons" style="width: 80%">
                   <label class="btn btn-primary active" (click)="register.cochera = 'NO'">
                     <input type="radio" name="cochera" checked value="NO" [(ngModel)]="register.cochera">NO
                   </label>
                   <label class="btn btn-primary" (click)="register.cochera = '1'">
-                    <input type="radio" name="cochera" value="1" [(ngModel)]="register.cochera">1
+                    <input type="radio" name="cochera" value="1" [(ngModel)]="register.cochera">1 a +
                   </label>
                   <label class="btn btn-primary" (click)="register.cochera = '2'">
-                    <input type="radio" name="cochera" value="2" [(ngModel)]="register.cochera">2
+                    <input type="radio" name="cochera" value="2" [(ngModel)]="register.cochera">2 a +
                   </label>
                   <label class="btn btn-primary" (click)="register.cochera = '3'">
-                      <input type="radio" name="cochera" value="3" [(ngModel)]="register.cochera">3
+                      <input type="radio" name="cochera" value="3" [(ngModel)]="register.cochera">3 a +
                     </label>
                     <label class="btn btn-primary" (click)="register.cochera = '4'">
-                        <input type="radio" name="cochera" value="4" [(ngModel)]="register.cochera">4+
+                        <input type="radio" name="cochera" value="4" [(ngModel)]="register.cochera">4 a +
                       </label>
                 <label style="color:red ;margin-top: 8px;font-weight: bold;margin-left: 2px" >*</label>
                 </div>
@@ -183,7 +183,7 @@
            <div class="form-group row ">
               <label  class="col-2 label_text ">Vista :</label>
              <div class="col-10">
-              <div class="btn-group style_toggle" data-toggle="buttons" style="width: 100%">
+              <div class="btn-group style_toggle" data-toggle="buttons" style="width: 70%">
                   <label class="btn btn-primary active" (click)="register.vista = 'INTERNA'">
                     <input type="radio" name="vista" checked value="INTERNA" [(ngModel)]="register.vista">INTERNA
                   </label>
@@ -191,8 +191,8 @@
                     <input type="radio" name="vista" value="EXTERNA" [(ngModel)]="register.vista" >EXTERNA
                   </label>
                   <label class="btn btn-primary" (click)="register.vista = 'INDISTINTO'">
-                    <input type="radio" name="vista" value="INDISTINTO" [(ngModel)]="register.vista" >INDISTINTO
-                  </label>
+                      <input type="radio" name="vista" value="INDISTINTO" [(ngModel)]="register.vista">INDISTINTO
+                    </label>
 
                 <label style="color:red ;margin-top: 8px;font-weight: bold;margin-left: 2px" >*</label>
                 </div>
@@ -202,7 +202,7 @@
            <div class="form-group row">
               <label  class="col-2 label_text ">Tipo :</label>
              <div class="col-10">
-              <div class="btn-group style_toggle" data-toggle="buttons"  style="width: 100%">
+              <div class="btn-group style_toggle" data-toggle="buttons"  style="width: 70%">
                   <label class="btn btn-primary active" (click)="register.tipo = 'FLAT'">
                     <input type="radio" name="tipo" checked value="FLAT" [(ngModel)]="register.tipo">FLAT
                   </label>
@@ -210,8 +210,9 @@
                     <input type="radio" name="tipo" value="DUPLEX" [(ngModel)]="register.tipo">DUPLEX
                   </label>
                   <label class="btn btn-primary" (click)="register.tipo = 'INDISTINTO'">
-                    <input type="radio" name="tipo" value="INDISTINTO" [(ngModel)]="register.tipo">INDISTINTO
-                  </label>
+                      <input type="radio" name="tipo" value="INDISTINTO" [(ngModel)]="register.tipo">INDISTINTO
+                    </label>
+
 
                 <label style="color:red ;margin-top: 8px;font-weight: bold;margin-left: 2px" >*</label>
                 </div>
@@ -221,7 +222,7 @@
            <div class="form-group row ">
               <label  class="col-2 label_text ">Amoblado :</label>
              <div class="col-10">
-              <div class="btn-group style_toggle" data-toggle="buttons"  style="width: 100%">
+              <div class="btn-group style_toggle" data-toggle="buttons"  style="width: 70%">
                   <label class="btn btn-primary active" (click)="register.amoblado = 'FULL'">
                     <input type="radio" name="amoblado" checked value="FULL" [(ngModel)]="register.amoblado">FULL
                   </label>
@@ -232,8 +233,10 @@
                       <input type="radio" name="amoblado" value="SIN" [(ngModel)]="register.amoblado">SIN
                     </label>
                     <label class="btn btn-primary" (click)="register.amoblado = 'INDISTINTO'">
-                      <input type="radio" name="amoblado" value="INDISTINTO" [(ngModel)]="register.amoblado">INDISTINTO
-                    </label>
+                        <input type="radio" name="amoblado" value="INDISTINTO" [(ngModel)]="register.amoblado">INDISTINTO
+                      </label>
+
+
 
                 <label style="color:red ;margin-top: 8px;font-weight: bold;margin-left: 2px" >*</label>
                 </div>
@@ -243,12 +246,17 @@
            <div class="form-group row">
               <label  class="col-2 label_text ">Estreno :</label>
              <div class="col-10">
-              <div class="btn-group style_toggle" data-toggle="buttons"  style="width: 40%">
+              <div class="btn-group style_toggle" data-toggle="buttons"  style="width: 50%">
                   <label class="btn btn-primary active" (click)="register.estreno = 'SI'">
                     <input type="radio" name="estreno" checked value="SI" [(ngModel)]="register.estreno">SI
                   </label>
                   <label class="btn btn-primary" (click)="register.estreno = 'NO'">
                     <input type="radio" name="estreno" value="NO" [(ngModel)]="register.estreno">NO
+                  </label>
+
+
+                  <label class="btn btn-primary" (click)="register.estreno = 'INDISTINTO'">
+                    <input type="radio" name="estreno" value="INDISTINTO" [(ngModel)]="register.estreno">INDISTINTO
                   </label>
 
                 <label style="color:red ;margin-top: 8px;font-weight: bold;margin-left: 2px" >*</label>
@@ -259,13 +267,17 @@
            <div class="form-group row">
               <label  class="col-2 label_text ">Proyecto :</label>
              <div class="col-10">
-              <div class="btn-group style_toggle" data-toggle="buttons"  style="width: 40%">
+              <div class="btn-group style_toggle" data-toggle="buttons"  style="width: 50%">
                   <label class="btn btn-primary active" (click)="register.proyecto = 'SI'">
                     <input type="radio" name="proyecto" checked value="SI" [(ngModel)]="register.proyecto">SI
                   </label>
                   <label class="btn btn-primary" (click)="register.proyecto = 'NO'">
                     <input type="radio" name="proyecto" value="NO" [(ngModel)]="register.proyecto">NO
                   </label>
+                  <label class="btn btn-primary" (click)="register.proyecto = 'INDISTINTO'">
+                    <input type="radio" name="proyecto" value="INDISTINTO" [(ngModel)]="register.proyecto">INDISTINTO
+                  </label>
+
 
                 <label style="color:red ;margin-top: 8px;font-weight: bold;margin-left: 2px" >*</label>
                 </div>
@@ -563,7 +575,7 @@
                 <input
                 type="checkbox"
                 name="terraza"
-                [(ngModel)]="register.terraza">TERRAZA
+                [(ngModel)]="register.terraza">BALCÓN Ó TERRAZA
               </label>
               <label  class="btn btn-primary margin0 border-b border-r chb" >
 
@@ -578,7 +590,7 @@
                 <input
                 type="checkbox"
                 name="deposito"
-                [(ngModel)]="register.deposito">DEPOSITO
+                [(ngModel)]="register.deposito">DEPÓSITO
               </label>
               <label  class="btn btn-primary margin0 border-b  chb" >
                   <i style="font-size: 40px" class="fas fa-grip-vertical"></i><br>
@@ -602,21 +614,21 @@
                   <input
                   type="checkbox"
                   name="servicio"
-                  [(ngModel)]="register.servicio">SERVICIO
+                  [(ngModel)]="register.servicio">CUARTO DE SERVICIO
                 </label>
                 <label  class="btn btn-primary margin0 border-b chb" >
                     <i  style="font-size: 40px" class="fas fa-wheelchair"></i> <br>
                   <input
                   type="checkbox"
                   name="dscp"
-                  [(ngModel)]="register.dscp">DSCSDOS
+                  [(ngModel)]="register.dscp">ACCESO DSCSDOS
                 </label>
                 <label  class="btn btn-primary margin0 border-b chb" >
                     <i style="font-size: 40px" class="fas fa-wine-glass-alt"></i> <br>
                   <input
                   type="checkbox"
                   name="reunion"
-                  [(ngModel)]="register.reunion">REUNION
+                  [(ngModel)]="register.reunion">SALA DE REUNIÓN
                 </label>
 
               </div>

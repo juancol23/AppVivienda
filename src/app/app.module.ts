@@ -28,6 +28,9 @@ import { NgxSpinnerModule } from 'ngx-spinner';
 import {NgxPaginationModule} from 'ngx-pagination';
 import { EditInmuebleComponent } from './edit-inmueble/edit-inmueble.component';
 import { EditSolicitudComponent } from './edit-solicitud/edit-solicitud.component';
+import { SolicitudComponent } from './solicitud/solicitud.component';
+import { DetailInmuebleComponent } from './detail-inmueble/detail-inmueble.component';
+import { DetailSolicitudComponent } from './detail-solicitud/detail-solicitud.component';
 
 
 
@@ -47,7 +50,10 @@ import { EditSolicitudComponent } from './edit-solicitud/edit-solicitud.componen
     RegisterInmuebleComponent,
     RegisterSolicitudComponent,
     EditInmuebleComponent,
-    EditSolicitudComponent
+    EditSolicitudComponent,
+    SolicitudComponent,
+    DetailInmuebleComponent,
+    DetailSolicitudComponent
   ],
   imports: [
     BrowserModule,

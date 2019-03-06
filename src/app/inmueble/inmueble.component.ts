@@ -12,11 +12,6 @@ import { NgxSpinnerService } from 'ngx-spinner';
 export class InmuebleComponent implements OnInit {
   public data:any=[];
   public user:any={};
-  public latitude: number;
-  public longitude: number;
-  public is_radio:boolean;
-  public not_radio:boolean;
-  public istrue:boolean = false;
 
 
   constructor(private router: Router,
@@ -26,17 +21,11 @@ export class InmuebleComponent implements OnInit {
 
   ngOnInit() {
 
-    this.is_radio = true;
-    this.not_radio=false;
     this.getAllUser();
     this.getSolicitud();
     this.spinner.show();
 
-   /* this.afs.firestore.collection(`users`).onSnapshot(function(querySnapshot) {
-      var cities = {};
-      console.log(querySnapshot.size);
-      console.log("Current cities in CA: ", cities);
-    });*/
+
 
 
 

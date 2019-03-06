@@ -180,7 +180,17 @@ html {
     transition: 0.5s;
     font-family: volteM;
     font-weight: 600;
+    font-size: 18px
+
 }
+
+@media (max-width: 714px){
+  .h6 {
+    font-size: 16px !important
+
+}
+}
+
 
 .modal-content {
     border-radius: 0px;
@@ -323,6 +333,7 @@ form {
 
 
 .text-publica h4 {
+  font-size: 30px;
     padding-top: 30px;
     transition: 0.5s;
     text-align: center !important;
@@ -679,9 +690,8 @@ agm-map {
 .margin0{
   margin: 0px;
   width: 25%;
-  padding: 20px;
-
-
+  padding: 20px 0px;
+  font-size: 12px !important;
 }
 a {
   color: rgb(24, 52, 207);
@@ -956,7 +966,7 @@ ngb-datepicker {
 
 @media (max-width: 621px) {
     .h6 {
-        font-size: 11.5px !important;
+        font-size: 12.5px !important;
         font-weight: bold;
     }
     .btn_prin {
@@ -1021,7 +1031,7 @@ ngb-datepicker {
         max-width: 100%;
     }
     .text-publica h4 {
-        font-size: 20px;
+        font-size: 23px;
     }
 }
 
@@ -1481,7 +1491,7 @@ html, body{
 
 .h4:hover h4{
   font-weight: bold !important;
-  animation: none !important;
+
 }
 
 
@@ -1491,3 +1501,26 @@ html, body{
 }
 
 
+.ver_s span{
+
+  font-size: 20px;
+  font-family: volteR !important;
+  color: rgb(24, 52, 207,1) !important;
+  cursor: pointer;
+  transition: 0.5s
+}
+
+
+
+.animation{
+
+  animation: bounce 1.2s;
+  animation-direction: alternate;
+  animation-iteration-count: infinite;
+}
+
+
+@keyframes bounce {
+  from { transform: translate3d(0, -5px, 0);     }
+  to   { transform: translate3d(0, 5px, 0); }
+}

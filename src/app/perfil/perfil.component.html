@@ -245,7 +245,7 @@
 
                     <div class="col-sm-12  " >
 
-                      <div *ngFor="let item of solicitudata | paginate: { itemsPerPage: 3, currentPage: p } ">
+                      <div *ngFor="let item of solicitudata | paginate: {id: 'solicitud', itemsPerPage: 2, currentPage: a } ">
                         <br><br>
                         <div  class="col-12">
                           <div class="botones_funcionales">
@@ -331,9 +331,10 @@
  <br>
                       <div class="col-12 text-center" >
                         <pagination-controls
-                       (pageChange)="p = $event"
+                       (pageChange)="a = $event"
                        previousLabel="<"
                        nextLabel=">"
+                       id="solicitud"
                        >
                       </pagination-controls>
                     </div>
@@ -355,13 +356,13 @@
                     <div class="col-sm-12 " >
 
                       <!-- <div *ngIf="_rentalPublications != null && _rentalPublications.length > 0" class="col-sm-12"> -->
-                      <div *ngFor="let item of data  | paginate: { itemsPerPage: 3, currentPage: a } ">
+                      <div *ngFor="let items of data  | paginate: {id: 'inmueble', itemsPerPage: 2, currentPage: p } ">
                         <br><br>
                         <div  class="col-12">
                           <div class="botones_funcionales">
 
-                              <a  (click)="editarInmueble(item.id_inmueble)">Editar</a>
-                              <a (click)="eliminarInmueble(item.id_inmueble)" >Eliminar</a>
+                              <a  (click)="editarInmueble(items.id_inmueble)">Editar</a>
+                              <a (click)="eliminarInmueble(items.id_inmueble)" >Eliminar</a>
                           </div>
                         </div>
                           <div class="item row">
@@ -379,22 +380,22 @@
                                               <div class="name-busca "><i class="fas fa-user"></i> ESTAS OFRECIENDO:</div>
                                           </div>
                                           <div class="col-6 margin_p text-right " >
-                                              <div class="estados">{{item.operacion}}</div>
+                                              <div class="estados">{{items.operacion}}</div>
                                           </div>
                                           <div class="col-12 margin_p text-right">
-                                              <div class="">{{item.provincia}} / {{item.distrito}} <i class="fas fa-map-marker-alt"></i></div>
+                                              <div class="">{{items.provincia}} / {{items.distrito}} <i class="fas fa-map-marker-alt"></i></div>
                                           </div>
 
                                           <div class="col-12 margin_p"  >
                                             <div class="row" style="margin:0px">
                                               <div class="col-6 " style="padding-left: 0px;padding-right: 5px">
                                                 <div class="border_s">
-                                                    <i class="fas fa-home"></i><span class="text-right" >{{item.tipo_departamento}}</span>
+                                                    <i class="fas fa-home"></i><span class="text-right" >{{items.tipo_departamento}}</span>
                                               </div>
                                             </div>
                                               <div class="col-6 " style="padding-right: 0px;padding-left: 5px">
                                                 <div class="border_s">
-                                                <i class="fas fa-bed"></i><span class="text-right" >{{item.cuartos}} DORMITORIOS</span>
+                                                <i class="fas fa-bed"></i><span class="text-right" >{{items.cuartos}} DORMITORIOS</span>
                                               </div>
                                               </div>
                                             </div>
@@ -404,17 +405,17 @@
                                               <div class="row" style="margin:0px">
 
                                                 <div class="col-3" style="padding-left: 0px">
-                                                  <div class="border_s"><i class="fab fa-medium"></i><span class="text-right" >{{item.area}} M²</span>
+                                                  <div class="border_s"><i class="fab fa-medium"></i><span class="text-right" >{{items.area}} M²</span>
                                                   </div>
                                                 </div>
 
                                                 <div class="col-4 " style="padding-left: 0px;padding-right: 0px">
-                                                  <div class="border_s"><i class="fas fa-toilet"></i><span class="text-right" >{{item.bano}} BAÑOS</span>
+                                                  <div class="border_s"><i class="fas fa-toilet"></i><span class="text-right" >{{items.bano}} BAÑOS</span>
                                                   </div>
                                                 </div>
 
                                                 <div class="col-5" style="padding-right: 0px">
-                                                  <div class="border_s"><i class="fas fa-dollar-sign"></i><span class="text-right" >{{item.presupuesto.precio}} {{item.presupuesto.moneda}}</span>
+                                                  <div class="border_s"><i class="fas fa-dollar-sign"></i><span class="text-right" >{{items.presupuesto.precio}} {{items.presupuesto.moneda}}</span>
                                                   </div>
                                                 </div>
                                               </div>
@@ -429,11 +430,13 @@
                       </div>
 
                       <br>
+
                       <div class="col-12 text-center" >
                         <pagination-controls
-                       (pageChange)="a = $event"
+                       (pageChange)="p = $event"
                        previousLabel="<"
                        nextLabel=">"
+                       id="inmueble"
                        >
                       </pagination-controls>
                     </div>

@@ -103,10 +103,10 @@ updatePhotoUrl(user){
   }
 
 
-  register_inmueble(inmueble ) {
+  register_inmueble(inmueble,images ) {
 
 
-    /*for (const file of images) {
+    for (const file of images) {
 
       const path = `inmuebles/${inmueble.id}/${file.name}`;
       const ref = this.afStorage.ref(path);
@@ -124,7 +124,7 @@ updatePhotoUrl(user){
           });
         })
       })
-   }*/
+   }
 
 
     const data: inmuebleInterface = {
@@ -245,6 +245,11 @@ updatePhotoUrl(user){
 
 }
 
+getSolicitudesAll(){
+
+  return this.afs.collection(`solicitudes`, ref => ref.orderBy('fecha','desc')).valueChanges();
+
+  }
 
 getSolicitudesHome(){
 
@@ -272,6 +277,58 @@ return this.afs.collection(`solicitudes`, ref => {
   return query
   }).valueChanges();
 
+
+}
+
+
+edit_solicitud(solicitud) {
+
+
+  const data: SolicitudInterface = {
+        tipo_departamento: solicitud.type_apar,
+        operacion:         solicitud.operation,
+        cuartos:           solicitud.door,
+        bano:              solicitud.bano,
+        cochera:           solicitud.cochera,
+        vista:             solicitud.vista,
+        tipo_depa:         solicitud.tipo,
+        amoblado:          solicitud.amoblado,
+        area:              solicitud.area,
+        estreno:           solicitud.estreno,
+        proyecto:          solicitud.proyecto,
+        presupuesto:{
+          moneda:solicitud.pre_type,
+          precio:solicitud.pre_price
+        },
+        mantenimiento:{
+          moneda:solicitud.man_type,
+          precio:solicitud.man_price
+        },
+        distrito:          solicitud.distrito,
+        radio:             solicitud.radius,
+        rango: {
+          de:solicitud.fromDate,
+          hasta:solicitud.toDate
+        },
+        comentario:        solicitud.comentario,
+        adicionales:{
+          terraza:solicitud.terraza,
+          mascota:solicitud.mascota,
+          deposito:solicitud.deposito,
+          ascensor:solicitud.ascensor,
+          vigilancia:solicitud.vigilancia,
+          servicio:solicitud.servicio,
+          dscp:solicitud.dscp,
+          reunion:solicitud.reunion,
+          piscina:solicitud.piscina,
+          gym:solicitud.gym,
+          parrilla:solicitud.parrilla,
+          juego:solicitud.juego,
+        }
+
+  }
+
+  return this.afs.collection(`solicitudes`).doc(`${solicitud.inmueble}`).update(data);
 
 }
 

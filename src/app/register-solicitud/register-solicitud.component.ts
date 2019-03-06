@@ -86,6 +86,9 @@ export class RegisterSolicitudComponent implements OnInit {
   public ub_area:boolean = false;
 
 
+  public isvacacional:boolean=true;
+
+
   public rangeDate:boolean=false;
   public hoveredDate: NgbDate;
   public fromDate: NgbDate;
@@ -113,6 +116,8 @@ export class RegisterSolicitudComponent implements OnInit {
     this.changeCheckbox();
 
     console.log(new Date());
+
+
 
 
   }
@@ -426,6 +431,29 @@ changeVacacional(valor){
   }
 
 }
+
+changeExit(valor){
+
+  this.register.type_apar=valor;
+
+  this.changeVacacional('ALQUILER');
+
+  $('input:radio[name="operation"][value="ALQUILER"]').click();
+
+  if(valor == "OFICINA" || valor == "TERRENO" ){
+
+
+    this.isvacacional=false;
+
+
+  }else{
+
+    this.isvacacional=true;
+
+  }
+
+}
+
 
 
 registersolicitud(form: NgForm){
