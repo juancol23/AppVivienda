@@ -487,7 +487,7 @@ edit_solicitud(solicitud) {
         vista:             solicitud.vista,
         tipo_depa:         solicitud.tipo,
         amoblado:          solicitud.amoblado,
-        area:              solicitud.area,
+        area:             parseInt( solicitud.area),
         estreno:           solicitud.estreno,
         proyecto:          solicitud.proyecto,
         presupuesto:{
