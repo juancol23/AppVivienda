@@ -9,6 +9,7 @@ import { Observable } from 'rxjs';
 import { AngularFireAuth } from '@angular/fire/auth';
 import { finalize } from 'rxjs/operators';
 import { query } from '@angular/animations';
+import { isUndefined } from 'util';
 
 
 
@@ -138,20 +139,18 @@ updatePhotoUrl(user){
           vista:             inmueble.vista,
           tipo_depa:         inmueble.tipo,
           amoblado:          inmueble.amoblado,
-          area:              inmueble.area,
+          area:              parseInt(inmueble.area),
           estreno:           inmueble.estreno,
           proyecto:          inmueble.proyecto,
           presupuesto:{
             moneda:inmueble.pre_type,
-            precio:inmueble.pre_price
+            precio:parseInt(inmueble.pre_price)
           },
           mantenimiento:{
             moneda:inmueble.man_type,
-            precio:inmueble.man_price
+            precio:parseInt(inmueble.man_price)
           },
-          departamento:      inmueble.departamento_,
-          provincia:         inmueble.provincia_,
-          distrito:          inmueble.distrito_,
+          coddireccion:          inmueble.distrito_,
           direccion:         inmueble.direccion,
           latitud:           inmueble.latitud,
           longitud:          inmueble.longitud,
@@ -205,16 +204,16 @@ updatePhotoUrl(user){
         vista:             solicitud.vista,
         tipo_depa:         solicitud.tipo,
         amoblado:          solicitud.amoblado,
-        area:              solicitud.area,
+        area:              parseInt(solicitud.area),
         estreno:           solicitud.estreno,
         proyecto:          solicitud.proyecto,
         presupuesto:{
           moneda:solicitud.pre_type,
-          precio:solicitud.pre_price
+          precio:parseInt(solicitud.pre_price)
         },
         mantenimiento:{
           moneda:solicitud.man_type,
-          precio:solicitud.man_price
+          precio:parseInt(solicitud.man_price)
         },
         distrito:          solicitud.distrito,
         radio:             solicitud.radius,
@@ -245,9 +244,204 @@ updatePhotoUrl(user){
 
 }
 
-getSolicitudesAll(){
+getSolicitudesAll(filtro){
 
-  return this.afs.collection(`solicitudes`, ref => ref.orderBy('fecha','desc')).valueChanges();
+  return this.afs.collection(`solicitudes`, ref => {
+
+    let query : firebase.firestore.Query = ref;
+    if(filtro["tipo_departamento"]!=''){
+      query = query.where('tipo_departamento', '==', filtro["tipo_departamento"])
+    }
+
+    if(filtro["operacion"]!=''){
+      query = query.where('operacion', '==', filtro["operacion"])
+    }
+
+    if(filtro["distrito"]!=''){
+      query = query.where('distrito', 'array-contains', filtro["distrito"])
+    }
+
+    if(filtro["bano"]!=''){
+      query = query.where('bano', '==', filtro["bano"])
+    }
+
+    if(filtro["cochera"]!=''){
+      query = query.where('cochera', '==', filtro["cochera"])
+    }
+
+    if(filtro["cuartos"]!=''){
+      query = query.where('cuartos', '==', filtro["cuartos"])
+    }
+
+    if(filtro["estreno"]!=''){
+      if(filtro["estreno"]=='INDISTINTO'){
+
+      }else{
+       query = query.where('estreno', '==', filtro["estreno"])
+      }
+     }
+
+
+    if(filtro["proyecto"]!=''){
+      if(filtro["proyecto"]=='INDISTINTO'){
+
+      }else{
+       query = query.where('proyecto', '==', filtro["proyecto"])
+      }
+     }
+
+    if(filtro["vista"]!=''){
+     if(filtro["vista"]=='INDISTINTO'){
+
+     }else{
+      query = query.where('vista', '==', filtro["vista"])
+     }
+    }
+
+    if(filtro["tipo_depa"]!=''){
+      if(filtro["tipo_depa"]=='INDISTINTO'){
+
+      }else{
+       query = query.where('tipo_depa', '==', filtro["tipo_depa"])
+      }
+    }
+
+    if(filtro["amoblado"]!=''){
+      if(filtro["amoblado"]=='INDISTINTO'){
+
+      }else{
+       query = query.where('amoblado', '==', filtro["amoblado"])
+      }
+    }
+
+    if(filtro["terraza"] !=''  ){
+
+      if( !isUndefined(filtro["terraza"]) ){
+        query = query.where('adicionales.terraza', '==', filtro["terraza"])
+      }
+    }
+
+    if(filtro["dscp"]!=''  ) {
+
+      if(!isUndefined(filtro["dscp"]) ){
+       query = query.where('adicionales.dscp', '==', filtro["dscp"])
+      }
+
+    }
+
+    if(filtro["gym"]!='' ){
+
+      if( !isUndefined(filtro["gym"]) ){
+        query = query.where('adicionales.gym', '==', filtro["gym"])
+       }
+
+
+    }
+
+    if(filtro["juego"]!=''){
+
+      if( !isUndefined(filtro["juego"]) ){
+
+        query = query.where('adicionales.juego', '==', filtro["juego"])
+       }
+
+    }
+
+    if(filtro["mascota"]!='' ){
+
+      if( !isUndefined(filtro["mascota"]) ){
+
+        query = query.where('adicionales.mascota', '==', filtro["mascota"])
+       }
+
+
+    }
+
+    if(filtro["parrilla"]!=''  ){
+
+      if( !isUndefined(filtro["parrilla"]) ){
+
+        query = query.where('adicionales.parrilla', '==', filtro["parrilla"])
+       }
+
+
+
+    }
+
+    if(filtro["piscina"]!='' ){
+
+      if( !isUndefined(filtro["piscina"]) ){
+
+        query = query.where('adicionales.piscina', '==', filtro["piscina"])
+       }
+
+    }
+
+    if(filtro["reunion"]!='' ){
+
+      if(!isUndefined(filtro["reunion"]) ){
+
+        query = query.where('adicionales.reunion', '==', filtro["reunion"])
+       }
+    }
+
+    if(filtro["servicio"]!='' ){
+
+      if( !isUndefined(filtro["servicio"]) ){
+
+
+       query = query.where('adicionales.servicio', '==', filtro["servicio"])
+
+       }
+    }
+
+    if(filtro["vigilancia"]!=''){
+
+      if( !isUndefined(filtro["vigilancia"]) ){
+
+
+        query = query.where('adicionales.vigilancia', '==', filtro["vigilancia"])
+
+        }
+
+    }
+
+    if(filtro["deposito"]!='' ){
+
+      if( !isUndefined(filtro["deposito"]) ){
+
+
+
+        query = query.where('adicionales.deposito', '==', filtro["deposito"])
+
+        }
+
+    }
+
+    if(filtro["ascensor"]!='' ){
+
+      if( !isUndefined(filtro["ascensor"]) ){
+
+
+        query = query.where('adicionales.ascensor', '==', filtro["ascensor"])
+        }
+
+    }
+
+    if(filtro["moneda"]!='' ){
+
+      if( !isUndefined(filtro["moneda"]) ){
+
+
+        query = query.where('presupuesto.moneda', '==', filtro["moneda"])
+        }
+
+
+    }
+
+    return query
+    }
+    ).valueChanges();
 
   }
 
@@ -298,11 +492,11 @@ edit_solicitud(solicitud) {
         proyecto:          solicitud.proyecto,
         presupuesto:{
           moneda:solicitud.pre_type,
-          precio:solicitud.pre_price
+          precio:parseInt(solicitud.pre_price)
         },
         mantenimiento:{
           moneda:solicitud.man_type,
-          precio:solicitud.man_price
+          precio:parseInt(solicitud.man_price)
         },
         distrito:          solicitud.distrito,
         radio:             solicitud.radius,

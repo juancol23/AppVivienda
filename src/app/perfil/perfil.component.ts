@@ -3,6 +3,7 @@ import { AuthService } from '../servicios/auth.service';
 import { FirebaseService } from '../servicios/firebase.service';
 import { NgForm } from '@angular/forms';
 import { Router } from '@angular/router';
+import * as globals from '../globals/globals';
 
 
 @Component({
@@ -49,6 +50,10 @@ export class PerfilComponent implements OnInit{
   public a: number;
 
   selectedFiles: FileList;
+
+
+
+  public colors = ['red', 'blue','black'];
 
   constructor( private authService: AuthService , private FirebaseService: FirebaseService,private router: Router) {
 
@@ -255,6 +260,21 @@ uploadSingle() {
 
 }
 
+setDistrito(cod){
+  let distrito = globals.DISTRICT_DIRECTION[cod].name
+  return distrito
+}
+
+setprovincia(cod){
+
+    let setear= cod.substr(0,4)
+
+    let name = globals.PROVINCE_DIRECTION[setear].name
+
+    return name
+}
+
+
 
 redireccionar(href):void{
 
@@ -309,6 +329,22 @@ editarSolicitud(id){
   this.router.navigate([`editar-solicitud/${id}`]);
 
 }
+
+setmapalat(coordenadas){
+
+  let mapa= coordenadas.split(',');
+
+   return parseFloat(mapa[0]);
+
+ }
+
+ setmapalon(coordenadas){
+
+   let mapa= coordenadas.split(',');
+
+    return parseFloat(mapa[1]);
+
+  }
 
 
 

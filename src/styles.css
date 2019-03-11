@@ -616,10 +616,16 @@ input[type="radio"]{
 .sm{
   width: 100px;
   display: inline-block;
-  height: 34px !important;
+  height: 32px !important;
     padding: .375rem .75rem;
     margin-left: 5px;
-    margin-top: 3px !important;
+}
+
+.sm-ad{
+  width: 70%;
+  display: inline-block;
+  height: 32px !important;
+    padding: .375rem .75rem;
 }
 .sm-2{
   width: 100px;
@@ -632,12 +638,13 @@ input[type="radio"]{
 .sm-3{
   width: 150px;
   display: inline-block;
-  height: 34px !important;
+
+  height: 32px !important;
     padding: .375rem .75rem;
 }
 
 .sm-4{
-  height: 34px !important;
+  height: 32px !important;
     padding: .375rem .75rem;
     margin-top: 1px;
     margin-bottom: 8px;
@@ -766,9 +773,14 @@ input:checked .btn-primary  {
 
  .margin_p{
    margin-top: 15px;
+   padding-left: 5px  !important;
+   padding-right: 5px !important;
  }
  .margin_p_10{
   margin-top: 10px;
+
+  padding-left: 5px  !important;
+  padding-right: 5px !important;
 }
 
 .maps-renta{
@@ -1134,6 +1146,12 @@ ngb-datepicker {
 
 
 }
+
+.dp  .ngb-dp-months {
+  display: block !important;
+
+}
+
 
 @media (max-width: 450px) {
   .nuevo_i{
@@ -1523,4 +1541,122 @@ html, body{
 @keyframes bounce {
   from { transform: translate3d(0, -5px, 0);     }
   to   { transform: translate3d(0, 5px, 0); }
+}
+
+
+.display-block{
+  display: block !important
+}
+
+.icon-bar {
+  position: fixed;
+  top: 50%;
+  -webkit-transform: translateY(-50%);
+  -ms-transform: translateY(-50%);
+  transform: translateY(-50%);
+  left: 0px;
+  z-index: 0px !important;
+
+
+}
+
+.icon-bar a {
+  display: block;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  padding-left: 10px;
+  padding-right: 15px;
+  color: white;
+  font-size: 14px;
+  text-decoration: none;
+  transition: 0.3s;
+  border-top-right-radius: 20px;
+  border-bottom-right-radius: 20px;
+  color: white;
+  cursor: pointer;
+
+  font-weight: 600;
+
+}
+
+.bl{
+
+  background-color: rgb(24, 52, 207,1) !important;
+  transition: 0.5s;
+}
+.rd{
+  background-color: rgba(242, 38, 19, 1) !important;
+  transition: 0.5s;
+}
+
+.icon-bar a{
+  color: white !important;
+
+}
+
+.icon-bar a span {
+  display: block;
+  transition: 0.5s;
+  color: white;
+  cursor: pointer;
+
+}
+
+.icon-bar .bl:hover {
+  background-color: rgb(24, 52, 207,0.8) !important;
+}
+
+.icon-bar .rd:hover {
+  background-color: rgba(242, 38, 19,0.8) !important;
+}
+
+
+
+
+.filter_se{
+  position: absolute;
+  right: 15px;
+  font-family: volteR !important;
+  color: rgb(24, 52, 207,1) !important;
+  top: -15px
+}
+
+.filter_se select{
+  border: 0px;
+  outline: none;
+  cursor: pointer;
+}
+
+.filter_se select option{
+  border: 0px;
+  outline: none;
+  background-color: rgb(24, 52, 207,1) !important;
+  color: white;
+  margin: 5px;
+  padding: 5px;
+  text-align: center !important
+}
+
+
+.right_b{
+  border-right: 1px solid rgb(24, 52, 207,0.5)
+}
+
+.sresul{
+
+  right: 20px;
+  font-family: volteR !important;
+  color: rgb(24, 52, 207,1) !important;
+  text-align: center
+}
+
+
+@media (max-width: 991px) {
+  .right_b{
+    border-right: 0px !important;
+    border-bottom:  1px solid rgb(24, 52, 207,0.5) !important;
+    margin-bottom: 30px;
+    padding-bottom: 20px;
+  }
+
 }

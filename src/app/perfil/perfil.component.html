@@ -257,13 +257,14 @@
                           <div class="item row">
 
                               <div class="col-sm-4 padding" *ngIf="item.radio.length > 0">
-                                  <agm-map [latitude]="item.radio[0].lat" [longitude]="item.radio[0].lng" [zoom]="13" >
-                                      <agm-circle *ngFor="let m of item.radio" [latitude]="m.lat" [longitude]="m.lng"
-                                     [radius]="500"
-                                     [fillColor]="m.color">
+                                  <agm-map [latitude]="setmapalat(item.radio[0])" [longitude]="setmapalon(item.radio[0])"[zoom]="12" >
+                                      <agm-circle *ngFor="let m of item.radio;let indice=index" [latitude]="setmapalat(m)" [longitude]="setmapalon(m)"
+                                     [radius]="700"
+                                     [fillColor]="colors[indice]">
                                      </agm-circle>
                                   </agm-map>
                               </div>
+
                               <div class="col-sm-4 padding" *ngIf="item.radio.length === 0">
                                   <agm-map [latitude]="-12.114090" [longitude]="-77.027842" [zoom]="13" >
                                   </agm-map>
@@ -280,7 +281,7 @@
                                               <div class="estados">{{item.operacion}}</div>
                                           </div>
                                           <div class="col-12 margin_p text-right" *ngIf="item.distrito.length>0" >
-                                              <div class="d-inline-flex" *ngFor="let m of item.distrito" > {{m.nombre}} - </div><i class="fas fa-map-marker-alt"></i>
+                                              <div class="d-inline-flex" *ngFor="let m of item.distrito" > {{setDistrito(m)}}-</div><i class="fas fa-map-marker-alt"></i>
                                           </div>
                                           <div class="col-12 margin_p text-right" *ngIf="item.distrito.length===0" >
                                               <div class="d-inline-flex">Seleccion por Area     <i class="fas fa-map-marker-alt"></i></div>
@@ -383,7 +384,7 @@
                                               <div class="estados">{{items.operacion}}</div>
                                           </div>
                                           <div class="col-12 margin_p text-right">
-                                              <div class="">{{items.provincia}} / {{items.distrito}} <i class="fas fa-map-marker-alt"></i></div>
+                                              <div class="">{{setDistrito(items.coddireccion)}} / {{setprovincia(items.coddireccion)}} <i class="fas fa-map-marker-alt"></i></div>
                                           </div>
 
                                           <div class="col-12 margin_p"  >

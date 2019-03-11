@@ -1,3 +1,5 @@
+
+
 <div id="carouselExampleSlidesOnly" class="carousel slide" data-ride="carousel">
   <div class="carousel-inner">
       <div class="carousel-item active">
@@ -112,19 +114,19 @@
               <label  class="col-2 label_text ">Dormitorios :</label>
              <div class="col-10">
               <div class="btn-group style_toggle" data-toggle="buttons" style="width: 80%">
-                  <label class="btn btn-primary active" (click)="register.door = '1'">
+                  <label class="btn btn-primary active" (click)="register.door = 1">
                     <input type="radio" name="door" value="1" [(ngModel)]="register.door" >1 a +
                   </label>
-                  <label class="btn btn-primary" (click)="register.door = '2'">
+                  <label class="btn btn-primary" (click)="register.door = 2">
                     <input type="radio" name="door" value="2" [(ngModel)]="register.door" >2 a +
                   </label>
-                  <label class="btn btn-primary" (click)="register.door = '3'">
+                  <label class="btn btn-primary" (click)="register.door = 3">
                     <input type="radio" name="door" value="3" [(ngModel)]="register.door" >3 a +
                   </label>
-                  <label class="btn btn-primary" (click)="register.door = '4'">
+                  <label class="btn btn-primary" (click)="register.door = 4">
                       <input type="radio" name="door" value="4" [(ngModel)]="register.door" >4 a +
                     </label>
-                    <label class="btn btn-primary" (click)="register.door = '5'">
+                    <label class="btn btn-primary" (click)="register.door = 5">
                         <input type="radio" name="door" value="5" [(ngModel)]="register.door">5 a +
                       </label>
                 <label style="color:red ;margin-top: 8px;font-weight: bold;margin-left: 2px" >*</label>
@@ -136,19 +138,19 @@
               <label  class="col-2 label_text ">Baños :</label>
              <div class="col-10">
               <div class="btn-group style_toggle" data-toggle="buttons" style="width: 80%">
-                  <label class="btn btn-primary active" (click)="register.bano = '1'">
+                  <label class="btn btn-primary active" (click)="register.bano = 1">
                     <input type="radio" name="bano" value="1" checked [(ngModel)]="register.bano">1 a +
                   </label>
-                  <label class="btn btn-primary" (click)="register.bano = '2'">
+                  <label class="btn btn-primary" (click)="register.bano = 2">
                     <input type="radio" name="bano" value="2" [(ngModel)]="register.bano">2 a +
                   </label>
-                  <label class="btn btn-primary" (click)="register.bano = '3'">
+                  <label class="btn btn-primary" (click)="register.bano = 3">
                     <input type="radio" name="bano" value="3" [(ngModel)]="register.bano" >3 a +
                   </label>
-                  <label class="btn btn-primary" (click)="register.bano = '4'">
+                  <label class="btn btn-primary" (click)="register.bano = 4">
                       <input type="radio" name="bano" value="4" [(ngModel)]="register.bano" >4 a +
                     </label>
-                    <label class="btn btn-primary" (click)="register.bano = '5'">
+                    <label class="btn btn-primary" (click)="register.bano = 5">
                         <input type="radio" name="bano" value="5" [(ngModel)]="register.bano" >5 a +
                       </label>
                 <label style="color:red ;margin-top: 8px;font-weight: bold;margin-left: 2px" >*</label>
@@ -163,16 +165,16 @@
                   <label class="btn btn-primary active" (click)="register.cochera = 'NO'">
                     <input type="radio" name="cochera" checked value="NO" [(ngModel)]="register.cochera">NO
                   </label>
-                  <label class="btn btn-primary" (click)="register.cochera = '1'">
+                  <label class="btn btn-primary" (click)="register.cochera = 1">
                     <input type="radio" name="cochera" value="1" [(ngModel)]="register.cochera">1 a +
                   </label>
-                  <label class="btn btn-primary" (click)="register.cochera = '2'">
+                  <label class="btn btn-primary" (click)="register.cochera = 2">
                     <input type="radio" name="cochera" value="2" [(ngModel)]="register.cochera">2 a +
                   </label>
-                  <label class="btn btn-primary" (click)="register.cochera = '3'">
+                  <label class="btn btn-primary" (click)="register.cochera = 3">
                       <input type="radio" name="cochera" value="3" [(ngModel)]="register.cochera">3 a +
                     </label>
-                    <label class="btn btn-primary" (click)="register.cochera = '4'">
+                    <label class="btn btn-primary" (click)="register.cochera = 4">
                         <input type="radio" name="cochera" value="4" [(ngModel)]="register.cochera">4 a +
                       </label>
                 <label style="color:red ;margin-top: 8px;font-weight: bold;margin-left: 2px" >*</label>
@@ -509,8 +511,9 @@
 
                  <div class="col-12 text-center">
                    <div class="row show_dis" style="margin:0px;">
-                    <div class='col-4' *ngFor="let d of distric"  style='padding:0px'>
-                      <a href='javascript:void(0)' title='Eliminar Distrito' (click)="eliminarItem(d.nombre)" class='dis-d' id="d.id" >{{d.nombre}}</a>
+                    <div class='col-4' *ngFor="let d of distric;let indice=index"  style='padding:0px'>
+
+                      <a href='javascript:void(0)' title='Eliminar Distrito' (click)="eliminarItem(indice)"  class='dis-d' >{{setDistrito(d)}}</a>
                     </div>
                   </div>
                  </div>
@@ -525,9 +528,9 @@
 
                 <agm-map [latitude]="latitude" id="map" [longitude]="longitude" [zoom]="zoom" (mapClick)="mapClicked($event)" style="height: 296px;">
 
-                  <agm-circle *ngFor="let m of markers" [latitude]="m.lat" [longitude]="m.lng"
-                   [radius]="500"
-                   [fillColor]="m.color">
+                  <agm-circle *ngFor="let m of markers ;let indice=index" [latitude]="setmapalat(m)" [longitude]="setmapalon(m)"
+                   [radius]="700"
+                   [fillColor]="colors[indice]">
                    </agm-circle>
 
 
@@ -537,11 +540,11 @@
                 <div class="row" id="legend">
 
 
-                <div  class="col-4 text-center" *ngFor="let m of markers"  >
-                  <span [style.background-color]="m.color" class="span_hover"
+                <div  class="col-4 text-center" *ngFor="let m of markers ;let indice=index"  >
+                  <span [style.background-color]="colors[indice]" class="span_hover"
                    style="width: 70%; padding: 5px 15px; color: white;border-radius: 30px;font-weight: bold; transition: 0.5s;left: 20px;"
-                   (click)="eliminarItem_mapa(m.lat,m.lng)" title='Eliminar Area'>
-                   {{m.nombre}}</span>
+                   (click)="eliminarItem_mapa(indice)" title='Eliminar Area'>
+                   Area {{indice+1}}</span>
 
                   </div>
                 </div>

@@ -85,6 +85,9 @@ export class RegisterInmuebleComponent implements OnInit {
             return;
           }
 
+          var geocoder = new google.maps.Geocoder;
+
+
           //set latitude, longitude and zoom
           this.latitude = place.geometry.location.lat();
           this.longitude = place.geometry.location.lng();
@@ -96,6 +99,10 @@ export class RegisterInmuebleComponent implements OnInit {
 
           this.register.latitud=this.latitude
           this.register.longitud=this.longitude
+
+          this.geocodeLatLng(geocoder,place.geometry.location.lat(),place.geometry.location.lng())
+
+
 
         });
       });
@@ -116,6 +123,27 @@ export class RegisterInmuebleComponent implements OnInit {
 
   }
 
+
+  geocodeLatLng(geocoder,lat,long) {
+    var latlng = {
+      lat: lat,
+      lng: long
+    };
+    geocoder.geocode({
+      'location': latlng
+    }, function(results, status) {
+      if (status === google.maps.GeocoderStatus.OK) {
+        if (results[1]) {
+          console.table(results);
+
+        } else {
+          console.log('No hay resultados');
+        }
+      } else {
+        console.log('Geocoder failed due to: ' + status);
+      }
+    });
+  }
 
   getCurrentUser() {
 
@@ -218,9 +246,9 @@ registerInmueble(form: NgForm){
 
         this.register.fecha=new Date();
         this.register.user=this.user;
-        this.register.departamento_=globals.DEPARTMENTS_DIRECTION[this.register.departamento].name;
-        this.register.provincia_=globals.PROVINCE_DIRECTION[this.register.departamento+this.register.provincia].name;
-        this.register.distrito_=globals.DISTRICT_DIRECTION[this.register.departamento+this.register.provincia+this.register.distrito].name;
+        /*this.register.departamento_=globals.DEPARTMENTS_DIRECTION[this.register.departamento].name;
+        this.register.provincia_=globals.PROVINCE_DIRECTION[this.register.departamento+this.register.provincia].name;*/
+        this.register.distrito_=this.register.departamento+this.register.provincia+this.register.distrito
         this.register.id = this.afs.createId();
 
       if(this.register.latitud== 0 || this.register.longitud==0){
@@ -385,7 +413,7 @@ registerInmueble(form: NgForm){
 
               if(this.urlsdb.length<10){
 
-                console.log("Es imagen");
+
 
                 var reader = new FileReader();
 
@@ -396,13 +424,13 @@ registerInmueble(form: NgForm){
 
                   this.urlsdb.push(event.target.files[i]);
 
-                  console.log(this.urlsdb);
+
 
                   reader.readAsDataURL(event.target.files[i]);
 
               }else{
 
-                console.log("Solo puede Seleccionar 10 imagenes");
+                alert("Solo puede Seleccionar 10 imagenes");
 
               }
 

@@ -4,6 +4,8 @@ import { FirebaseService } from '../servicios/firebase.service';
 import { AngularFirestore, AngularFirestoreDocument,AngularFirestoreCollection} from '@angular/fire/firestore';
 import { NgxSpinnerService } from 'ngx-spinner';
 
+import * as globals from '../globals/globals';
+
 @Component({
   selector: 'app-inmueble',
   templateUrl: './inmueble.component.html',
@@ -12,6 +14,10 @@ import { NgxSpinnerService } from 'ngx-spinner';
 export class InmuebleComponent implements OnInit {
   public data:any=[];
   public user:any={};
+
+
+
+  public colors = ['red', 'blue','black'];
 
 
   constructor(private router: Router,
@@ -23,7 +29,7 @@ export class InmuebleComponent implements OnInit {
 
     this.getAllUser();
     this.getSolicitud();
-    this.spinner.show();
+
 
 
 
@@ -64,19 +70,37 @@ export class InmuebleComponent implements OnInit {
   }
 
   getSolicitud(){
+
+    this.spinner.show();
+
     this.FirebaseService.getSolicitudesHome().subscribe((res) => {
 
      this.data=res;
 
 
   })
-
-
-
-
-
-
 }
+
+setDistrito(cod){
+  let distrito = globals.DISTRICT_DIRECTION[cod].name
+  return distrito
+}
+
+setmapalat(coordenadas){
+
+  let mapa= coordenadas.split(',');
+
+   return parseFloat(mapa[0]);
+
+ }
+
+ setmapalon(coordenadas){
+
+   let mapa= coordenadas.split(',');
+
+    return parseFloat(mapa[1]);
+
+  }
 
 
 }

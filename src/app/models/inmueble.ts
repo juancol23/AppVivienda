@@ -14,9 +14,7 @@ export interface inmuebleInterface {
   proyecto?:string;
   presupuesto?:  {moneda?: string , precio?: number};
   mantenimiento?:  {moneda?: string , precio?: number};
-  departamento?:string;
-  provincia?:string;
-  distrito?:string;
+  coddireccion?:string;
   direccion?:string;
   latitud?:number;
   longitud?:number;

@@ -15,7 +15,7 @@ export interface SolicitudInterface {
   presupuesto?:  {moneda?: string , precio?: number};
   mantenimiento?:  {moneda?: string , precio?: number};
   comentario?:string;
-  distrito?:any;
+  distrito?:[];
   radio?:any;
 
   adicionales?:{

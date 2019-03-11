@@ -14,20 +14,20 @@ class RequestDepartment {
 	value: any
 }
 
-interface marker {
+/*interface marker {
   id:number;
   nombre:string;
 	lat: number;
   lng: number;
   color: string;
-}
+}*/
 
-interface dis {
+/*interface dis [{
   id:number;
   nombre:string;
   provincia:string;
   departamento:string;
-}
+}]*/
 
 const WEEKDAYS_SHORT = ['Lu', 'Ma', 'Mi', 'Ju', 'Vi', 'Sa', 'Do'];
 const MONTHS = ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Setiembre', 'Octubre', 'Noviembre', 'Diciembre'];
@@ -76,10 +76,10 @@ export class RegisterSolicitudComponent implements OnInit {
   public latitude: number;
   public longitude: number;
   public zoom:number;
-  public markers: marker[]=[];
-  public colors = ['red', 'blue', 'olive', 'orange', 'black',
-        'gray', 'lightblue', 'purple', 'green','teal','maroon','tan','cornflowerblue','gold','goldenrod','mediumseagreen'];
-  public distric: dis[]=[];
+  public markers:any;
+
+  public colors = ['red', 'blue','black'];
+  public distric: any;
 
 
   public ub_dis:boolean = true;
@@ -120,6 +120,8 @@ export class RegisterSolicitudComponent implements OnInit {
 
 
 
+
+
   }
 
 
@@ -154,8 +156,8 @@ getCurrentUser() {
 resetear(){
     this.register.type_apar="DEPARTAMENTO"
     this.register.operation="ALQUILER"
-    this.register.door="1"
-    this.register.bano="1"
+    this.register.door=1
+    this.register.bano=1
     this.register.cochera="NO"
     this.register.vista="INTERNA"
     this.register.tipo="FLAT"
@@ -183,7 +185,7 @@ resetear(){
     this.register.comentario=""
     this.latitude=-12.114090
     this.longitude=-77.027842
-    this.zoom=14
+    this.zoom=13
     this.markers=[]
     this.distric=[]
     this.ub_dis= true
@@ -202,6 +204,30 @@ resetear(){
     $('input:radio[name="amoblado"][value="FULL"]').click();
     $('input:radio[name="estreno"][value="SI"]').click();
     $('input:radio[name="proyecto"][value="SI"]').click();
+    $("#v-pills-home-tab").click();
+
+}
+
+
+geocodeLatLng(geocoder,lat,long) {
+  var latlng = {
+    lat: lat,
+    lng: long
+  };
+  geocoder.geocode({
+    'location': latlng
+  }, function(results, status) {
+    if (status === google.maps.GeocoderStatus.OK) {
+      if (results[1]) {
+        console.table(results);
+
+      } else {
+        console.log('No hay resultados');
+      }
+    } else {
+      console.log('Geocoder failed due to: ' + status);
+    }
+  });
 }
 
 sortByTwoProperty = () => {
@@ -287,19 +313,26 @@ selDistrict() {
       alert("Debe seleccionar un distrito");
 
     }else{
-      let departamento =globals.DEPARTMENTS_DIRECTION[this.register.departamento].name;
+      /*let departamento =globals.DEPARTMENTS_DIRECTION[this.register.departamento].name;
       let pronvincia =globals.PROVINCE_DIRECTION[this.register.departamento+this.register.provincia].name;
-      let distrito = globals.DISTRICT_DIRECTION[this.register.departamento+this.register.provincia+this.register.distrito].name;
+      let distrito = globals.DISTRICT_DIRECTION[this.register.departamento+this.register.provincia+this.register.distrito].name;*/
+
+      let distrito = this.register.departamento+this.register.provincia+this.register.distrito
 
       if(this.distric.length<3){
 
-        this.distric.push({
-          id:this.distric.length,
-          nombre:distrito,
-          provincia:pronvincia,
-          departamento:departamento
-      });
+        let istrue = this.distric.includes(distrito);
 
+           if(istrue){
+
+            alert("Ya selecciono el distrito.")
+
+           }else{
+
+
+        this.distric.push(distrito)
+
+           }
 
       }else{
 
@@ -310,29 +343,23 @@ selDistrict() {
     }
   }
 
-  eliminarItem(texto){
+  setDistrito(cod){
+    let distrito = globals.DISTRICT_DIRECTION[cod].name
+    return distrito
+  }
 
-    for (let index = 0; index < this.distric.length; index++) {
+ eliminarItem(indice){
 
-      if (this.distric[index].nombre == texto) {
-        this.distric.splice(index, 1);
-        break
-      }
-    }
+  this.distric.splice(indice, 1);
+
 
     console.log(this.distric);
+}
 
-   }
+   eliminarItem_mapa(indice){
 
-   eliminarItem_mapa(lat,lng){
+    this.markers.splice(indice, 1);
 
-    for (let index = 0; index < this.markers.length; index++) {
-
-      if (this.markers[index].lat == lat && this.markers[index].lng == lng ) {
-        this.markers.splice(index, 1);
-        break
-      }
-    }
 
     console.log(this.markers);
 
@@ -343,15 +370,11 @@ selDistrict() {
     var lat = event.coords.lat;
     var lng = event.coords.lng;
 
+    var string = lat+","+lng;
+
     if(this.markers.length<3){
-      let count = this.markers.length+1;
-      this.markers.push({
-        id: this.markers.length,
-        nombre: "Area "+ count,
-        lat: lat,
-        lng: lng,
-        color:this.colors[Math.floor(Math.random() * this.colors.length)]
-      });
+
+      this.markers.push(string);
 
       console.log(this.markers);
 
@@ -359,7 +382,29 @@ selDistrict() {
       alert("Solo puede seleccionar 3 lugares.");
     }
 
+    var geocoder = new google.maps.Geocoder;
+
+    this.geocodeLatLng(geocoder,lat,lng);
+
+
+
   }
+
+  setmapalat(coordenadas){
+
+   let mapa= coordenadas.split(',');
+
+    return parseFloat(mapa[0]);
+
+  }
+
+  setmapalon(coordenadas){
+
+    let mapa= coordenadas.split(',');
+
+     return parseFloat(mapa[1]);
+
+   }
 
 
 

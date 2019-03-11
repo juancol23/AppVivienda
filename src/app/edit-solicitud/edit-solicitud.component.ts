@@ -14,20 +14,7 @@ class RequestDepartment {
 	value: any
 }
 
-interface marker {
-  id:number;
-  nombre:string;
-	lat: number;
-  lng: number;
-  color: string;
-}
 
-interface dis {
-  id:number;
-  nombre:string;
-  provincia:string;
-  departamento:string;
-}
 
 const WEEKDAYS_SHORT = ['Lu', 'Ma', 'Mi', 'Ju', 'Vi', 'Sa', 'Do'];
 const MONTHS = ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Setiembre', 'Octubre', 'Noviembre', 'Diciembre'];
@@ -81,10 +68,10 @@ export class EditSolicitudComponent implements OnInit {
   public latitude: number;
   public longitude: number;
   public zoom:number;
-  public markers: marker[]=[];
-  public colors = ['red', 'blue', 'olive', 'orange', 'black',
-        'gray', 'lightblue', 'purple', 'green','teal','maroon','tan','cornflowerblue','gold','goldenrod','mediumseagreen'];
-  public distric: dis[]=[];
+  public markers:any;
+
+  public colors = ['red', 'blue','black'];
+  public distric:any;
 
 
   public ub_dis:boolean = true;
@@ -120,7 +107,7 @@ export class EditSolicitudComponent implements OnInit {
     this.getCurrentUser();
     this.latitude=-12.114090
     this.longitude=-77.027842
-    this.zoom=14;
+    this.zoom=13;
 
     this.obtenerDepartamentos();
     this.changeCheckbox();
@@ -498,19 +485,26 @@ addDistrito(){
     alert("Debe seleccionar un distrito");
 
   }else{
-    let departamento =globals.DEPARTMENTS_DIRECTION[this.register.departamento].name;
+    /*let departamento =globals.DEPARTMENTS_DIRECTION[this.register.departamento].name;
     let pronvincia =globals.PROVINCE_DIRECTION[this.register.departamento+this.register.provincia].name;
-    let distrito = globals.DISTRICT_DIRECTION[this.register.departamento+this.register.provincia+this.register.distrito].name;
+    let distrito = globals.DISTRICT_DIRECTION[this.register.departamento+this.register.provincia+this.register.distrito].name;*/
+
+    let distrito = this.register.departamento+this.register.provincia+this.register.distrito
 
     if(this.distric.length<3){
 
-      this.distric.push({
-        id:this.distric.length,
-        nombre:distrito,
-        provincia:pronvincia,
-        departamento:departamento
-    });
+      let istrue = this.distric.includes(distrito);
 
+         if(istrue){
+
+          alert("Ya selecciono el distrito.")
+
+         }else{
+
+
+      this.distric.push(distrito)
+
+         }
 
     }else{
 
@@ -521,28 +515,20 @@ addDistrito(){
   }
 }
 
-eliminarItem(texto){
 
-  for (let index = 0; index < this.distric.length; index++) {
+eliminarItem(indice){
 
-    if (this.distric[index].nombre == texto) {
-      this.distric.splice(index, 1);
-      break
-    }
-  }
+this.distric.splice(indice, 1);
 
- }
 
- eliminarItem_mapa(lat,lng){
+  console.log(this.distric);
+}
+eliminarItem_mapa(indice){
 
-  for (let index = 0; index < this.markers.length; index++) {
+  this.markers.splice(indice, 1);
 
-    if (this.markers[index].lat == lat && this.markers[index].lng == lng ) {
-      this.markers.splice(index, 1);
-      break
-    }
-  }
 
+  console.log(this.markers);
 
  }
 
@@ -551,16 +537,13 @@ mapClicked(event){
   var lat = event.coords.lat;
   var lng = event.coords.lng;
 
-  if(this.markers.length<3){
-    let count = this.markers.length+1;
-    this.markers.push({
-      id: this.markers.length,
-      nombre: "Area "+ count,
-      lat: lat,
-      lng: lng,
-      color:this.colors[Math.floor(Math.random() * this.colors.length)]
-    });
+  var string = lat+","+lng;
 
+  if(this.markers.length<3){
+
+    this.markers.push(string);
+
+    console.log(this.markers);
 
   }else{
     alert("Solo puede seleccionar 3 lugares.");
@@ -670,6 +653,12 @@ changeCheckbox(){
 
 }
 
+
+setDistrito(cod){
+  let distrito = globals.DISTRICT_DIRECTION[cod].name
+  return distrito
+}
+
 editSolicitud(form: NgForm){
 
   if (this.isLogged) {
@@ -761,5 +750,21 @@ editSolicitud(form: NgForm){
   }
 
 }
+
+setmapalat(coordenadas){
+
+  let mapa= coordenadas.split(',');
+
+   return parseFloat(mapa[0]);
+
+ }
+
+ setmapalon(coordenadas){
+
+   let mapa= coordenadas.split(',');
+
+    return parseFloat(mapa[1]);
+
+  }
 
 }
