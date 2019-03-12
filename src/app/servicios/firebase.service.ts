@@ -63,22 +63,30 @@ getUserByEmail(email){
 deleteInmueble(id){
 
 
-  this.afs.collection(`files_images`, ref => ref.where("id_inmueble", '==', id))
+  this.afs.collection(`inmuebles`, ref => ref.where("id_inmueble", '==', id))
   .valueChanges().subscribe((res)=>{
 
     for (let index = 0; index < res.length; index++) {
 
-      this.afs.collection(`files_images`).doc(res[index]["id_image"]).delete();
 
-    const storageRef = this.afStorage.storage.ref();
-    storageRef.child(`inmuebles/${id}/${res[index]["name"]}`).delete()
+
+      for (let index2 = 0; index2 < res[index]["image"].length; index2++) {
+
+      const storageRef = this.afStorage.storage.ref();
+    storageRef.child(`inmuebles/${id}/${res[index]["image"][index2]["name"]}`).delete()
     .then(()=>{
 
     }).catch(err => {
 
     });
 
+      }
+
+
     }
+
+
+
 
   })
 
@@ -152,6 +160,7 @@ updatePhotoUrl(user){
       area:              parseInt(inmueble.area),
       estreno:           inmueble.estreno,
       proyecto:          inmueble.proyecto,
+      image:[],
       presupuesto:{
         moneda:inmueble.pre_type,
         precio:parseInt(inmueble.pre_price)
@@ -211,7 +220,7 @@ updatePhotoUrl(user){
 
   }
 
-  uploadFiles(data){
+  uploadFiles(id,data){
 
     const dato = {
 
@@ -222,7 +231,9 @@ updatePhotoUrl(user){
 
     }
 
-    return this.afs.collection('files_images').doc(`${data.id_image}`).set(dato)
+
+
+    return this.afs.collection('inmuebles').doc(id).update({image:data})
 
   }
 

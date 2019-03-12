@@ -4,6 +4,7 @@ import { FirebaseService } from '../servicios/firebase.service';
 import { NgForm } from '@angular/forms';
 import { Router } from '@angular/router';
 import * as globals from '../globals/globals';
+import { isUndefined } from 'util';
 
 
 @Component({
@@ -79,22 +80,19 @@ export class PerfilComponent implements OnInit{
             this.FirebaseService.getInmuebles(auth.uid).subscribe((res) => {
               this.data=res;
 
-              if(res.length>0){
 
-                for (const dato of this.data) {
+
+                /*for (const dato of this.data) {
 
                   this.FirebaseService.getImageInmueble(dato.id_inmueble).subscribe((res)=>{
 
                     this.img[dato.id_inmueble]=res[0]["url"]
 
+
                   })
 
-                }
+                }*/
 
-              }else{
-
-
-              }
 
 
             })

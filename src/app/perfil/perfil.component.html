@@ -357,7 +357,12 @@
                     <div class="col-sm-12 " >
 
                       <!-- <div *ngIf="_rentalPublications != null && _rentalPublications.length > 0" class="col-sm-12"> -->
-                      <div *ngFor="let items of data  | paginate: {id: 'inmueble', itemsPerPage: 2, currentPage: p } ">
+
+
+
+
+
+                        <div *ngFor="let items of data  | paginate: {id: 'inmueble', itemsPerPage: 2, currentPage: p } ">
                         <br><br>
                         <div  class="col-12">
                           <div class="botones_funcionales">
@@ -368,13 +373,9 @@
                         </div>
                           <div class="item row">
 
-                              <div class="col-sm-4 padding">
+                              <div class="col-sm-4 padding"  >
 
-
-
-                              <img [src]="img[items.id_inmueble]" class="img-fluid foto_normal">
-
-
+                              <img [src]="items.image[0]['url']" class="img-fluid foto_normal">
 
                               </div>
                               <div class="col-sm-8  padding">

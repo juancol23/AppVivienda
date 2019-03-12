@@ -68,6 +68,8 @@ export class RegisterInmuebleComponent implements OnInit {
   public isvacacional:boolean=true;
 
 
+  public image=[];
+
 
   downloadURL: Observable<string>;
 
@@ -303,13 +305,19 @@ registerInmueble(form: NgForm){
                 ref.getDownloadURL().subscribe(url => {
                   this.downloadURL = url;
 
-                  let obj = new upload();
-                  obj.url=this.downloadURL;
-                  obj.name=file["name"];
-                  obj.id_image=id;
-                  obj.id_inmueble=this.register.id
 
-                  this.FirebaseService.uploadFiles(obj).then((res)=>{
+
+                  this.image.push({
+                    url:this.downloadURL,
+                    name:file["name"],
+                    id_image:id,
+                    id_inmueble:this.register.id
+
+                  })
+
+                  console.log(this.image);
+
+
 
 
                     this.count++;
@@ -317,16 +325,19 @@ registerInmueble(form: NgForm){
 
                   if(this.urlsdb.length == this.count ){
 
+                    this.FirebaseService.uploadFiles(this.register.id,this.image).then((res)=>{
+
                   this.spinner.hide();
 
                   form.reset();
                   this.reset();
                   $("#modal_ok").modal('show');
 
+                })
+
                   }
 
 
-                  })
 
 
                 })
