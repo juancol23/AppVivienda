@@ -19,7 +19,7 @@ import { isUndefined } from 'util';
 })
 export class FirebaseService {
 
-  task: AngularFireUploadTask;
+
 
   userCollection: AngularFirestoreCollection<UserInterface>;
   user: Observable<UserInterface[]>;
@@ -28,6 +28,11 @@ export class FirebaseService {
 
   items: Observable<any[]>;
   itemsCollection: AngularFirestoreCollection<any>;
+
+
+  task: AngularFireUploadTask;
+
+  public
 
 
   constructor(private afs: AngularFirestore,private afStorage: AngularFireStorage,private afsAuth: AngularFireAuth) {
@@ -43,8 +48,6 @@ export class FirebaseService {
     this.downloadURL = this.afStorage.ref(`users/${event.id}/${event.name}`).getDownloadURL();
 
     return this.downloadURL;*/
-
-
   }
 
   getUserById(uid){
@@ -59,7 +62,35 @@ getUserByEmail(email){
 
 deleteInmueble(id){
 
+
+  this.afs.collection(`files_images`, ref => ref.where("id_inmueble", '==', id))
+  .valueChanges().subscribe((res)=>{
+
+    for (let index = 0; index < res.length; index++) {
+
+      this.afs.collection(`files_images`).doc(res[index]["id_image"]).delete();
+
+    const storageRef = this.afStorage.storage.ref();
+    storageRef.child(`inmuebles/${id}/${res[index]["name"]}`).delete()
+    .then(()=>{
+
+    }).catch(err => {
+
+    });
+
+    }
+
+  })
+
+
+  /*for (const datas of res) {
+
+    this.afs.collection(`files_images`).doc(datas.id_image).delete();
+  }*/
+
   return this.afs.collection(`inmuebles`).doc(`${id}`).delete();
+
+
 }
 
 deleteSolicitud(id){
@@ -104,16 +135,63 @@ updatePhotoUrl(user){
   }
 
 
-  register_inmueble(inmueble,images ) {
+  register_inmueble(inmueble) {
 
 
-    for (const file of images) {
+    const data: inmuebleInterface = {
+      id_inmueble:       inmueble.id,
+      id_user:           inmueble.user,
+      tipo_departamento: inmueble.type_apar,
+      operacion:         inmueble.operation,
+      cuartos:           inmueble.door,
+      bano:              inmueble.bano,
+      cochera:           inmueble.cochera,
+      vista:             inmueble.vista,
+      tipo_depa:         inmueble.tipo,
+      amoblado:          inmueble.amoblado,
+      area:              parseInt(inmueble.area),
+      estreno:           inmueble.estreno,
+      proyecto:          inmueble.proyecto,
+      presupuesto:{
+        moneda:inmueble.pre_type,
+        precio:parseInt(inmueble.pre_price)
+      },
+      mantenimiento:{
+        moneda:inmueble.man_type,
+        precio:parseInt(inmueble.man_price)
+      },
+      coddireccion:          inmueble.distrito_,
+      direccion:         inmueble.direccion,
+      latitud:           inmueble.latitud,
+      longitud:          inmueble.longitud,
+      fecha:             inmueble.fecha,
+      adicionales:{
+        terraza:inmueble.terraza,
+        mascota:inmueble.mascota,
+        deposito:inmueble.deposito,
+        ascensor:inmueble.ascensor,
+        vigilancia:inmueble.vigilancia,
+        servicio:inmueble.servicio,
+        dscp:inmueble.dscp,
+        reunion:inmueble.reunion,
+        piscina:inmueble.piscina,
+        gym:inmueble.gym,
+        parrilla:inmueble.parrilla,
+        juego:inmueble.juego,
+
+      }
+
+}
+
+
+    /*for (const file of images) {
 
       const path = `inmuebles/${inmueble.id}/${file.name}`;
       const ref = this.afStorage.ref(path);
       const task = this.afStorage.upload(path, file);
-
       let id = this.afs.createId();
+
+
 
       task.then((f) => {
         return f.ref.getDownloadURL().then((url) => {
@@ -123,58 +201,28 @@ updatePhotoUrl(user){
             name: f.metadata.name,
             url: url
           });
+
         })
       })
-   }
+    }*/
 
 
-    const data: inmuebleInterface = {
-          id_inmueble:       inmueble.id,
-          id_user:           inmueble.user,
-          tipo_departamento: inmueble.type_apar,
-          operacion:         inmueble.operation,
-          cuartos:           inmueble.door,
-          bano:              inmueble.bano,
-          cochera:           inmueble.cochera,
-          vista:             inmueble.vista,
-          tipo_depa:         inmueble.tipo,
-          amoblado:          inmueble.amoblado,
-          area:              parseInt(inmueble.area),
-          estreno:           inmueble.estreno,
-          proyecto:          inmueble.proyecto,
-          presupuesto:{
-            moneda:inmueble.pre_type,
-            precio:parseInt(inmueble.pre_price)
-          },
-          mantenimiento:{
-            moneda:inmueble.man_type,
-            precio:parseInt(inmueble.man_price)
-          },
-          coddireccion:          inmueble.distrito_,
-          direccion:         inmueble.direccion,
-          latitud:           inmueble.latitud,
-          longitud:          inmueble.longitud,
-          fecha:             inmueble.fecha,
-          adicionales:{
-            terraza:inmueble.terraza,
-            mascota:inmueble.mascota,
-            deposito:inmueble.deposito,
-            ascensor:inmueble.ascensor,
-            vigilancia:inmueble.vigilancia,
-            servicio:inmueble.servicio,
-            dscp:inmueble.dscp,
-            reunion:inmueble.reunion,
-            piscina:inmueble.piscina,
-            gym:inmueble.gym,
-            parrilla:inmueble.parrilla,
-            juego:inmueble.juego,
+    return this.afs.collection(`inmuebles`).doc(`${inmueble.id}`).set(data)
 
-          }
+  }
+
+  uploadFiles(data){
+
+    const dato = {
+
+      name: data.name,
+      id_image: data.id_image,
+      id_inmueble:data.id_inmueble,
+      url:data.url
 
     }
 
-
-    return this.afs.collection(`inmuebles`).doc(`${inmueble.id}`).set(data);
+    return this.afs.collection('files_images').doc(`${data.id_image}`).set(dato)
 
   }
 
@@ -188,6 +236,12 @@ updatePhotoUrl(user){
     return this.afs.collection(`inmuebles`, ref => ref.where("id_user", '==', uid , ).orderBy('fecha','desc') ).valueChanges();
  }
 
+
+ getImageInmueble(id){
+  return this.afs.collection(`files_images`, ref => ref.where("id_inmueble", '==', id )).valueChanges();
+
+
+ }
 
  register_solicitud(solicitud) {
 

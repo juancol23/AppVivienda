@@ -30,7 +30,7 @@ export class PerfilComponent implements OnInit{
   public solicitudata:any;
 
 
-  public img:any;
+  public img:any={};
   public array:any;
 
 
@@ -69,15 +69,33 @@ export class PerfilComponent implements OnInit{
     this.a=1;
   }
 
+  ngOnd
 
   getInmueble(){
 
     this.authService.isAuth().subscribe(auth => {
       if (auth) {
 
-
             this.FirebaseService.getInmuebles(auth.uid).subscribe((res) => {
               this.data=res;
+
+              if(res.length>0){
+
+                for (const dato of this.data) {
+
+                  this.FirebaseService.getImageInmueble(dato.id_inmueble).subscribe((res)=>{
+
+                    this.img[dato.id_inmueble]=res[0]["url"]
+
+                  })
+
+                }
+
+              }else{
+
+
+              }
+
 
             })
 
@@ -90,6 +108,7 @@ export class PerfilComponent implements OnInit{
       }
     });
   }
+
 
   getCurrentUser() {
 

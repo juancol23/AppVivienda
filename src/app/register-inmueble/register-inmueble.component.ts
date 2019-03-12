@@ -6,12 +6,23 @@ import { Router } from '@angular/router';
 import * as globals from '../globals/globals';
 import { MapsAPILoader } from '@agm/core';
 import { AngularFirestore} from '@angular/fire/firestore';
+import { NgxSpinnerService } from 'ngx-spinner';
+import { AngularFireStorage, AngularFireStorageReference, AngularFireUploadTask } from 'angularfire2/storage';
+import { finalize, tap } from 'rxjs/operators';
+import { Observable } from 'rxjs';
 
 declare var google;
 declare var $ :any;
 class RequestDepartment {
 	id: string
 	value: any
+}
+
+class upload {
+	name: any
+  id_image: any
+  id_inmueble:any
+  url:any
 }
 
 @Component({
@@ -49,12 +60,19 @@ export class RegisterInmuebleComponent implements OnInit {
   public longitude_m: number;
   public zoom:number;
   public urls = [];
-  public urlsdb : FileList[]=[];
+  public urlsdb : FileList[];
   public posicion : any;
+  public total:any;
+  public count :any;
 
   public isvacacional:boolean=true;
 
-  selectedFiles: FileList;
+
+
+  downloadURL: Observable<string>;
+
+
+
 
   @ViewChild("search")
   public searchElementRef: ElementRef;
@@ -64,9 +82,10 @@ export class RegisterInmuebleComponent implements OnInit {
      private FirebaseService: FirebaseService,
      private router: Router,
      private mapsAPILoader: MapsAPILoader,
-     private ngZone: NgZone,private afs: AngularFirestore) { }
+     private ngZone: NgZone,private afs: AngularFirestore,private spinner: NgxSpinnerService,private afStorage: AngularFireStorage,) { }
 
   ngOnInit() {
+
     this.reset();
     this.obtenerDepartamentos();
     this.getCurrentUser();
@@ -134,13 +153,10 @@ export class RegisterInmuebleComponent implements OnInit {
     }, function(results, status) {
       if (status === google.maps.GeocoderStatus.OK) {
         if (results[1]) {
-          console.table(results);
 
         } else {
-          console.log('No hay resultados');
         }
       } else {
-        console.log('Geocoder failed due to: ' + status);
       }
     });
   }
@@ -150,12 +166,10 @@ export class RegisterInmuebleComponent implements OnInit {
     this.authService.isAuth().subscribe(auth => {
       if (auth) {
         this.isLogged = true;
-        console.log(this.isLogged);
         this.user=auth.uid;
 
       }else {
         this.isLogged = false;
-        console.log(this.isLogged);
         this.user="";
       }
     });
@@ -165,9 +179,9 @@ export class RegisterInmuebleComponent implements OnInit {
   reset(){
     this.register.type_apar="DEPARTAMENTO"
     this.register.operation="ALQUILER"
-    this.register.door="1"
-    this.register.bano="1"
-    this.register.cochera="1"
+    this.register.door=1
+    this.register.bano=1
+    this.register.cochera="NO"
     this.register.vista="INTERNA"
     this.register.tipo="FLAT"
     this.register.amoblado="FULL"
@@ -240,8 +254,9 @@ onlyDireccion(event) {
 }
 
 
-registerInmueble(form: NgForm){
 
+registerInmueble(form: NgForm){
+  this.spinner.show();
       if (this.isLogged) {
 
         this.register.fecha=new Date();
@@ -252,29 +267,77 @@ registerInmueble(form: NgForm){
         this.register.id = this.afs.createId();
 
       if(this.register.latitud== 0 || this.register.longitud==0){
+        this.spinner.hide();
         alert("Debe buscar direccion");
+
         return false;
       }
 
-      if(this.urlsdb.length<5){
+      if(this.urlsdb.length<3){
+        this.spinner.hide();
+        alert("Debe agregar un minimo de 3 fotos.");
 
-        alert("Debe agregar un minimo de 5 fotos.");
         return false;
       }
 
-        this.FirebaseService.register_inmueble(this.register,this.urlsdb).then((res) =>{
 
-              console.log(res)
 
-            form.reset();
-            this.reset();
-            $("#modal_ok").modal('show');
+        this.FirebaseService.register_inmueble(this.register).then((res) =>{
 
-       }).catch((err)=>
+          this.count = 0;
 
-         console.log("error")
+          this.total=this.urlsdb.length
 
-       );
+          for (const file of this.urlsdb) {
+
+            const path = `inmuebles/${this.register.id}/${file["name"]}`;
+            const ref = this.afStorage.ref(path);
+            const task = this.afStorage.upload(path, file);
+
+
+            let id = this.afs.createId();
+
+            task.snapshotChanges().pipe(
+
+              finalize(() => {
+                ref.getDownloadURL().subscribe(url => {
+                  this.downloadURL = url;
+
+                  let obj = new upload();
+                  obj.url=this.downloadURL;
+                  obj.name=file["name"];
+                  obj.id_image=id;
+                  obj.id_inmueble=this.register.id
+
+                  this.FirebaseService.uploadFiles(obj).then((res)=>{
+
+
+                    this.count++;
+
+
+                  if(this.urlsdb.length == this.count ){
+
+                  this.spinner.hide();
+
+                  form.reset();
+                  this.reset();
+                  $("#modal_ok").modal('show');
+
+                  }
+
+
+                  })
+
+
+                })
+
+
+
+              })
+            ).subscribe()
+}
+
+       })
 
 
       }else {
@@ -423,6 +486,7 @@ registerInmueble(form: NgForm){
 
 
                   this.urlsdb.push(event.target.files[i]);
+
 
 
 
