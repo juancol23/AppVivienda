@@ -255,6 +255,7 @@
                name="area"
                #area_="ngModel"
                [(ngModel)]="register.area"
+               placeholder="Inmueble"
                pattern="[0-9.]*"
                required
                (keypress)="onlyNumber($event)" >
@@ -262,9 +263,9 @@
 
 
                <div *ngIf="area_.invalid && (area_.dirty )" class="validif" >
-                <div *ngIf="area_.errors.required">Area es requerido*</div>
+                <div *ngIf="area_.errors.required">Área del inmueble es requerido*</div>
                 <div *ngIf="area_.errors.pattern">
-                  Area debe contener solo numeros*
+                    Área del inmueble debe contener solo numeros*
                  </div>
             </div>
 

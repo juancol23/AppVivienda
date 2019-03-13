@@ -68,8 +68,6 @@ deleteInmueble(id){
 
     for (let index = 0; index < res.length; index++) {
 
-
-
       for (let index2 = 0; index2 < res[index]["image"].length; index2++) {
 
       const storageRef = this.afStorage.storage.ref();
@@ -82,19 +80,10 @@ deleteInmueble(id){
 
       }
 
-
     }
-
-
-
 
   })
 
-
-  /*for (const datas of res) {
-
-    this.afs.collection(`files_images`).doc(datas.id_image).delete();
-  }*/
 
   return this.afs.collection(`inmuebles`).doc(`${id}`).delete();
 
@@ -269,16 +258,16 @@ updatePhotoUrl(user){
         vista:             solicitud.vista,
         tipo_depa:         solicitud.tipo,
         amoblado:          solicitud.amoblado,
-        area:              parseInt(solicitud.area),
+        area:              parseFloat(solicitud.area),
         estreno:           solicitud.estreno,
         proyecto:          solicitud.proyecto,
         presupuesto:{
           moneda:solicitud.pre_type,
-          precio:parseInt(solicitud.pre_price)
+          precio:parseFloat(solicitud.pre_price)
         },
         mantenimiento:{
           moneda:solicitud.man_type,
-          precio:parseInt(solicitud.man_price)
+          precio:parseFloat(solicitud.man_price)
         },
         distrito:          solicitud.distrito,
         radio:             solicitud.radius,
@@ -516,6 +505,12 @@ getSolicitudesHome(){
 
   }
 
+  getSolicitudesbyId(id){
+
+    return this.afs.collection(`solicitudes`, ref => ref.where("id_solicitud", '==', id  )).valueChanges();
+
+    }
+
 getallUser(){
 
 return  this.afs.collection(`users`).valueChanges();
@@ -552,16 +547,16 @@ edit_solicitud(solicitud) {
         vista:             solicitud.vista,
         tipo_depa:         solicitud.tipo,
         amoblado:          solicitud.amoblado,
-        area:             parseInt( solicitud.area),
+        area:             parseFloat( solicitud.area),
         estreno:           solicitud.estreno,
         proyecto:          solicitud.proyecto,
         presupuesto:{
           moneda:solicitud.pre_type,
-          precio:parseInt(solicitud.pre_price)
+          precio:parseFloat(solicitud.pre_price)
         },
         mantenimiento:{
           moneda:solicitud.man_type,
-          precio:parseInt(solicitud.man_price)
+          precio:parseFloat(solicitud.man_price)
         },
         distrito:          solicitud.distrito,
         radio:             solicitud.radius,

@@ -31,10 +31,6 @@ export class InmuebleComponent implements OnInit {
     this.getSolicitud();
 
 
-
-
-
-
   }
 
 
@@ -55,8 +51,6 @@ export class InmuebleComponent implements OnInit {
 
           localStorage.setItem("users",  JSON.stringify(this.user));
 
-
-
           this.spinner.hide();
       });
 
@@ -76,6 +70,7 @@ export class InmuebleComponent implements OnInit {
     this.FirebaseService.getSolicitudesHome().subscribe((res) => {
 
      this.data=res;
+
 
 
   })
@@ -99,6 +94,12 @@ setmapalat(coordenadas){
    let mapa= coordenadas.split(',');
 
     return parseFloat(mapa[1]);
+
+  }
+
+  viewSolicitud(id){
+
+    this.router.navigate([`detalle-solicitud/${id}`]);
 
   }
 

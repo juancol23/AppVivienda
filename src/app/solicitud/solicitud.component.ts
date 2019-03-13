@@ -162,7 +162,6 @@ export class SolicitudComponent implements OnInit {
       hasta:''
     }
 
-    console.log(this.filtro["ordenar"]);
   }
 
   changeCheckbox(){
@@ -583,6 +582,12 @@ setmapalat(coordenadas){
    let mapa= coordenadas.split(',');
 
     return parseFloat(mapa[1]);
+
+  }
+
+  viewSolicitud(id){
+
+    this.router.navigate([`detalle-solicitud/${id}`]);
 
   }
 

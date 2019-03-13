@@ -1,11 +1,15 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit,ViewChild } from '@angular/core';
 import { AuthService } from '../servicios/auth.service';
 import { FirebaseService } from '../servicios/firebase.service';
 import { NgForm } from '@angular/forms';
 import { Router } from '@angular/router';
 import * as globals from '../globals/globals';
 import { isUndefined } from 'util';
+import { AgmMap } from '@agm/core';
 
+declare var $ :any;
+
+declare var google;
 
 @Component({
   selector: 'app-perfil',
@@ -15,7 +19,11 @@ import { isUndefined } from 'util';
   ]
 })
 
+
+
 export class PerfilComponent implements OnInit{
+
+  @ViewChild(AgmMap) map: AgmMap;
 
   public photo_profile: string =null;
   public name_profile: string =null;
@@ -68,9 +76,19 @@ export class PerfilComponent implements OnInit{
     this.getInmueble();
     this.p=1;
     this.a=1;
+
+
   }
 
-  ngOnd
+
+
+mapare(){
+
+  setTimeout(() => {
+    this.map.triggerResize()
+
+  }, 100);
+}
 
   getInmueble(){
 
@@ -364,6 +382,12 @@ setmapalat(coordenadas){
   }
 
 
+
+  viewSolicitud(id){
+
+    this.router.navigate([`detalle-solicitud/${id}`]);
+
+  }
 
 
 }

@@ -317,7 +317,9 @@ registerInmueble(form: NgForm){
 
                   console.log(this.image);
 
+                  this.FirebaseService.uploadFiles(this.register.id,this.image).then((res)=>{
 
+                  });
 
 
                     this.count++;
@@ -325,7 +327,7 @@ registerInmueble(form: NgForm){
 
                   if(this.urlsdb.length == this.count ){
 
-                    this.FirebaseService.uploadFiles(this.register.id,this.image).then((res)=>{
+
 
                   this.spinner.hide();
 
@@ -333,7 +335,7 @@ registerInmueble(form: NgForm){
                   this.reset();
                   $("#modal_ok").modal('show');
 
-                })
+
 
                   }
 

@@ -130,7 +130,7 @@ export class RegisterSolicitudComponent implements OnInit {
 
 
 onlyNumber(event) {
-     const pattern = /[0-9]/;
+     const pattern = /[0-9.]/;
      let inputChar = String.fromCharCode(event.charCode);
 
      if (!pattern.test(inputChar)) {
@@ -164,6 +164,9 @@ resetear(){
     this.register.amoblado="FULL"
     this.register.proyecto="SI"
     this.register.estreno="SI"
+
+    this.register.man_type="SOLES"
+    this.register.pre_type="SOLES"
     this.register.terraza=false
     this.register.mascota=false
     this.register.deposito=false
