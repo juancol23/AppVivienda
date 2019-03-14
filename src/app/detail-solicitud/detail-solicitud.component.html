@@ -9,7 +9,7 @@
 <div class="text-publica " *ngFor="let item of data ">
   <div class="container">
 
-  <span><a routerLink="home">Home</a> / <a >Detalle Solicitud</a></span>
+  <span><a (click)="backButton()" style="cursor: pointer">Regresar</a> / <a >Detalle Solicitud</a></span>
 
   <h4 class="register_in_h4">{{user[item.id_user]}} BUSCA :</h4>
 </div>
@@ -24,6 +24,10 @@
        <h4 class="operacion" *ngIf="item.operacion == 'ALQUILER'">ALQUILAR</h4>
        <h4 class="operacion" *ngIf="item.operacion == 'VACACIONAL'">VACACIONAR</h4>
 
+       <div *ngIf="item.operacion == 'VACACIONAL'" class="fecdate">
+         {{setfecha(item.rango.de) | date:'longDate'  }} / {{setfecha(item.rango.hasta) |  date:'longDate'   }}
+       </div>
+
        <div *ngIf="item.radio.length > 0">
         <div class="d-inline-flex sarea" >Selección por Área     <i class="fas fa-map-marker-alt"></i></div>
        </div>
@@ -37,22 +41,22 @@
         <br>
   </div>
 
-  <div class="col-lg-3 col-md-6 col-6 detail_so">
+  <div class="col-lg-3 col-md-6 col-6 detail_so tl">
     <p>TIPO : <span>{{item.tipo_departamento}}</span></p>
     <p>OPERACIÓN : <span>{{item.operacion}}</span></p>
-    <p>DORMITORIOS : <span>{{item.cuartos}}</span></p>
-    <p>BAÑOS : <span>{{item.bano}}</span></p>
+    <p>DORMITORIO : <span>{{item.cuartos}}</span></p>
+    <p>BAÑO : <span>{{item.bano}}</span></p>
     <p>COCHERA : <span>{{item.cochera}}</span></p>
-    <p>PRESUPUESTO : <span>{{item.presupuesto.precio}} {{item.presupuesto.moneda}}</span></p>
+    <p>PRESUPUESTO : <span>{{item.presupuesto.precio | currency:" "}} {{item.presupuesto.moneda}}</span></p>
     <p>ÁREA : <span>{{item.area}} M²</span></p>
     <p>VISTA : <span>{{item.vista}}</span> </p>
     <p>TIPO : <span>{{item.tipo_depa}} </span></p>
     <p>AMOBLADO : <span>{{item.amoblado}} </span></p>
-    <p>COSTO MANT : <span>{{item.mantenimiento.precio}} {{item.mantenimiento.moneda}}</span></p>
+    <p>COSTO MANT : <span>{{item.mantenimiento.precio | currency:" "}} {{item.mantenimiento.moneda}}</span></p>
     <p>DE ESTRENO : <span>{{item.estreno}} </span></p>
     <p>EN PROYECTO : <span>{{item.proyecto}} </span></p>
   </div>
-  <div class="col-lg-3 col-md-6 col-6 detail_so">
+  <div class="col-lg-3 col-md-6 col-6 detail_so tr">
       <p>BALCÓN O TERRAZA :
         <span *ngIf="item.adicionales.terraza == true">SI</span>
         <span *ngIf="item.adicionales.terraza == false">NO</span>
@@ -143,12 +147,12 @@
 <div class="row">
 
 
-    <div class="col-md-8 col-12 b-r" >
+    <div class="col-lg-8 col-12 b-r" >
       <div class="propuesta">PROPUESTAS QUE RECIBIÓ {{user[item.id_user]}} </div>
 
     </div>
 
-    <div class="col-md-4 col-12">
+    <div class="col-lg-4 col-12">
       <br>
         <div class="prt">PRESENTA</div>
         <div class="prt">TU PROPUESTA : </div>
@@ -168,10 +172,6 @@
 
       </div>
 
-
-
-
-  </div>
 
   <br><br>
 </div>

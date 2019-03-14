@@ -744,7 +744,7 @@ input:checked .btn-primary  {
   border: solid #3f4dda .5px;
   color:  #3f4dda;
   font-family: volteR;
-  font-size: 15px;
+  font-size: 14px;
   font-weight: bold;
   transition: 0.2s !important
   }
@@ -1271,6 +1271,22 @@ textarea{
 
 }
 
+.galeria_fotoss h4{
+
+  color: rgb(24, 52, 207,1) !important;
+  font-family: volteR;
+  font-size: 25px !important;
+  text-transform: uppercase;
+  transition: 0.5s;
+
+}
+
+.galeria_fotoss span{
+
+  color: red;
+
+}
+
 .galeria_fotos span{
 
   color: red;
@@ -1357,7 +1373,7 @@ textarea{
     max-width: 20% !important;
 }
 .galeria_f img{
-  height: 180px !important;
+  height: auto !important;
   width: 100% !important;
 }
 
@@ -1386,6 +1402,8 @@ textarea{
 
 .foto_normal{
   border-radius: 0px !important;
+  width: 100% !important;
+  height: 200px !important;
 }
 
 
@@ -1427,7 +1445,8 @@ textarea{
   position: fixed;
   width: 100%;
   height: 100%;
-  top: 0px;
+  top: 0;
+  left: 0;
   overflow-y: hidden;
   z-index: 99999;
    display:none;
@@ -1688,7 +1707,7 @@ html, body{
   color:  rgb(24, 52, 207,1) !important;
 
   font-family: volteR !important;
-  margin-bottom: 7px;
+  margin-bottom: 2px;
 
 }
 
@@ -1733,9 +1752,20 @@ font-weight: 600;
   margin-top: 10px;
 }
 
+@media (max-width: 991px) {
+  .b-r{
+    border-bottom: 1px solid rgb(24, 52, 207,1) !important;
+
+    border-right: 0px solid transparent !important;
+    margin-bottom: 20px !important;
+  }
+}
 
 @media (max-width: 767px) {
 
+  .tr{
+    text-align: right !important;
+  }
   .b-r{
     border-bottom: 1px solid rgb(24, 52, 207,1) !important;
 
@@ -1803,7 +1833,16 @@ font-weight: 600;
 
 
 
+.spand-direccion{
 
+  font-family: volteR !important;
+  color:  rgb(24, 52, 207,1) !important;
+  font-weight: 600;
+  margin-top: 10px;
+  text-transform: uppercase;
+
+  font-size: 14px;
+}
 
 
 .spand-b{
@@ -1811,7 +1850,7 @@ font-weight: 600;
   margin-left: 10px;
   margin-right:  10px;
   color:  rgb(24, 52, 207,1) !important;
-  font-size: 15px;
+  font-size: 14px;
   text-transform: uppercase;
   transition: 0.5s;
   font-family: volteR !important;
@@ -1856,4 +1895,13 @@ font-weight: 600;
   font-family: volteR !important;
   display: block;
   margin-top: 5px;
+}
+
+.fecdate{
+  color:rgb(24, 52, 207,1) !important;
+  text-align: center;
+  font-weight: 500;
+  font-family: volteR !important;
+  margin-bottom: 10px;
+  letter-spacing: 2px;
 }

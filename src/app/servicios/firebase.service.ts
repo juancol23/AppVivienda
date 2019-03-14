@@ -511,6 +511,12 @@ getSolicitudesHome(){
 
     }
 
+    getInmueblebyId(id){
+
+      return this.afs.collection(`inmuebles`, ref => ref.where("id_inmueble", '==', id  )).valueChanges();
+  
+      }
+
 getallUser(){
 
 return  this.afs.collection(`users`).valueChanges();

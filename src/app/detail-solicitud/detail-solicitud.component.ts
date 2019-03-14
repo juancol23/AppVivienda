@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, LOCALE_ID } from '@angular/core';
 import { Router } from '@angular/router';
 import { FirebaseService } from '../servicios/firebase.service';
 import { NgxSpinnerService } from 'ngx-spinner';
@@ -6,18 +6,21 @@ import { Injectable,NgZone } from '@angular/core';
 import { ActivatedRoute,Params } from '@angular/router';
 import * as globals from '../globals/globals';
 
+
 @Component({
   selector: 'app-detail-solicitud',
   templateUrl: './detail-solicitud.component.html',
   styleUrls: ['./detail-solicitud.component.css']
 })
+
+
 export class DetailSolicitudComponent implements OnInit {
 
   public user:any={};
   public id_solicitud:string;
   public data :any;
   public colors = ['red', 'blue','black'];
-
+  
 
   constructor(private router: Router,
     private FirebaseService: FirebaseService,private spinner: NgxSpinnerService,
@@ -43,10 +46,21 @@ export class DetailSolicitudComponent implements OnInit {
 
 
   }
+   
+
+  backButton(){
+    
+    window.history.back();
+  }
 
   setDistrito(cod){
     let distrito = globals.DISTRICT_DIRECTION[cod].name
     return distrito
+  }
+
+  setfecha(fecha){
+
+    return fecha.toDate();
   }
 
   getAllUser(){

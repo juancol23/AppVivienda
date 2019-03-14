@@ -2,7 +2,7 @@
 
     <div class="row">
 
-        <div class="col-md-4 text-center">
+        <div class="col-lg-4 text-center">
 
 
             <div class="con">
@@ -38,7 +38,7 @@
 
 
         </div>
-        <div class="col-md-8">
+        <div class="col-lg-8">
 
             <div class="tab-content perfil_tab" id="v-pills-tabContent">
                 <div class="tab-pane fade show active" id="v-pills-home" role="tabpanel" aria-labelledby="v-pills-home-tab">
@@ -340,7 +340,7 @@
                                                 </div>
 
                                                 <div class="col-lg-5 col-md-5 col-sm-12 pr" >
-                                                  <div class="border_s"><i class="fas fa-dollar-sign"></i><span class="text-right" >{{item.presupuesto.precio}} {{item.presupuesto.moneda}}</span>
+                                                  <div class="border_s"><i class="fas fa-dollar-sign"></i><span class="text-right" >{{item.presupuesto.precio  | currency:" "}} {{item.presupuesto.moneda}}</span>
                                                   </div>
                                                 </div>
                                               </div>
@@ -402,7 +402,7 @@
                               <img [src]="items.image[0]['url']" class="img-fluid foto_normal">
 
                               </div>
-                              <div class="col-sm-8  padding">
+                              <div class="col-sm-8  padding" (click)="viewInmueble(items.id_inmueble)">
                                   <div class="maps-renta row" style="margin:0px">
 
                                           <div class="col-6 margin_p text-left " >
@@ -413,7 +413,7 @@
                                               <div class="estados">{{items.operacion}}</div>
                                           </div>
                                           <div class="col-12 margin_p text-right">
-                                              <div class="">{{setDistrito(items.coddireccion)}} / {{setprovincia(items.coddireccion)}} <i class="fas fa-map-marker-alt"></i></div>
+                                              <div >{{setDistrito(items.coddireccion)}} / {{setprovincia(items.coddireccion)}} <i class="fas fa-map-marker-alt"></i></div>
                                           </div>
 
                                           <div class="col-12 margin_p"  >
@@ -424,9 +424,16 @@
                                               </div>
                                             </div>
                                               <div class="col-6 " style="padding-right: 0px;padding-left: 5px">
-                                                <div class="border_s">
-                                                <i class="fas fa-bed"></i><span class="text-right" >{{items.cuartos}} DORMITORIOS</span>
+                                                <div *ngIf="items.cuartos==1">
+                                                  <div class="border_s">
+                                                      <i class="fas fa-bed"></i><span class="text-right" >{{items.cuartos}} DORMITORIO </span>
+                                                    </div>
                                               </div>
+                                              <div *ngIf="items.cuartos>1">
+                                                  <div class="border_s">
+                                                      <i class="fas fa-bed"></i><span class="text-right" >{{items.cuartos}} DORMITORIOS </span>
+                                                    </div>
+                                                </div>
                                               </div>
                                             </div>
                                           </div >
@@ -434,18 +441,25 @@
                                           <div class="col-12 margin_p_10"  >
                                               <div class="row" style="margin:0px">
 
-                                                <div class="col-3" style="padding-left: 0px">
+                                                <div class="col-lg-3 col-md-3 col-6 pl" >
                                                   <div class="border_s"><i class="fab fa-medium"></i><span class="text-right" >{{items.area}} M²</span>
                                                   </div>
                                                 </div>
 
-                                                <div class="col-4 " style="padding-left: 0px;padding-right: 0px">
-                                                  <div class="border_s"><i class="fas fa-toilet"></i><span class="text-right" >{{items.bano}} BAÑOS</span>
+                                                <div class="col-lg-4 col-md-4 col-6 plr">
+                                                  <div *ngIf="items.bano==1">
+                                                    <div class="border_s"><i class="fas fa-toilet"></i><span class="text-right" >{{items.bano}} BAÑO </span>
+                                                    </div>
                                                   </div>
+                                                  <div *ngIf="items.bano>1">
+                                                      <div class="border_s"><i class="fas fa-toilet"></i><span class="text-right" >{{items.bano}} BAÑOS </span>
+                                                      </div>
+                                                    </div>
+                                                 
                                                 </div>
 
-                                                <div class="col-5" style="padding-right: 0px">
-                                                  <div class="border_s"><i class="fas fa-dollar-sign"></i><span class="text-right" >{{items.presupuesto.precio}} {{items.presupuesto.moneda}}</span>
+                                                <div class="col-lg-5 col-md-5 col-sm-12 pr" >
+                                                  <div class="border_s"><i class="fas fa-dollar-sign"></i><span class="text-right" >{{items.presupuesto.precio | currency:" "}} {{items.presupuesto.moneda}}</span>
                                                   </div>
                                                 </div>
                                               </div>

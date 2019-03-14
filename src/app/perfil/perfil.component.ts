@@ -389,5 +389,9 @@ setmapalat(coordenadas){
 
   }
 
+  viewInmueble(id){
+    this.router.navigate([`detalle-inmueble/${id}`]);
+  }
+
 
 }

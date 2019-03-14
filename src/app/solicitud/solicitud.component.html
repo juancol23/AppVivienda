@@ -505,7 +505,7 @@
                           <div class="row" style="margin:0px">
 
                               <div class="col-lg-3 col-md-3 col-6 pl" >
-                              <div class="border_s"><i class="fab fa-medium"></i><span class="text-right" >{{item.area}} M²</span>
+                              <div class="border_s"><i class="fab fa-medium"></i><span class="text-right" >{{item.area}} M² A+</span>
                               </div>
                             </div>
 
@@ -521,7 +521,7 @@
                             </div>
 
                             <div class="col-lg-5 col-md-5 col-sm-12 pr" >
-                              <div class="border_s"><i class="fas fa-dollar-sign"></i><span class="text-right" >{{item.presupuesto.precio}} {{item.presupuesto.moneda}}</span>
+                              <div class="border_s"><i class="fas fa-dollar-sign"></i><span class="text-right" >{{item.presupuesto.precio | currency:" "}} {{item.presupuesto.moneda}}</span>
                               </div>
                             </div>
                           </div>
