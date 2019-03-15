@@ -63,32 +63,29 @@ getUserByEmail(email){
 deleteInmueble(id){
 
 
-  this.afs.collection(`inmuebles`, ref => ref.where("id_inmueble", '==', id))
-  .valueChanges().subscribe((res)=>{
 
-    for (let index = 0; index < res.length; index++) {
+  this.afs.collection(`inmuebles`).doc(`${id}`).valueChanges().subscribe((res)=>{
 
-      for (let index2 = 0; index2 < res[index]["image"].length; index2++) {
+    for (let index = 0; index < res["image"].length; index++) {
 
       const storageRef = this.afStorage.storage.ref();
-    storageRef.child(`inmuebles/${id}/${res[index]["image"][index2]["name"]}`).delete()
-    .then(()=>{
+    storageRef.child(`inmuebles/${id}/${res["image"][index]["name"]}`).delete()
 
-    }).catch(err => {
-
-    });
 
       }
 
-    }
+      this.afs.collection(`inmuebles`).doc(`${id}`).delete();
+
 
   })
 
+  return true;
 
-  return this.afs.collection(`inmuebles`).doc(`${id}`).delete();
 
 
 }
+
+
 
 deleteSolicitud(id){
 
@@ -108,6 +105,7 @@ updatePhotoUrl(user){
 
     const data: UserInterface = {
           name:     user.name,
+          apellido:user.apellido,
           telefono: user.telefono
         }
 
@@ -514,7 +512,7 @@ getSolicitudesHome(){
     getInmueblebyId(id){
 
       return this.afs.collection(`inmuebles`, ref => ref.where("id_inmueble", '==', id  )).valueChanges();
-  
+
       }
 
 getallUser(){
@@ -539,6 +537,19 @@ return this.afs.collection(`solicitudes`, ref => {
 
 
 }
+
+geteditInmueble(id1,id2){
+
+  return this.afs.collection(`inmuebles`, ref => {
+
+    let query : firebase.firestore.Query = ref;
+    query = query.where('id_user', '==', id1)
+    query = query.where('id_inmueble', '==', id2)
+    return query
+    }).valueChanges();
+
+
+  }
 
 
 edit_solicitud(solicitud) {

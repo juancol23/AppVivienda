@@ -7,4 +7,5 @@ export interface UserInterface {
   telefono?: string;
   provider?: string;
   id?:string;
+  apellido?:string;
 }

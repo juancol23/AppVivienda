@@ -5,6 +5,7 @@ import { FirebaseService } from '../servicios/firebase.service';
 import { Router } from '@angular/router';
 import { MapsAPILoader } from '@agm/core';
 import { NgForm } from '@angular/forms';
+import { NgxSpinnerService } from 'ngx-spinner';
 import {NgbDate, NgbCalendar,NgbDatepickerConfig,NgbDatepickerI18n,NgbDateStruct} from '@ng-bootstrap/ng-bootstrap';
 declare var google;
 declare var $ :any;
@@ -105,7 +106,8 @@ export class RegisterSolicitudComponent implements OnInit {
     private mapsAPILoader: MapsAPILoader,
     private ngZone: NgZone,
     private calendar: NgbCalendar,
-    private config: NgbDatepickerConfig) {
+    private config: NgbDatepickerConfig
+    ,private spinner: NgxSpinnerService) {
     config.minDate = calendar.getToday();
     }
 
@@ -508,7 +510,7 @@ registersolicitud(form: NgForm){
 
   if (this.isLogged) {
 
-
+    this.spinner.show();
     this.register.fecha=new Date();
     this.register.user=this.user;
 
@@ -516,7 +518,7 @@ registersolicitud(form: NgForm){
       if(this.register.operation =="VACACIONAL"){
 
         if(this.fromDate==null ||  this.toDate == null){
-
+          this.spinner.hide();
           alert("Seleccionar rango de fechas");
           return false;
 
@@ -541,7 +543,7 @@ registersolicitud(form: NgForm){
           this.register.distrito= this.distric;
 
         }else{
-
+          this.spinner.hide();
           alert("Debe seleccionar un distrito.");
 
           return false;
@@ -562,7 +564,7 @@ registersolicitud(form: NgForm){
 
 
         }else{
-
+          this.spinner.hide();
            alert("Debe seleccionar una area.");
            return false;
         }
@@ -577,14 +579,18 @@ registersolicitud(form: NgForm){
       console.log(JSON.stringify(this.register));
 
       this.FirebaseService.register_solicitud(this.register).then((res) =>{
-
+        this.spinner.hide();
         form.reset();
         this.resetear();
           $("#modal_ok").modal('show');
 
-     }).catch((err)=>
+     }).catch((err)=>{
 
-       alert("error")
+      this.spinner.hide();
+      alert("error")
+     }
+
+
 
      );
 

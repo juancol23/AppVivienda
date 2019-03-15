@@ -31,7 +31,7 @@
             <div class="nav flex-column nav-pills text-center" id="v-pills-tab" role="tablist" aria-orientation="vertical" style="margin-bottom: 10px;"><br>
                <a class="nav-link active" id="v-pills-home-tab" data-toggle="pill" href="#v-pills-home" role="tab" aria-controls="v-pills-home" aria-selected="true"><i class="fas fa-align-justify"></i>MIS DATOS</a>
                 <a *ngIf="!typeUser" class="nav-link" id="v-pills-profile-tab" data-toggle="pill" href="#v-pills-profile" role="tab" aria-controls="v-pills-profile" aria-selected="false"><i class="far fa-user"></i>MI CONTRASEÑA</a>
-                <a (click)="mapare()" class="nav-link" id="v-pills-messages-tab" data-toggle="pill" href="#v-pills-messages" role="tab" aria-controls="v-pills-messages" aria-selected="false"><i class="fab fa-telegram-plane"  ></i>MIS SOLICITUDES</a>
+                <a   class="nav-link" id="v-pills-messages-tab" data-toggle="pill" href="#v-pills-messages" role="tab" aria-controls="v-pills-messages" aria-selected="false"><i class="fab fa-telegram-plane"  ></i>MIS SOLICITUDES</a>
                 <a class="nav-link" id="v-pills-settings-tab" data-toggle="pill" href="#v-pills-settings" role="tab" aria-controls="v-pills-settings" aria-selected="false"><i class="fas fa-home"></i>MIS INMUEBLES</a>
             </div>
 
@@ -82,6 +82,44 @@
 
 
                         </div>
+
+                        <div class="form-group row">
+
+                          <label for="nombre_p" class="col-sm-3 col-form-label ">Apellidos:</label>
+                          <div class="col-sm-7">
+
+                              <input
+                              type="text"
+                              #apellidoProfile_="ngModel"
+                              [(ngModel)]="modelProfile.apellidoProfile"
+                              name="apellidoProfile"
+                              class="form-control input_login"
+                              placeholder="Apellido"
+                              minlength="4"
+                              pattern="[a-zA-Z ]*"
+                              required
+                              (keypress)="onlyText($event)">
+
+                          <div *ngIf="apellidoProfile_.invalid && (apellidoProfile_.dirty || apellidoProfile_.touched)" class="validif">
+
+                                      <div *ngIf="apellidoProfile_.errors.required">
+                                        Apellido es requerido*
+                                      </div>
+                                      <div *ngIf="apellidoProfile_.errors.minlength">
+                                        Apellido debe ser mayor a 4 digitos*
+                                      </div>
+                                      <div *ngIf="apellidoProfile_.errors.pattern">
+                                        Apellido debe contener solo letras*
+                                      </div>
+
+                          </div>
+
+                        </div>
+
+
+
+                      </div>
+
 
                         <div class="form-group row">
                             <label for="email_p" class="col-sm-3 col-form-label ">E-mail:  </label>
@@ -256,8 +294,8 @@
                         </div>
                           <div class="item row">
 
-                              <div class="col-sm-4 padding" *ngIf="item.radio.length > 0">
-                                  <agm-map id="item.id_solicitud"   [scrollwheel]="false" [latitude]="setmapalat(item.radio[0])" [longitude]="setmapalon(item.radio[0])"[zoom]="12" >
+                              <div class="col-sm-4 padding" >
+                                  <agm-map #map id="item.id_solicitud"   [scrollwheel]="false" [latitude]="setmapalat(item.radio[0])" [longitude]="setmapalon(item.radio[0])"[zoom]="12" >
                                       <agm-circle *ngFor="let m of item.radio;let indice=index" [latitude]="setmapalat(m)" [longitude]="setmapalon(m)"
                                      [radius]="700"
                                      [fillColor]="colors[indice]">
@@ -266,9 +304,10 @@
                               </div>
 
                               <div class="col-sm-4 padding" *ngIf="item.radio.length === 0">
-                                  <agm-map id="item.id_solicitud"   [scrollwheel]="false" [latitude]="-12.114090" [longitude]="-77.027842" [zoom]="13" >
-                                  </agm-map>
-                              </div>
+                                <agm-map id="item.id_solicitud"   [scrollwheel]="false" [latitude]="-12.114090" [longitude]="-77.027842" [zoom]="13" >
+                                </agm-map>
+                            </div>
+
 
 
                               <div class="col-sm-8  padding" (click)="viewSolicitud(item.id_solicitud)">
@@ -455,7 +494,7 @@
                                                       <div class="border_s"><i class="fas fa-toilet"></i><span class="text-right" >{{items.bano}} BAÑOS </span>
                                                       </div>
                                                     </div>
-                                                 
+
                                                 </div>
 
                                                 <div class="col-lg-5 col-md-5 col-sm-12 pr" >

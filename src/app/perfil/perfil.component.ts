@@ -5,7 +5,9 @@ import { NgForm } from '@angular/forms';
 import { Router } from '@angular/router';
 import * as globals from '../globals/globals';
 import { isUndefined } from 'util';
-import { AgmMap } from '@agm/core';
+import { AgmMap,MapsAPILoader } from '@agm/core';
+
+
 
 declare var $ :any;
 
@@ -23,7 +25,7 @@ declare var google;
 
 export class PerfilComponent implements OnInit{
 
-  @ViewChild(AgmMap) map: AgmMap;
+
 
   public photo_profile: string =null;
   public name_profile: string =null;
@@ -78,17 +80,15 @@ export class PerfilComponent implements OnInit{
     this.a=1;
 
 
+
+
   }
 
 
 
-mapare(){
 
-  setTimeout(() => {
-    this.map.triggerResize()
 
-  }, 100);
-}
+
 
   getInmueble(){
 
@@ -139,6 +139,7 @@ mapare(){
             this.FirebaseService.getUserById(auth.uid).subscribe((res) => {
               this.modelProfile.nameProfile=res['name'];
               this.name_profile=res['name'];
+              this.modelProfile.apellidoProfile=res['apellido'];
               this.modelProfile.email=res['email'];
               this.modelPassword.email=res['email'];
               this.photo_profile=res["photoUrl"];
@@ -216,7 +217,8 @@ onUpdatePassword(form: NgForm):void{
           {
             name: this.modelProfile.nameProfile,
             telefono: this.modelProfile.phoneNumber,
-            id:auth.uid
+            id:auth.uid,
+            apellido:  this.modelProfile.apellidoProfile
 
           }).then((res) =>{
 
@@ -319,7 +321,8 @@ redireccionar(href):void{
 
 editarInmueble(id){
 
-  alert(id)
+
+  this.router.navigate([`editar-inmueble/${id}`]);
 }
 
 
@@ -327,13 +330,16 @@ eliminarInmueble(id){
 
 
     if (confirm("Estas seguro de eliminar el inmueble ?")) {
-      this.FirebaseService.deleteInmueble(id).then(res => {
+
+      if(this.FirebaseService.deleteInmueble(id)){
 
         alert("Inmueble se elimino");
 
-      }).catch(err => {
-         console.log(err)
-      })
+      }else{
+
+        console.log("error");
+      }
+
 
     } else {
 

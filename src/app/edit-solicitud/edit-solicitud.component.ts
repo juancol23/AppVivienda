@@ -240,6 +240,7 @@ export class EditSolicitudComponent implements OnInit {
         this.register.terraza=this.data[0]["adicionales"]["terraza"]
         }else{
         $(`input:checkbox[name="terraza"]`).prop('checked',false)
+        $(`input:checkbox[name="terraza"]`).parent().removeClass("pintar");
         this.register.terraza=false
         }
 
@@ -251,6 +252,8 @@ export class EditSolicitudComponent implements OnInit {
         this.register.mascota=this.data[0]["adicionales"]["mascota"]
         }else{
         $(`input:checkbox[name="mascota"]`).prop('checked',false)
+
+        $(`input:checkbox[name="mascota"]`).parent().removeClass("pintar");
         this.register.mascota=false
         }
 
@@ -261,6 +264,8 @@ export class EditSolicitudComponent implements OnInit {
           this.register.deposito=this.data[0]["adicionales"]["deposito"]
           }else{
             $(`input:checkbox[name="deposito"]`).prop('checked',false)
+
+        $(`input:checkbox[name="deposito"]`).parent().removeClass("pintar");
           this.register.deposito=false
           }
 
@@ -272,6 +277,8 @@ export class EditSolicitudComponent implements OnInit {
             }else{
 
         $(`input:checkbox[name="ascensor"]`).prop('checked',false)
+
+        $(`input:checkbox[name="ascensor"]`).parent().removeClass("pintar");
             this.register.ascensor=false
             }
 
@@ -282,6 +289,7 @@ export class EditSolicitudComponent implements OnInit {
               this.register.vigilancia=this.data[0]["adicionales"]["vigilancia"]
               }else{
                 $(`input:checkbox[name="vigilancia"]`).prop('checked',false)
+                $(`input:checkbox[name="vigilancia"]`).parent().removeClass("pintar");
               this.register.vigilancia=false
               }
 
@@ -293,6 +301,8 @@ export class EditSolicitudComponent implements OnInit {
                 }else{
 
         $(`input:checkbox[name="servicio"]`).prop('checked',false)
+
+        $(`input:checkbox[name="servicio"]`).parent().removeClass("pintar");
                 this.register.servicio=false
                 }
 
@@ -304,6 +314,8 @@ export class EditSolicitudComponent implements OnInit {
                   }else{
 
         $(`input:checkbox[name="dscp"]`).prop('checked',false)
+
+        $(`input:checkbox[name="dscp"]`).parent().removeClass("pintar");
                   this.register.dscp=false
                   }
 
@@ -315,6 +327,8 @@ export class EditSolicitudComponent implements OnInit {
                     }else{
 
         $(`input:checkbox[name="reunion"]`).prop('checked',false)
+
+        $(`input:checkbox[name="reunion"]`).parent().removeClass("pintar");
                     this.register.reunion=false
                     }
 
@@ -326,6 +340,7 @@ export class EditSolicitudComponent implements OnInit {
                       }else{
 
         $(`input:checkbox[name="piscina"]`).prop('checked',false)
+        $(`input:checkbox[name="piscina"]`).parent().removeClass("pintar");
                       this.register.piscina=false
                       }
 
@@ -338,6 +353,8 @@ export class EditSolicitudComponent implements OnInit {
                         }else{
 
         $(`input:checkbox[name="gym"]`).prop('checked',false)
+
+        $(`input:checkbox[name="gym"]`).parent().removeClass("pintar");
                         this.register.gym=false
                         }
 
@@ -349,6 +366,8 @@ export class EditSolicitudComponent implements OnInit {
                           }else{
 
         $(`input:checkbox[name="parrilla"]`).prop('checked',false)
+
+        $(`input:checkbox[name="parrilla"]`).parent().removeClass("pintar");
                           this.register.parrilla=false
                           }
 
@@ -360,6 +379,8 @@ export class EditSolicitudComponent implements OnInit {
                             }else{
 
         $(`input:checkbox[name="juego"]`).prop('checked',false)
+
+        $(`input:checkbox[name="juego"]`).parent().removeClass("pintar");
                             this.register.juego=false
                             }
 

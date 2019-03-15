@@ -258,9 +258,9 @@ onlyDireccion(event) {
 
 
 registerInmueble(form: NgForm){
-  this.spinner.show();
-      if (this.isLogged) {
 
+      if (this.isLogged) {
+        this.spinner.show();
         this.register.fecha=new Date();
         this.register.user=this.user;
         /*this.register.departamento_=globals.DEPARTMENTS_DIRECTION[this.register.departamento].name;
@@ -566,11 +566,11 @@ registerInmueble(form: NgForm){
 
     this.register.type_apar=valor;
 
-    $('input:radio[name="operation"][value="ALQUILER"]').click();
+
 
     if(valor == "OFICINA" || valor == "TERRENO" ){
 
-
+    $('input:radio[name="operation"][value="ALQUILER"]').click();
       this.isvacacional=false;
 
 

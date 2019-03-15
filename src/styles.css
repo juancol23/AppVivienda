@@ -1320,9 +1320,7 @@ textarea{
 
 @media (max-width: 991px){
 
-  .resp{
-    height: 50vh !important;
-    }
+
 
     .fondo_b .row{
 
@@ -1335,7 +1333,7 @@ textarea{
 
   .fondo_b .row{
 
-    margin-top: 35vh !important;
+    margin-top: 40vh !important;
    }
 
 
@@ -1361,9 +1359,7 @@ textarea{
 
   }
 
-  .resp{
-    height: 180px !important;
-    }
+
 
   }
 
@@ -1467,7 +1463,7 @@ display: block !important;
 
 .fondo_b .row{
 
- margin-top: 15vh;
+ margin-top: 20vh;
  justify-content: center;
  align-items: center;
 }
@@ -1497,11 +1493,11 @@ display: block !important;
  }
 
 .resp{
-height: 70vh;
-width: 100%;
-min-width: 100%;
-max-width: 100%;
-transition: 0.5s;
+    /* height: 70vh; */
+    max-height: 50%;
+    min-width: 50%;
+    max-width: 60%;
+    transition: 0.5s;
 }
 
  .puntero{

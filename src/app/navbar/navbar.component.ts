@@ -58,7 +58,7 @@ public message_text_register: String = "";
 
 
   onAddUser(form: NgForm): void {
-      this.authService.registerUser(this.register.emailr, this.register.password,this.register.nombre)
+      this.authService.registerUser(this.register.emailr, this.register.password,this.register.nombre,this.register.apellido)
       .then((res) => {
         this.authService.isAuth().subscribe(user => {
           if (user) {

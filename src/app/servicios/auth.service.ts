@@ -12,12 +12,12 @@ export class AuthService {
 
   constructor(private afsAuth: AngularFireAuth, private afs: AngularFirestore) { }
 
-  registerUser(email: string, pass: string,name:String) {
+  registerUser(email: string, pass: string,name:String,apellido:String) {
     return new Promise((resolve, reject) => {
       this.afsAuth.auth.createUserWithEmailAndPassword(email, pass)
         .then(userData => {
           resolve(userData),
-          this.updateUserDataCorreo(userData.user,userData.additionalUserInfo["isNewUser"],name)
+          this.updateUserDataCorreo(userData.user,userData.additionalUserInfo["isNewUser"],name,apellido)
         }).catch(
           err => reject(err)
           )
@@ -66,7 +66,8 @@ export class AuthService {
       photoUrl:user.photoURL,
       telefono:null,
       provider:user.providerData[0].providerId,
-      id:user.uid
+      id:user.uid,
+      apellido:null
     }
 
     if(userinfo){
@@ -79,12 +80,13 @@ export class AuthService {
 
     }
 
-    private updateUserDataCorreo(user,userinfo,nombre) {
+    private updateUserDataCorreo(user,userinfo,nombre,apellido) {
 
       const userRef: AngularFirestoreDocument<any> = this.afs.doc(`users/${user.uid}`);
 
       const data: UserInterface = {
         name:nombre,
+        apellido:apellido,
         email:user.email,
         photoUrl:"assets/img/foto_perfil.jpg",
         telefono:null,
@@ -97,6 +99,7 @@ export class AuthService {
       return userRef.set(data);
 
       }else{
+
 
       }
 
