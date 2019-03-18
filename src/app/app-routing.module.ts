@@ -12,6 +12,8 @@ import { AuthGuard } from './observador/auth.guard';
 import { SolicitudComponent } from './solicitud/solicitud.component';
 import {DetailSolicitudComponent} from './detail-solicitud/detail-solicitud.component';
 import {DetailInmuebleComponent} from './detail-inmueble/detail-inmueble.component';
+import { TermComponent } from './term/term.component';
+import { PoliticasComponent } from './politicas/politicas.component';
 
 const app_routes: Routes = [
   {path: 'home', component: InmuebleComponent},
@@ -25,6 +27,8 @@ const app_routes: Routes = [
   {path: 'search', component: SolicitudComponent},
   {path: 'detalle-solicitud/:id', component: DetailSolicitudComponent},
   {path: 'detalle-inmueble/:id', component: DetailInmuebleComponent},
+  {path: 'terminos-condiciones', component: TermComponent},
+  {path: 'politicas-privacidad', component: PoliticasComponent},
   {path: '**', redirectTo: 'home',pathMatch: 'full' }
 ]
 

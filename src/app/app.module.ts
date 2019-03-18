@@ -31,6 +31,8 @@ import { EditSolicitudComponent } from './edit-solicitud/edit-solicitud.componen
 import { SolicitudComponent } from './solicitud/solicitud.component';
 import { DetailInmuebleComponent } from './detail-inmueble/detail-inmueble.component';
 import { DetailSolicitudComponent } from './detail-solicitud/detail-solicitud.component';
+import { TermComponent } from './term/term.component';
+import { PoliticasComponent } from './politicas/politicas.component';
 
 
 
@@ -53,7 +55,9 @@ import { DetailSolicitudComponent } from './detail-solicitud/detail-solicitud.co
     EditSolicitudComponent,
     SolicitudComponent,
     DetailInmuebleComponent,
-    DetailSolicitudComponent
+    DetailSolicitudComponent,
+    TermComponent,
+    PoliticasComponent
   ],
   imports: [
     BrowserModule,

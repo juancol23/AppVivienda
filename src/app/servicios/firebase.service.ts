@@ -80,9 +80,26 @@ deleteInmueble(id){
   })
 
   return true;
+}
+
+deleteImageInmueble(data){
 
 
 
+
+    for (let index = 0; index < data.length; index++) {
+
+      const storageRef = this.afStorage.storage.ref();
+    storageRef.child(`inmuebles/${data[index]["id_inmueble"]}/${data[index]["name"]}`).delete()
+
+
+      }
+
+
+
+
+
+  return true;
 }
 
 
@@ -600,6 +617,175 @@ edit_solicitud(solicitud) {
   }
 
   return this.afs.collection(`solicitudes`).doc(`${solicitud.inmueble}`).update(data);
+
+}
+
+edit_inmueble(inmueble) {
+
+
+  const data: inmuebleInterface = {
+    id_inmueble:       inmueble.id,
+    tipo_departamento: inmueble.type_apar,
+    operacion:         inmueble.operation,
+    cuartos:           inmueble.door,
+    bano:              inmueble.bano,
+    cochera:           inmueble.cochera,
+    vista:             inmueble.vista,
+    tipo_depa:         inmueble.tipo,
+    amoblado:          inmueble.amoblado,
+    area:              parseInt(inmueble.area),
+    estreno:           inmueble.estreno,
+    proyecto:          inmueble.proyecto,
+    image:             inmueble.image,
+    presupuesto:{
+      moneda:inmueble.pre_type,
+      precio:parseInt(inmueble.pre_price)
+    },
+    mantenimiento:{
+      moneda:inmueble.man_type,
+      precio:parseInt(inmueble.man_price)
+    },
+    coddireccion:          inmueble.distrito_,
+    direccion:         inmueble.direccion,
+    latitud:           inmueble.latitud,
+    longitud:          inmueble.longitud,
+    adicionales:{
+      terraza:inmueble.terraza,
+      mascota:inmueble.mascota,
+      deposito:inmueble.deposito,
+      ascensor:inmueble.ascensor,
+      vigilancia:inmueble.vigilancia,
+      servicio:inmueble.servicio,
+      dscp:inmueble.dscp,
+      reunion:inmueble.reunion,
+      piscina:inmueble.piscina,
+      gym:inmueble.gym,
+      parrilla:inmueble.parrilla,
+      juego:inmueble.juego,
+
+    }
+
+}
+
+  return this.afs.collection(`inmuebles`).doc(`${inmueble.id}`).update(data);
+
+}
+
+
+getMatch(filtro){
+
+  return this.afs.collection(`inmuebles`, ref => {
+
+    let query : firebase.firestore.Query = ref;
+    query = query.where('id_user', '==', filtro["id_user"])
+    /*query = query.where('tipo_departamento', '==', filtro["tipo_departamento"])
+    query = query.where('operacion', '==', filtro["operacion"])*/
+    /*query = query.where('cuartos', '>=', filtro["cuartos"])
+    query = query.where('bano', '>=', filtro["bano"])*/
+
+    /*if(filtro["cochera"]=='NO'){
+      query = query.where('cochera', '==', filtro["cochera"])
+    }else{
+      query = query.where('cochera', '>=', filtro["cochera"])
+    }*/
+
+    /*if(filtro["vista"]=='INDISTINTO'){
+
+    }else{
+      query = query.where('vista', '==', filtro["vista"])
+    }
+
+    if(filtro["tipo_depa"]=='INDISTINTO'){
+
+    }else{
+      query = query.where('tipo_depa', '==', filtro["tipo_depa"])
+    }
+
+    if(filtro["amoblado"]=='INDISTINTO'){
+
+    }else{
+      query = query.where('amoblado', '==', filtro["amoblado"])
+    }
+    if(filtro["estreno"]=='INDISTINTO'){
+
+    }else{
+      query = query.where('estreno', '==', filtro["estreno"])
+    }
+    if(filtro["proyecto"]=='INDISTINTO'){
+
+    }else{
+      query = query.where('proyecto', '==', filtro["proyecto"])
+    }*/
+
+    /*query = query.where('area', '<=', filtro["area"])
+
+    query = query.where('presupuesto.precio', '<=', filtro["presupuesto"])
+
+    query = query.where('mantenimiento.precio', '<=', filtro["mantenimiento"])*/
+
+    /*if(filtro["distrito"].length>0){
+
+
+    }else{
+
+
+    }*/
+
+
+    /*if(filtro["terraza"] ==true ){
+        query = query.where('adicionales.terraza', '==', filtro["terraza"])
+    }
+
+    if(filtro["dscp"]==true  ) {
+       query = query.where('adicionales.dscp', '==', filtro["dscp"])
+    }
+
+    if(filtro["gym"]==true ){
+        query = query.where('adicionales.gym', '==', filtro["gym"])
+    }
+
+    if(filtro["juego"]==true){
+        query = query.where('adicionales.juego', '==', filtro["juego"])
+    }
+
+    if(filtro["mascota"]==true  ){
+        query = query.where('adicionales.mascota', '==', filtro["mascota"])
+    }
+
+    if(filtro["parrilla"]==true   ){
+       query = query.where('adicionales.parrilla', '==', filtro["parrilla"])
+   }
+
+    if(filtro["piscina"]==true ){
+        query = query.where('adicionales.piscina', '==', filtro["piscina"])
+    }
+
+    if(filtro["reunion"]==true ){
+        query = query.where('adicionales.reunion', '==', filtro["reunion"])
+    }
+
+    if(filtro["servicio"]==true ){
+       query = query.where('adicionales.servicio', '==', filtro["servicio"])
+    }
+
+    if(filtro["vigilancia"]==true){
+        query = query.where('adicionales.vigilancia', '==', filtro["vigilancia"])
+    }
+
+    if(filtro["deposito"]==true ){
+        query = query.where('adicionales.deposito', '==', filtro["deposito"])
+    }
+
+    if(filtro["ascensor"]==true ){
+        query = query.where('adicionales.ascensor', '==', filtro["ascensor"])
+    }
+*/
+
+
+
+    return query
+    }).valueChanges();
+
 
 }
 

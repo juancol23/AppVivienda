@@ -16,14 +16,14 @@
 </div>
 
 <div class="container registre" >
-  <form class="row" #FormRegisterInmueble="ngForm" (submit)="registerInmueble(FormRegisterInmueble)" autocomplete="of">
+  <form class="row" #FormEditSolicitud="ngForm" (submit)="registerInmueble(FormEditSolicitud)" autocomplete="of">
 
        <div class="col-lg-6">
 
            <div class="form-group row ">
               <label  class="col-2 label_text ">Tipo :</label>
              <div class="col-10">
-              <input type="text"  value={{user}} hidden>
+
 
                <div class="btn-group style_toggle " data-toggle="buttons"  style="width: 100%" >
                   <label  class="btn btn-primary active" (click)="changeExit('DEPARTAMENTO')" >
@@ -588,14 +588,24 @@
        </div>
 
        <div class="row galeria_f"  style="margin: 0px;">
-         <div class="modi col" *ngFor='let url of urls;let indice=index'>
-            <img  class="img-fluid"  [src]="url"  >
-            <div class="eliminarimg" title="Visualizar Imagen" (click)="abrirImagen(indice)">
+         <div class="modi col" *ngFor='let url of urlsdb;let indice=index'>
+            <img  class="img-fluid"  [src]="url.url"  >
+            <div class="eliminarimg"  >
 
             <span title="Eliminar" (click)="eliminarImagen(indice)">x</span>
 
             </div>
         </div>
+
+        <div class="modi col" *ngFor='let url of url;let indice=index'>
+          <img  class="img-fluid"  [src]="url"  >
+          <div class="eliminarimg"  >
+
+          <span title="Eliminar" (click)="eliminarImagen2(indice)">x</span>
+
+          </div>
+      </div>
+
        </div>
      </div>
 
@@ -608,13 +618,13 @@
 
 
 
-       <div class=" col-12 justify-content-md-center wid"><br><br>
-         <div class="row justify-content-md-center">
-         <div class="fir_se">
-          <button type="submit" class="btn bg-blul button_red" [disabled] = "!FormRegisterInmueble.valid" >REGISTRA</button>
-        </div>
-      </div>
-      </div>
+     <div class=" col-12 justify-content-md-center wid"><br><br>
+      <div class="row justify-content-md-center">
+      <div class="fir_se">
+       <button type="submit" style=" width: 100px !important" class="btn bg-blul button_red" [disabled] = "!FormEditSolicitud.valid" >EDITAR</button>
+     </div>
+   </div>
+   </div>
 
 
     </form>
@@ -648,22 +658,7 @@
   </div>
 </div>
 
-<div class="visualizar">
-<div class="fondo_b " >
 
-  <div class="row justify-content-md-center align-items-center">
-    <div class="col-1 "><img class="puntero" src="assets/img/left.png" (click)="btn_galeria('l')" alt="" style="float:right" width="30px"></div>
-  <div class="col-8 text-center ">
-
-    <img [src]="urls[posicion]"  class="img-fluid resp" alt="" >
-
-  </div>
-  <div class="col-1 "><img class="puntero" src="assets/img/right.png" (click)="btn_galeria('r')" alt="" width="30px"></div>
-</div>
-<span (click)="cerrra_visualizar()" title="Cerrar">x</span>
-</div>
-
-</div>
 
 <ngx-spinner
 bdOpacity = 0.5

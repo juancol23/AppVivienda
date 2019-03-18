@@ -6,6 +6,7 @@ import { Router } from '@angular/router';
 import * as globals from '../globals/globals';
 import { isUndefined } from 'util';
 import { AgmMap,MapsAPILoader } from '@agm/core';
+import { map } from 'rxjs/operators';
 
 
 
@@ -66,7 +67,11 @@ export class PerfilComponent implements OnInit{
 
   public colors = ['red', 'blue','black'];
 
-  constructor( private authService: AuthService , private FirebaseService: FirebaseService,private router: Router) {
+  constructor(
+    private mapsAPILoader: MapsAPILoader,
+    private authService: AuthService ,
+    private FirebaseService: FirebaseService,
+    private router: Router) {
 
   }
 
@@ -78,6 +83,21 @@ export class PerfilComponent implements OnInit{
     this.getInmueble();
     this.p=1;
     this.a=1;
+
+
+
+
+
+        $("#v-pills-messages-tab").on('shown.bs.tab', function() {
+
+
+          $(window).resize(function() {
+            // (the 'map' here is the result of the created 'var map = ...' above)
+            google.maps.event.trigger(map, "resize");
+          });
+
+        });
+
 
 
 
@@ -310,6 +330,7 @@ setprovincia(cod){
 
     return name
 }
+
 
 
 

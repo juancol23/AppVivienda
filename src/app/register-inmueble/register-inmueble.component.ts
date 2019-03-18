@@ -84,7 +84,10 @@ export class RegisterInmuebleComponent implements OnInit {
      private FirebaseService: FirebaseService,
      private router: Router,
      private mapsAPILoader: MapsAPILoader,
-     private ngZone: NgZone,private afs: AngularFirestore,private spinner: NgxSpinnerService,private afStorage: AngularFireStorage,) { }
+     private ngZone: NgZone,
+     private afs: AngularFirestore,
+     private spinner: NgxSpinnerService,
+     private afStorage: AngularFireStorage) { }
 
   ngOnInit() {
 
@@ -226,7 +229,7 @@ export class RegisterInmuebleComponent implements OnInit {
     $('input:radio[name="operation"][value="ALQUILER"]').click();
     $('input:radio[name="door"][value="1"]').click();
     $('input:radio[name="bano"][value="1"]').click();
-    $('input:radio[name="cochera"][value="1"]').click();
+    $('input:radio[name="cochera"][value="NO"]').click();
     $('input:radio[name="vista"][value="INTERNA"]').click();
     $('input:radio[name="tipo"][value="FLAT"]').click();
     $('input:radio[name="amoblado"][value="FULL"]').click();

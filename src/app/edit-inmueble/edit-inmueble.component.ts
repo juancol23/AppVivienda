@@ -1,12 +1,16 @@
-import { Component, OnInit,Injectable,NgZone,ElementRef,ViewChild } from '@angular/core';
+import { Component, OnInit,NgZone,ElementRef,ViewChild } from '@angular/core';
 import { Router,ActivatedRoute,Params } from '@angular/router';
+import { NgForm } from '@angular/forms';
 import { FirebaseService } from '../servicios/firebase.service';
 import { MapsAPILoader } from '@agm/core';
 import * as globals from '../globals/globals';
 declare var $ :any;
 import { AuthService } from '../servicios/auth.service';
-
 import { NgxSpinnerService } from 'ngx-spinner';
+import { Observable } from 'rxjs';
+import { AngularFirestore} from '@angular/fire/firestore';
+import { AngularFireStorage, AngularFireStorageReference, AngularFireUploadTask } from 'angularfire2/storage';
+import { finalize, tap } from 'rxjs/operators';
 
 declare var google;
 
@@ -57,11 +61,23 @@ export class EditInmuebleComponent implements OnInit {
   public latitude_m: number;
   public longitude_m: number;
   public zoom:number;
-  public urls = [];
-  public urlsdb : FileList[];
+
   public posicion : any;
   public total:any;
   public count :any;
+
+  public urlsdb = [];
+  public urlsDBeliminar=[];
+
+  public url=[];
+  public urlAddDB : FileList[]=[];
+
+  downloadURL: Observable<string>;
+
+
+  /*public image=[];
+  public urlsdb : FileList[];
+  public urlsEliminar=[];*/
 
 
   constructor(private authService: AuthService ,
@@ -70,7 +86,9 @@ export class EditInmuebleComponent implements OnInit {
     private route:ActivatedRoute,
     private mapsAPILoader: MapsAPILoader,
     private ngZone: NgZone,
-    private spinner: NgxSpinnerService) { }
+    private spinner: NgxSpinnerService,
+    private afStorage: AngularFireStorage,
+    private afs: AngularFirestore) { }
 
 
     @ViewChild("search")
@@ -162,7 +180,7 @@ export class EditInmuebleComponent implements OnInit {
 
     this.FirebaseService.geteditInmueble(id1,id2).subscribe((res)=>{
 
-      console.log(res);
+
 
       if(res.length==0){
 
@@ -181,7 +199,7 @@ export class EditInmuebleComponent implements OnInit {
       $(`input:radio[name="type_apar"][value=${this.data[0]["tipo_departamento"]}]`).click();
       this.register.operation=this.data[0]["operacion"]
       $(`input:radio[name="operation"][value=${this.data[0]["operacion"]}]`).click();
-      this.changeExit(this.data[0]["operacion"])
+
       this.register.door=this.data[0]["cuartos"]
       $(`input:radio[name="door"][value=${this.data[0]["cuartos"]}]`).click();
 
@@ -395,13 +413,16 @@ export class EditInmuebleComponent implements OnInit {
                             this.register.juego=false
                             }
 
-
+                            this.urlsdb=[];
 
         for (let index = 0; index < this.data[0]["image"].length; index++) {
 
-          this.urls.push(this.data[0]["image"][index]["url"])
+           this.urlsdb.push(this.data[0]["image"][index])
 
         }
+
+
+
 
       }
     })
@@ -424,19 +445,18 @@ export class EditInmuebleComponent implements OnInit {
 
             if(existejpg!=-1  || existepng!=-1 || existejpeg!=-1 || existeJPG!=-1 || existeJPEG!=-1 || existePNG!=-1  ){
 
-              if(this.urlsdb.length<10){
+              if(this.urlsdb.length+this.url.length<10){
 
                 var reader = new FileReader();
 
                   reader.onload = (events:any) => {
-                     this.urls.push(events.target.result);
+                     this.url.push(events.target.result );
                   }
 
-                  console.log(event.target.files[i]);
 
-                  this.urlsdb.push(event.target.files[i]);
-                  console.log(this.urlsdb);
-                  console.log(this.urls);
+
+                  this.urlAddDB.push(event.target.files[i]);
+
 
 
                   reader.readAsDataURL(event.target.files[i]);
@@ -461,43 +481,29 @@ export class EditInmuebleComponent implements OnInit {
 
   eliminarImagen(pos){
     event.stopPropagation();
+
+    this.urlsDBeliminar.push(this.urlsdb[pos])
     this.urlsdb.splice(pos, 1);
-    this.urls.splice(pos, 1);
-  }
-
-  cerrra_visualizar(){
-    $(".visualizar").removeClass("mostrar");
-  }
 
 
-  abrirImagen(pos){
-    $(".visualizar").addClass("mostrar");
-    this.posicion=pos;
+
 
 
   }
 
-  btn_galeria(valor){
+  eliminarImagen2(pos){
+    event.stopPropagation();
 
-    let count = this.urls.length;
 
-    if(valor== 'l' && this.posicion==0){
-      return false;
-    }
-     if(valor == 'r' && this.posicion==count-1){
-      return false;
-     }
+    this.url.splice(pos, 1);
+    this.urlAddDB.splice(pos, 1);
 
-    if(valor=='l'){
-      this.posicion=this.posicion-1;
-    }
 
-    if(valor=='r'){
-      this.posicion=this.posicion+1;
-    }
 
 
   }
+
+
 
 
   changeCheckbox(){
@@ -628,6 +634,133 @@ let inputChar = String.fromCharCode(event.charCode);
 if (!pattern.test(inputChar)) {
   event.preventDefault();
 }
+}
+
+
+registerInmueble(form: NgForm){
+
+  if (this.isLogged) {
+    this.spinner.show();
+    /*this.register.departamento_=globals.DEPARTMENTS_DIRECTION[this.register.departamento].name;
+    this.register.provincia_=globals.PROVINCE_DIRECTION[this.register.departamento+this.register.provincia].name;*/
+    this.register.distrito_=this.register.departamento+this.register.provincia+this.register.distrito
+    this.register.id = this.id_inmueble;
+
+    this.register.image=this.urlsdb;
+
+  if(this.register.latitud== 0 || this.register.longitud==0){
+    this.spinner.hide();
+    alert("Debe buscar direccion");
+
+    return false;
+  }
+
+  if(this.urlsdb.length+this.url.length<3){
+    this.spinner.hide();
+    alert("Debe agregar un minimo de 3 fotos.");
+
+    return false;
+  }
+
+  if(this.urlsDBeliminar.length>0){
+
+    this.FirebaseService.deleteImageInmueble(this.urlsDBeliminar);
+
+  }
+
+
+
+
+    this.FirebaseService.edit_inmueble(this.register).then((res) =>{
+
+      this.count = 0;
+
+      this.total=this.urlAddDB.length
+
+      if(this.total>0){
+
+      for (const file of this.urlAddDB) {
+
+        const path = `inmuebles/${this.register.id}/${file["name"]}`;
+        const ref = this.afStorage.ref(path);
+        const task = this.afStorage.upload(path, file);
+
+
+        let id = this.afs.createId();
+
+        task.snapshotChanges().pipe(
+
+          finalize(() => {
+            ref.getDownloadURL().subscribe(url => {
+              this.downloadURL = url;
+
+
+
+              this.urlsdb.push({
+                url:this.downloadURL,
+                name:file["name"],
+                id_image:id,
+                id_inmueble:this.register.id
+
+              })
+
+
+
+              this.FirebaseService.uploadFiles(this.register.id,this.urlsdb).then((res)=>{
+
+              });
+
+
+                this.count++;
+
+
+              if(this.urlAddDB.length == this.count ){
+
+              this.spinner.hide();
+              $("#modal_ok").modal('show');
+
+
+              this.urlsDBeliminar=[];
+              this.url=[];
+              this.urlAddDB=[];
+
+              }
+
+
+
+
+            })
+
+
+
+          })
+        ).subscribe()
+}
+    }else{
+
+      this.spinner.hide();
+      $("#modal_ok").modal('show');
+
+      this.urlsDBeliminar=[];
+      this.url=[];
+      this.urlAddDB=[];
+
+    }
+
+      /*this.spinner.hide();
+      $("#modal_ok").modal('show');*/
+
+   })
+
+
+  }else {
+
+    $("#exampleModalCenter").modal('show');
+
+  }
+
+
+
 }
 
 
