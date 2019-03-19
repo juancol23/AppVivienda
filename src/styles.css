@@ -794,6 +794,13 @@ input:checked .btn-primary  {
 
  }
 
+ .margin_d{
+
+  margin-top: 5px;
+  padding-left: 5px  !important;
+  padding-right: 5px !important;
+ }
+
  .margin_p{
    margin-top: 15px;
    padding-left: 5px  !important;
@@ -882,6 +889,25 @@ input:checked .btn-primary  {
   border-radius: 0px !important;
   background-color: rgb(24, 52, 207) !important;
   font-weight: bold;
+}
+
+.text-1{
+  color:  rgb(24, 52, 207) !important;
+  font-family: volteM;
+  font-size: 13px;
+}
+
+.text-3{
+  color:  rgb(24, 52, 207) !important;
+  font-family: volteR;
+  font-size: 12px;
+}
+
+
+.text-2{
+  color:  red !important;
+  font-family: volteR;
+  font-size: 12px;
 }
 
 .dis-d{
@@ -1019,6 +1045,17 @@ ngb-datepicker {
     .modal-dialog {
         max-width: 350px;
     }
+}
+
+@media (min-width: 576px){
+.md-g {
+    max-width: 500px !important;
+}
+}
+
+
+ul {
+  padding: 0px !important
 }
 
 @media (max-width: 576px) {
@@ -1207,6 +1244,26 @@ input[type="checkbox"] {
   background-color: white !important;
 }
 
+#modal_list_inmuebles h6{
+
+ color: rgb(24, 52, 207) !important;
+
+ font-family: volteR !important;
+ font-size: 20px;
+ font-weight: bold;
+}
+
+.nuevo_i_d{
+
+  background-color: rgb(24, 52, 207) !important;
+  transition: 0.5s;
+  color: white !important;
+  font-family: volteR !important;
+  padding: 5px 30px;
+  border-radius: 30px;
+  font-size: 13px;
+  z-index: 9;
+}
 
 .nuevo_i{
   position: absolute !important;

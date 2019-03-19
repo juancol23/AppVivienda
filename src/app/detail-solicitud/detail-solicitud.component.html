@@ -160,7 +160,7 @@
         <div class=" col-12 justify-content-md-center wid"><br>
           <div class="row justify-content-md-center">
           <div class="fir_se">
-           <button (click)="match()" class="btn bg-blul button_red"  >POSTULA</button>
+           <button (click)="match()"  class="btn bg-blul button_red"  >POSTULA</button>
          </div>
        </div>
        </div>
@@ -177,3 +177,148 @@
 </div>
 
 
+<div class="modal fade" id="modal_list_inmuebles" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered  modal-dialog-scrollable md-g" role="document" >
+      <div class="modal-content">
+
+          <div class="modal-body mdbody">
+              <div class="text-center">
+                  <div class="text-center"><h6>INMUEBLES</h6></div>
+                  <a class="btn_cerrar_modal" data-dismiss="modal">X</a>
+              </div>
+
+              <div  class="text-center" *ngIf="arrayInmueble.length === 0" >
+                  <img src="assets/img/alerta.png" alt="">
+                <p class="p_login">Lo sentimos, no cuenta con Inmuebles registrados.</p>
+                <a class="btn nuevo_i_d" (click)="redireccionar('registro-inmueble')">NUEVO INMUEBLE</a>
+              </div>
+
+              <div  class="text-center" *ngIf="arrayInmueble.length > 0" >
+
+
+                  <div *ngFor="let items of arrayInmueble   | paginate: {id: 'inmueble', itemsPerPage: 2, currentPage: p } ;let indice=index ">
+
+                        <div class="item row" style="margin:5px 0px">
+
+                            <div class="col-sm-6 padding"  >
+
+                            <img [src]="items.image[0]['url']" class="img-fluid foto_normal">
+
+                            </div>
+                            <div class="col-sm-6  padding" (click)="select(indice , items.id_inmueble )">
+                                <div class="maps-renta row" style="margin:0px">
+
+
+                                        <div class="col-sm-12 margin_d  text-right" >
+                                         <br>
+                                            <div class="estados">{{items.operacion}}</div>
+                                        </div>
+                                        <div class="col-sm-12 margin_d text-right">
+                                            <div >{{setDistrito(items.coddireccion)}} / {{setprovincia(items.coddireccion)}} <i class="fas fa-map-marker-alt"></i></div>
+                                        </div>
+
+                                        <div class="col-sm-12 margin_d text-left " >
+                                            <div class="border_s">
+                                                <i class="fas fa-home text-left "></i><span class="text-right" >{{items.tipo_departamento}}</span>
+                                          </div>
+                                        </div>
+
+                                        <div class="col-sm-12 margin_d text-left">
+                                            <div class="border_s">
+                                                <i class="fas fa-home text-left"></i><span class="text-right" >{{items.area}} M²</span>
+                                          </div>
+                                        </div>
+
+                                        <div class="col-sm-12 margin_d text-left">
+                                            <div class="border_s text-left"><i class="fas fa-dollar-sign"></i><span class="text-right" >{{items.presupuesto.precio | currency:" "}} {{items.presupuesto.moneda}}</span>
+                                          </div>
+                                        </div>
+
+
+
+
+
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <br>
+
+                    <div class="col-12 text-center" >
+                      <pagination-controls
+                     (pageChange)="p = $event"
+                     previousLabel="<"
+                     nextLabel=">"
+                     id="inmueble"
+                     >
+                    </pagination-controls>
+                  </div>
+
+
+
+              </div>
+
+          </div>
+      </div>
+  </div>
+</div>
+
+<div class="modal fade" id="modal_nomatch" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered  modal-dialog-scrollable md-g" role="document" >
+        <div class="modal-content">
+
+            <div class="modal-body mdbody">
+                <div class="text-center">
+                    <a class="btn_cerrar_modal" data-dismiss="modal">X</a>
+                </div>
+
+                <div  class="text-center"  >
+                    <img src="assets/img/alerta.png" alt="">
+                  <p class="p_login">Lo sentimos, tu inmueble no cúmple
+                      con algunos requerimientos de la solicitud</p>
+                </div>
+
+                <div class="row" style="margin:0px">
+
+                  <div class="col-4 "></div>
+                  <div class="col-4 text-center text-1">SOLICITUD</div>
+                  <div class="col-4 text-center text-1">INMUEBLE</div>
+
+                </div>
+
+                <div *ngFor="let item of noMatch "  class="row" style="margin:5px 0px">
+
+
+
+                    <div class="col-4 text-3">{{item.name}} :</div>
+                    <div class="col-4 text-center text-3" style="border-right: 1px  solid rgb(24, 52, 207) " >{{item.valor1}}</div>
+                    <div class="col-4 text-center text-2" style="color:red">{{item.valor2}}</div>
+
+                 </div>
+
+                 <div class="text-center">
+<br>
+                    <a class="btn nuevo_i_d" (click)="editarInmueble(id_inmueble)">EDITAR INMUEBLE</a>
+                 </div>
+
+
+
+
+            </div>
+        </div>
+    </div>
+  </div>
+
+
+  <ngx-spinner
+bdOpacity = 0.5
+bdColor = "rgba(0,0,0,0.9)"
+size = "large"
+color = "#ffffff"
+type = "ball-clip-rotate-multiple"
+fullScreen = "true"
+>
+<p style="font-size: 20px; color: white">Match Solicitud | Inmueble</p>
+</ngx-spinner>
