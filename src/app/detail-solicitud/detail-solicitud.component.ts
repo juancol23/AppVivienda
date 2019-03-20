@@ -6,6 +6,8 @@ import { Injectable,NgZone } from '@angular/core';
 import { ActivatedRoute,Params } from '@angular/router';
 import * as globals from '../globals/globals';
 import { AuthService } from '../servicios/auth.service';
+import { ToastrService } from 'ngx-toastr';
+
 
 declare var $ :any;
 
@@ -26,10 +28,17 @@ export class DetailSolicitudComponent implements OnInit {
   public noMatch:any=[];
   public id_inmueble:string="";
 
+  public matchid:any=[];
+
+  public data_res :any=[];
+
   public arrayInmueble:any=[];
   public colors = ['red', 'blue','black'];
 
   public filtro:any;
+
+
+  public inmueble : any=[];
 
 
   public isLogged: boolean = false;
@@ -41,7 +50,8 @@ export class DetailSolicitudComponent implements OnInit {
     private router: Router,
     private FirebaseService: FirebaseService,
     private spinner: NgxSpinnerService,
-    private route:ActivatedRoute)
+    private route:ActivatedRoute,
+    private toastr: ToastrService)
   {}
 
   ngOnInit() {
@@ -60,6 +70,8 @@ export class DetailSolicitudComponent implements OnInit {
     this.getSolicitud(this.id_solicitud);
 
     this.getCurrentUser();
+
+
 
 
   }
@@ -167,7 +179,9 @@ getSolicitud(id){
       vigilancia:this.data[0].adicionales.vigilancia
     }
 
-    console.log(this.filtro);
+
+    this.listarInmueble();
+
 
 
 
@@ -198,11 +212,11 @@ setmapalat(coordenadas){
 
       this.filtro["id_user"]=this.id_user_inmueble;
 
-      /*if(this.id_user_inmueble==this.data[0].id_user){
+      if(this.id_user_inmueble==this.data[0].id_user){
 
-        alert("No puede postular a una misma solicitud");
+        this.toastr.warning('No puedes postular a tu misma solicitud.' );
         return false
-      }*/
+      }
 
       this.FirebaseService.getMatch(this.filtro).subscribe((res)=>{
 
@@ -711,6 +725,7 @@ setmapalat(coordenadas){
 
 
     if(this.noMatch.length>0){
+
       $("#modal_list_inmuebles").modal('hide');
 
       this.spinner.show();
@@ -727,14 +742,89 @@ setmapalat(coordenadas){
 
     }else{
 
+      this.spinner.show();
+
+
+
+
+      this.FirebaseService.getMatchSI(this.data[0]["id_solicitud"],this.arrayInmueble[indice]["id_inmueble"]).subscribe((res)=>{
+
+        this.data_res = res.size;
+
+        this.functioncontar(indice);
+
+      })
+
+    }
+
+  }
+
+
+  functioncontar(indice){
+
+    $("#modal_list_inmuebles").modal('hide');
+
+    let boolean;
+
+    if(this.data_res>0){
+
+    this.spinner.hide();
+
+    this.toastr.warning('Inmueble se encuentra registrado' );
+
+     boolean=false;
+
+     }else{
+
+      this.matchid=this.data[0]["match"]
+
+      this.matchid.push(this.arrayInmueble[indice]["id_inmueble"]);
+
+      this.FirebaseService.updateSolicitud(this.data[0]["id_solicitud"], this.matchid).then((res)=>{
+
+        this.toastr.success('Felicitaciones, Inmueble registrado.' );
+
+        this.spinner.hide();
+
+      })
+
+      boolean=true;
+
+     }
+
+
+
+  }
+
+  listarInmueble(){
+
+    this.inmueble=[]
+
+    for (let index = 0; index < this.data[0]["match"].length; index++) {
+
+
+      this.FirebaseService.getInmuebleByID(this.data[0]["match"][index]).subscribe((res)=>{
+
+        this.inmueble[index]=res
+
+
+
+      })
+
+
+      }
+
+
 
     }
 
 
+    viewInmueble(id){
+      this.router.navigate([`detalle-inmueble/${id}`]);
+    }
 
-    console.log(this.noMatch);
 
-  }
+
 
   redireccionar(href):void{
 

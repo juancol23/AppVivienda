@@ -7,6 +7,7 @@ import * as globals from '../globals/globals';
 import { isUndefined } from 'util';
 import { AgmMap,MapsAPILoader } from '@agm/core';
 import { map } from 'rxjs/operators';
+import { ToastrService } from 'ngx-toastr';
 
 
 
@@ -71,7 +72,8 @@ export class PerfilComponent implements OnInit{
     private mapsAPILoader: MapsAPILoader,
     private authService: AuthService ,
     private FirebaseService: FirebaseService,
-    private router: Router) {
+    private router: Router,
+    private toastr: ToastrService) {
 
   }
 
@@ -354,7 +356,7 @@ eliminarInmueble(id){
 
       if(this.FirebaseService.deleteInmueble(id)){
 
-        alert("Inmueble se elimino");
+        this.toastr.success('Inmueble se elimino correctamente.' );
 
       }else{
 
@@ -374,7 +376,7 @@ eliminarSolicitud(id){
   if (confirm("Estas seguro de eliminar la solicitud ?")) {
     this.FirebaseService.deleteSolicitud(id).then(res => {
 
-      alert("Solicitud se elimino");
+      this.toastr.success('Solicitud se elimino correctamente.' );
 
     }).catch(err => {
        console.log(err)

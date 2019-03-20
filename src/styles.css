@@ -1439,6 +1439,15 @@ color:black  !important;
   background-color: rgb(24, 52, 207,0.8) !important;
 }
 
+.toast-container.toast-bottom-center .ngx-toastr{
+
+  width: 350px !important;
+}
+
+.toast-message {
+  height: 25px !important;
+}
+
 @media (max-width: 991px){
 
 

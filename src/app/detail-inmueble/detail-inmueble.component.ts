@@ -88,7 +88,6 @@ getInmueble(id){
     }else{
 
     this.data=res;
-    console.log(this.data)
 
     }
 
@@ -122,7 +121,6 @@ abrirImagen(pos){
 
   this.imageurl=this.data[0]["image"][pos]["url"];
 
-  console.log(this.data[0]["image"][pos]["url"]);
 
 }
 

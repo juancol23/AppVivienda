@@ -6,6 +6,7 @@ import * as globals from '../globals/globals';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { of } from 'rxjs';
 import { isUndefined } from 'util';
+import { ToastrService } from 'ngx-toastr';
 
 declare var $ :any;
 
@@ -87,7 +88,8 @@ export class SolicitudComponent implements OnInit {
     private router: Router,
     private ngZone: NgZone,
     private calendar: NgbCalendar,
-    private config: NgbDatepickerConfig,private spinner: NgxSpinnerService) {
+    private config: NgbDatepickerConfig,private spinner: NgxSpinnerService,
+    private toastr: ToastrService) {
 
 
     config.minDate = calendar.getToday();

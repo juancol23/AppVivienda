@@ -12,6 +12,7 @@ export interface SolicitudInterface {
   area?:number;
   estreno?:string;
   proyecto?:string;
+  match?:[];
   presupuesto?:  {moneda?: string , precio?: number};
   mantenimiento?:  {moneda?: string , precio?: number};
   comentario?:string;

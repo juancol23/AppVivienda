@@ -276,6 +276,7 @@ updatePhotoUrl(user){
         area:              parseFloat(solicitud.area),
         estreno:           solicitud.estreno,
         proyecto:          solicitud.proyecto,
+        match:[],
         presupuesto:{
           moneda:solicitud.pre_type,
           precio:parseFloat(solicitud.pre_price)
@@ -787,6 +788,37 @@ getMatch(filtro){
     }).valueChanges();
 
 
+}
+
+
+
+getMatchSI(id,id_inmueble){
+
+  return this.afs.collection(`solicitudes`, ref => {
+
+    let query : firebase.firestore.Query = ref;
+    query = query.where('id_solicitud', '==', id)
+    query = query.where('match', 'array-contains', id_inmueble)
+
+    return query
+  }).get();
+
+}
+
+updateSolicitud(id,array){
+
+  const data: SolicitudInterface = {
+    match: array,
+  }
+
+  return this.afs.collection(`solicitudes`).doc(id).update(data);
+
+}
+
+
+getInmuebleByID(id){
+
+  return this.afs.collection(`inmuebles`).doc(id).valueChanges();
 }
 
 

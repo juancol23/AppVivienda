@@ -10,6 +10,7 @@ import { NgxSpinnerService } from 'ngx-spinner';
 import { AngularFireStorage, AngularFireStorageReference, AngularFireUploadTask } from 'angularfire2/storage';
 import { finalize, tap } from 'rxjs/operators';
 import { Observable } from 'rxjs';
+import { ToastrService } from 'ngx-toastr';
 
 declare var google;
 declare var $ :any;
@@ -87,7 +88,8 @@ export class RegisterInmuebleComponent implements OnInit {
      private ngZone: NgZone,
      private afs: AngularFirestore,
      private spinner: NgxSpinnerService,
-     private afStorage: AngularFireStorage) { }
+     private afStorage: AngularFireStorage,
+     private toastr: ToastrService) { }
 
   ngOnInit() {
 
@@ -273,14 +275,14 @@ registerInmueble(form: NgForm){
 
       if(this.register.latitud== 0 || this.register.longitud==0){
         this.spinner.hide();
-        alert("Debe buscar direccion");
+        this.toastr.warning('Debe buscar una direccion' );
 
         return false;
       }
 
       if(this.urlsdb.length<3){
         this.spinner.hide();
-        alert("Debe agregar un minimo de 3 fotos.");
+        this.toastr.warning('Debe agregar un minimo de 3 fotos' );
 
         return false;
       }
@@ -431,8 +433,6 @@ registerInmueble(form: NgForm){
     this.proviSeleccionado = this.selectProv.value;
     this.listarDistritos(this.departSeleccionado + this.proviSeleccionado);
 
-
-
   }
 
   listarDistritos(skuDepPro) {
@@ -510,7 +510,8 @@ registerInmueble(form: NgForm){
 
               }else{
 
-                alert("Solo puede Seleccionar 10 imagenes");
+               
+                this.toastr.warning('Solo puede Seleccionar 10 imagenes' );
 
               }
 
@@ -518,7 +519,7 @@ registerInmueble(form: NgForm){
 
             }else{
 
-              console.log("No es imagen");
+              this.toastr.error(`${event.target.files[i]["name"]} no es una imagen.` );
             }
 
 

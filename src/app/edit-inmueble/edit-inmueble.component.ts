@@ -11,6 +11,7 @@ import { Observable } from 'rxjs';
 import { AngularFirestore} from '@angular/fire/firestore';
 import { AngularFireStorage, AngularFireStorageReference, AngularFireUploadTask } from 'angularfire2/storage';
 import { finalize, tap } from 'rxjs/operators';
+import { ToastrService } from 'ngx-toastr';
 
 declare var google;
 
@@ -88,7 +89,8 @@ export class EditInmuebleComponent implements OnInit {
     private ngZone: NgZone,
     private spinner: NgxSpinnerService,
     private afStorage: AngularFireStorage,
-    private afs: AngularFirestore) { }
+    private afs: AngularFirestore,
+    private toastr: ToastrService) { }
 
 
     @ViewChild("search")
@@ -159,7 +161,7 @@ export class EditInmuebleComponent implements OnInit {
 
         this.id_inmueble = params['id'];
 
-        console.log(this.id_inmueble);
+        
 
         })
 
@@ -463,7 +465,7 @@ export class EditInmuebleComponent implements OnInit {
 
               }else{
 
-                alert("Solo puede Seleccionar 10 imagenes");
+                this.toastr.warning('Solo puede Seleccionar 10 imagenes' );
 
               }
 
@@ -471,7 +473,7 @@ export class EditInmuebleComponent implements OnInit {
 
             }else{
 
-              console.log("No es imagen");
+              this.toastr.error(`${event.target.files[i]["name"]} no es una imagen.` );
             }
 
 
@@ -650,14 +652,14 @@ registerInmueble(form: NgForm){
 
   if(this.register.latitud== 0 || this.register.longitud==0){
     this.spinner.hide();
-    alert("Debe buscar direccion");
+    this.toastr.warning('Debe buscar una direccion' );
 
     return false;
   }
 
   if(this.urlsdb.length+this.url.length<3){
     this.spinner.hide();
-    alert("Debe agregar un minimo de 3 fotos.");
+    this.toastr.warning('Debe agregar un minimo de 3 fotos' );
 
     return false;
   }

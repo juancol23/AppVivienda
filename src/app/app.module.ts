@@ -33,6 +33,8 @@ import { DetailInmuebleComponent } from './detail-inmueble/detail-inmueble.compo
 import { DetailSolicitudComponent } from './detail-solicitud/detail-solicitud.component';
 import { TermComponent } from './term/term.component';
 import { PoliticasComponent } from './politicas/politicas.component';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { ToastrModule } from 'ngx-toastr';
 
 
 
@@ -71,7 +73,14 @@ import { PoliticasComponent } from './politicas/politicas.component';
     AgmCoreModule.forRoot({apiKey: 'AIzaSyDc2AdGnT2qtKTMHxa-5yupJd-m46NGPCI', libraries: ['places']}),
     NgbModule,
     NgxSpinnerModule,
-    NgxPaginationModule
+    NgxPaginationModule,
+    BrowserAnimationsModule,
+    ToastrModule.forRoot({
+    timeOut: 3000,
+    positionClass: 'toast-bottom-center',
+    preventDuplicates: true,
+
+    })
   ],
   providers: [AngularFireAuth, AngularFirestore],
   bootstrap: [AppComponent]

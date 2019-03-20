@@ -10,6 +10,8 @@ import {NgbDate, NgbCalendar,NgbDatepickerConfig,NgbDatepickerI18n,NgbDateStruct
 declare var google;
 declare var $ :any;
 
+import { ToastrService } from 'ngx-toastr';
+
 class RequestDepartment {
 	id: string
 	value: any
@@ -106,8 +108,9 @@ export class RegisterSolicitudComponent implements OnInit {
     private mapsAPILoader: MapsAPILoader,
     private ngZone: NgZone,
     private calendar: NgbCalendar,
-    private config: NgbDatepickerConfig
-    ,private spinner: NgxSpinnerService) {
+    private config: NgbDatepickerConfig,
+    private spinner: NgxSpinnerService,
+    private toastr: ToastrService) {
     config.minDate = calendar.getToday();
     }
 
@@ -117,7 +120,7 @@ export class RegisterSolicitudComponent implements OnInit {
     this.obtenerDepartamentos();
     this.changeCheckbox();
 
-    console.log(new Date());
+ 
 
 
 
@@ -144,12 +147,10 @@ getCurrentUser() {
     this.authService.isAuth().subscribe(auth => {
       if (auth) {
         this.isLogged = true;
-        console.log(this.isLogged);
         this.user=auth.uid;
 
       }else {
         this.isLogged = false;
-        console.log(this.isLogged);
         this.user="";
       }
     });
@@ -315,7 +316,7 @@ selDistrict() {
   addDistrito(){
     if(this.register.distrito=="" || this.register.distrito.empty){
 
-      alert("Debe seleccionar un distrito");
+      this.toastr.warning('Debe seleccionar un distrito' );
 
     }else{
       /*let departamento =globals.DEPARTMENTS_DIRECTION[this.register.departamento].name;
@@ -330,7 +331,7 @@ selDistrict() {
 
            if(istrue){
 
-            alert("Ya selecciono el distrito.")
+            this.toastr.warning('Distrito se encuentra seleccionado' );
 
            }else{
 
@@ -341,7 +342,7 @@ selDistrict() {
 
       }else{
 
-        alert("Solo puede seleccionar 3 distritos");
+        this.toastr.warning('Solo puede seleccionar 3 distritos' );
 
       }
 
@@ -357,16 +358,12 @@ selDistrict() {
 
   this.distric.splice(indice, 1);
 
-
-    console.log(this.distric);
 }
 
    eliminarItem_mapa(indice){
 
     this.markers.splice(indice, 1);
 
-
-    console.log(this.markers);
 
    }
 
@@ -381,10 +378,9 @@ selDistrict() {
 
       this.markers.push(string);
 
-      console.log(this.markers);
 
     }else{
-      alert("Solo puede seleccionar 3 lugares.");
+      this.toastr.warning('Solo puede seleccionar 3 lugares' );
     }
 
     var geocoder = new google.maps.Geocoder;
@@ -421,7 +417,6 @@ change(valor){
     this.ub_dis= true;
     this.ub_area= false;
 
-    console.log(this.ub_dis,this.ub_area);
 
 
   }else{
@@ -429,7 +424,6 @@ change(valor){
     this.ub_dis= false;
     this.ub_area= true;
 
-    console.log(this.ub_dis,this.ub_area);
   }
 
 }
@@ -519,7 +513,7 @@ registersolicitud(form: NgForm){
 
         if(this.fromDate==null ||  this.toDate == null){
           this.spinner.hide();
-          alert("Seleccionar rango de fechas");
+          this.toastr.warning('Seleccionar rango de fechas.' );
           return false;
 
         }else{
@@ -544,7 +538,7 @@ registersolicitud(form: NgForm){
 
         }else{
           this.spinner.hide();
-          alert("Debe seleccionar un distrito.");
+          this.toastr.warning('Debe seleccionar minimo un distrito.' );
 
           return false;
 
@@ -565,7 +559,7 @@ registersolicitud(form: NgForm){
 
         }else{
           this.spinner.hide();
-           alert("Debe seleccionar una area.");
+          this.toastr.warning('Debe seleccionar minimo una área.' );
            return false;
         }
 
@@ -576,7 +570,7 @@ registersolicitud(form: NgForm){
       }
 
 
-      console.log(JSON.stringify(this.register));
+   
 
       this.FirebaseService.register_solicitud(this.register).then((res) =>{
         this.spinner.hide();

@@ -7,7 +7,7 @@ import { AuthService } from '../servicios/auth.service';
 import * as globals from '../globals/globals';
 import { NgForm } from '@angular/forms';
 import {NgbDate, NgbCalendar,NgbDatepickerConfig,NgbDatepickerI18n,NgbDateStruct} from '@ng-bootstrap/ng-bootstrap';
-
+import { ToastrService } from 'ngx-toastr';
 
 class RequestDepartment {
 	id: string
@@ -96,8 +96,8 @@ export class EditSolicitudComponent implements OnInit {
     private ngZone: NgZone,
     private calendar: NgbCalendar,
     private config: NgbDatepickerConfig,
-
-    private route:ActivatedRoute) {
+    private route:ActivatedRoute,
+    private toastr: ToastrService) {
 
       config.minDate = calendar.getToday();
      }
@@ -503,7 +503,7 @@ sortByProperty = (property) => {
 addDistrito(){
   if(this.register.distrito=="" || this.register.distrito.empty){
 
-    alert("Debe seleccionar un distrito");
+    this.toastr.warning('Debe seleccionar un distrito.' );
 
   }else{
     /*let departamento =globals.DEPARTMENTS_DIRECTION[this.register.departamento].name;
@@ -518,7 +518,7 @@ addDistrito(){
 
          if(istrue){
 
-          alert("Ya selecciono el distrito.")
+          this.toastr.warning('Distrito se encuentra seleccionado' );
 
          }else{
 
@@ -529,7 +529,7 @@ addDistrito(){
 
     }else{
 
-      alert("Solo puede seleccionar 3 distritos");
+      this.toastr.warning('Solo puede seleccionar 3 distritos' );
 
     }
 
@@ -564,10 +564,9 @@ mapClicked(event){
 
     this.markers.push(string);
 
-    console.log(this.markers);
 
   }else{
-    alert("Solo puede seleccionar 3 lugares.");
+    this.toastr.warning('Solo puede seleccionar 3 lugares' );
   }
 
 }
@@ -601,12 +600,12 @@ if (!this.fromDate && !this.toDate) {
 } else if (this.fromDate && !this.toDate && date.after(this.fromDate)) {
   this.toDate = date;
 
-  console.log(this.fromDate,this.toDate);
+  
 
   this.de =new Date(this.fromDate.year,this.fromDate.month-1,this.fromDate.day);
   this.hasta =new Date(this.toDate.year,this.toDate.month-1,this.toDate.day);
 
-  console.log(this.de,this.hasta);
+ 
 } else {
   this.toDate = null;
   this.fromDate = date;
@@ -693,7 +692,8 @@ editSolicitud(form: NgForm){
 
         if(this.fromDate==null ||  this.toDate == null){
 
-          alert("Seleccionar rango de fechas");
+          
+          this.toastr.warning('Seleccionar rango de fechas.' );
           return false;
 
         }else{
@@ -718,7 +718,7 @@ editSolicitud(form: NgForm){
 
         }else{
 
-          alert("Debe seleccionar un distrito.");
+          this.toastr.warning('Debe seleccionar minimo un distrito.' );
 
           return false;
 
@@ -739,7 +739,7 @@ editSolicitud(form: NgForm){
 
         }else{
 
-           alert("Debe seleccionar una area.");
+          this.toastr.warning('Debe seleccionar minimo una área.' );
            return false;
         }
 
