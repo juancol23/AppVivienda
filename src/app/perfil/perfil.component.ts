@@ -39,6 +39,9 @@ export class PerfilComponent implements OnInit{
   public modelPassword: any = {};
   public error:any={};
 
+
+  public inmuebles_match:any=[];
+
   public data:any;
   public solicitudata:any;
 
@@ -65,6 +68,9 @@ export class PerfilComponent implements OnInit{
   selectedFiles: FileList;
 
 
+  public user:any={};
+
+
 
   public colors = ['red', 'blue','black'];
 
@@ -80,12 +86,12 @@ export class PerfilComponent implements OnInit{
 
 
   ngOnInit() {
+    this.user = JSON.parse(localStorage.getItem("users")) ;
 
     this.getCurrentUser();
     this.getInmueble();
     this.p=1;
     this.a=1;
-
 
 
 
@@ -99,6 +105,8 @@ export class PerfilComponent implements OnInit{
           });
 
         });
+
+
 
 
 
@@ -139,7 +147,13 @@ export class PerfilComponent implements OnInit{
 
             this.FirebaseService.getSolicitudesByUser(auth.uid).subscribe((res) => {
               this.solicitudata=res;
+
+
+              this.sendInmueble();
             })
+
+
+
 
       }else {
 
@@ -370,10 +384,17 @@ eliminarInmueble(id){
 
 }
 
-eliminarSolicitud(id){
-
+eliminarSolicitud(id,indice){
 
   if (confirm("Estas seguro de eliminar la solicitud ?")) {
+
+    if(this.solicitudata[indice]["match"].length>0){
+
+      this.toastr.error('Solicitud enlazada con inmuebles.' );
+
+      return false;
+
+    }
     this.FirebaseService.deleteSolicitud(id).then(res => {
 
       this.toastr.success('Solicitud se elimino correctamente.' );
@@ -385,6 +406,7 @@ eliminarSolicitud(id){
   } else {
 
 }
+
 
 }
 
@@ -420,7 +442,55 @@ setmapalat(coordenadas){
 
   viewInmueble(id){
     this.router.navigate([`detalle-inmueble/${id}`]);
+
+
   }
+
+
+
+  sendInmueble(){
+
+     for (let index = 0; index < this.solicitudata.length; index++) {
+
+      if (this.solicitudata[index]["match"].length>0){
+
+        for (let index2 = 0; index2 < this.solicitudata[index]["match"].length; index2++) {
+
+          this.FirebaseService.getInmueblesbyid(this.solicitudata[index]["match"][index2]).subscribe((res)=>{
+
+
+            this.inmuebles_match[index2]=res
+
+
+          })
+
+
+
+        }
+
+
+
+
+      }else{
+
+
+      }
+
+     }
+
+     console.log(this.inmuebles_match);
+
+
+     setTimeout(() => {
+      console.clear()
+     }
+     , 300);
+
+
+
+  }
+
+
 
 
 }

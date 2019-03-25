@@ -243,7 +243,9 @@ updatePhotoUrl(user){
 
 
 
-
+  getInmueblesbyid(id){
+    return this.afs.collection('inmuebles').doc(id).valueChanges();
+ }
 
 
 
@@ -532,6 +534,12 @@ getSolicitudesHome(){
       return this.afs.collection(`inmuebles`, ref => ref.where("id_inmueble", '==', id  )).valueChanges();
 
       }
+
+getSolicitudContainInmueblebyId(id){
+
+ return this.afs.collection(`solicitudes`, ref => ref.where("match", 'array-contains', id  )).valueChanges();
+
+ }
 
 getallUser(){
 

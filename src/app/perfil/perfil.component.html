@@ -283,16 +283,16 @@
 
                     <div class="col-sm-12  " >
 
-                      <div *ngFor="let item of solicitudata | paginate: {id: 'solicitud', itemsPerPage: 2, currentPage: a } ">
+                      <div *ngFor="let item of solicitudata | paginate: {id: 'solicitud', itemsPerPage: 2, currentPage: a }  ;let indice=index">
                         <br><br>
                         <div  class="col-12">
                           <div class="botones_funcionales">
 
                               <a (click)="editarSolicitud(item.id_solicitud)"  >Editar</a>
-                              <a (click)="eliminarSolicitud(item.id_solicitud)" >Eliminar</a>
+                              <a (click)="eliminarSolicitud(item.id_solicitud,indice)" >Eliminar</a>
                           </div>
                         </div>
-                          <div class="item row">
+                          <div class="item row showm">
 
                               <div class="col-sm-4 padding" *ngIf="item.radio.length > 0" >
                                   <agm-map   #map id="item.id_solicitud" class="mapag"   [scrollwheel]="false" [latitude]="setmapalat(item.radio[0])" [longitude]="setmapalon(item.radio[0])"[zoom]="12" >
@@ -382,6 +382,7 @@
                                                   <div class="border_s"><i class="fas fa-dollar-sign"></i><span class="text-right" >{{item.presupuesto.precio  | currency:" "}} {{item.presupuesto.moneda}}</span>
                                                   </div>
                                                 </div>
+
                                               </div>
                                             </div>
 
@@ -390,6 +391,105 @@
                                   </div>
                               </div>
                           </div>
+
+                          <div class="flecha_v" [ngClass]="item.match.length > 0 ? 'border-co1' : 'border-co2'">
+
+                          </div>
+
+                          <div  *ngIf="item.match.length > 0" class="mostrar_inmuebles"  >
+                          <div >
+                          <div *ngFor="let match of item.match;let indice=index" >
+
+                              <div class="itemss row " style="margin-top:10px ; margin-bottom: 10px; background-color: #e9ecef"  (click)="viewInmueble(inmuebles_match[indice].id_inmueble)"  >
+
+                                  <div class="col-sm-4 padding"  >
+
+                                  <img [src]="inmuebles_match[indice].image[0]['url']" class="img-fluid foto_normal">
+
+                                  </div>
+                                  <div class="col-sm-8  padding" >
+                                      <div class="maps-renta row" style="margin:0px">
+
+                                              <div class="col-6 margin_p text-left " >
+                                                  <div class="name-busca "><i class="fas fa-user"></i> {{user[inmuebles_match[indice].id_user]}} LE OFRECE:</div>
+                                              </div>
+                                              <div class="col-6 margin_p text-right " >
+
+                                                  <div class="estados">{{ inmuebles_match[indice].operacion}}</div>
+                                              </div>
+                                              <div class="col-12 margin_p text-right">
+                                                  <div >{{setDistrito( inmuebles_match[indice].coddireccion)}} / {{setprovincia( inmuebles_match[indice].coddireccion)}} <i class="fas fa-map-marker-alt"></i></div>
+                                              </div>
+
+                                              <div class="col-12 margin_p"  >
+                                                <div class="row" style="margin:0px">
+                                                  <div class="col-6 " style="padding-left: 0px;padding-right: 5px">
+                                                    <div class="border_s">
+                                                        <i class="fas fa-home"></i><span class="text-right" >{{ inmuebles_match[indice].tipo_departamento}}</span>
+                                                  </div>
+                                                </div>
+                                                  <div class="col-6 " style="padding-right: 0px;padding-left: 5px">
+                                                    <div *ngIf="inmuebles_match[indice].cuartos==1">
+                                                      <div class="border_s">
+                                                          <i class="fas fa-bed"></i><span class="text-right" >{{ inmuebles_match[indice].cuartos}} DORMITORIO </span>
+                                                        </div>
+                                                  </div>
+                                                  <div *ngIf="inmuebles_match[indice].cuartos>1">
+                                                      <div class="border_s">
+                                                          <i class="fas fa-bed"></i><span class="text-right" >{{ inmuebles_match[indice].cuartos}} DORMITORIOS </span>
+                                                        </div>
+                                                    </div>
+                                                  </div>
+                                                </div>
+                                              </div >
+                                              <br>
+                                              <div class="col-12 margin_p_10"  >
+                                                  <div class="row" style="margin:0px">
+
+                                                    <div class="col-lg-3 col-md-3 col-6 pl" >
+                                                      <div class="border_s"><i class="fab fa-medium"></i><span class="text-right" >{{ inmuebles_match[indice].area}} M²</span>
+                                                      </div>
+                                                    </div>
+
+                                                    <div class="col-lg-4 col-md-4 col-6 plr">
+                                                      <div *ngIf="inmuebles_match[indice].bano==1">
+                                                        <div class="border_s"><i class="fas fa-toilet"></i><span class="text-right" >{{ inmuebles_match[indice].bano}} BAÑO </span>
+                                                        </div>
+                                                      </div>
+                                                      <div *ngIf="inmuebles_match[indice].bano>1">
+                                                          <div class="border_s"><i class="fas fa-toilet"></i><span class="text-right" >{{ inmuebles_match[indice].bano}} BAÑOS </span>
+                                                          </div>
+                                                        </div>
+
+                                                    </div>
+
+                                                    <div class="col-lg-5 col-md-5 col-sm-12 pr" >
+                                                      <div class="border_s"><i class="fas fa-dollar-sign"></i><span class="text-right" >{{inmuebles_match[indice].presupuesto.precio | currency:" "}} {{ inmuebles_match[indice].presupuesto.moneda}}</span>
+                                                      </div>
+                                                    </div>
+                                                  </div>
+                                                </div>
+
+
+
+                                      </div>
+                                  </div>
+                              </div>
+
+                            </div>
+
+                          </div>
+
+
+
+
+                            </div>
+
+
+
+
+
+
 
                       </div>
  <br>

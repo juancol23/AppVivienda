@@ -761,6 +761,43 @@ input:checked .btn-primary  {
   font-size: 16.5px;
 }
 
+#modal_exitoso h6 ,#modal_email h6{
+  color: rgb(24, 52, 207);
+  font-family: volteM;
+  font-size: 20px;
+}
+
+#modal_exitoso .p-f ,#modal_email .p-f {
+  color: rgb(24, 52, 207);
+  font-family: volteR;
+  font-size: 16.5px;
+  padding: 0px 100px;
+}
+
+#modal_exitoso .p-f span ,#modal_email .p-f span{
+  display: block !important;
+}
+
+.dispal p {
+  font-size: 15px;
+}
+.dispal p span{
+  display: block !important;
+  font-weight: bold;
+}
+
+
+
+#modal_exitoso .p-s ,#modal_email .p-s {
+  color: rgb(24, 52, 207);
+  font-family: volteR;
+  font-size: 16.5px;
+  padding: 0px 10px;
+}
+
+#modal_exitoso p span ,#modal_email p span{
+  font-weight: bold;
+}
 .item{
   /* background: #3f4dda; */
    padding:10px;
@@ -771,6 +808,18 @@ input:checked .btn-primary  {
   font-weight: bold;
   transition: 0.2s !important
   }
+
+  .itemss{
+    /* background: #3f4dda; */
+     padding:10px;
+    border: solid #3f4dda .5px;
+    color:  #3f4dda;
+    font-family: volteR;
+    font-size: 14px;
+    font-weight: bold;
+    transition: 0.2s !important;
+    cursor: pointer;
+    }
 
 .padding{
   padding: 0px;
@@ -903,7 +952,40 @@ input:checked .btn-primary  {
   font-size: 12px;
 }
 
+.flecha_v{
+  text-align: center;
+  margin-left: 45%;
+  width: 0;
+  height: 0;
+  border-width: 20px 20px 0;
+  border-style: solid;
+  opacity: 1;
+  transition: 0.3s;
+}
 
+
+.border-co1{
+  border-color:  #3f4dda   transparent transparent !important;
+}
+
+.border-co2{
+  border-color:  transparent   transparent transparent !important;
+}
+
+
+
+
+
+.item:hover + .flecha_v {
+  border-width: 25px 25px 0;
+}
+
+@media (max-width: 576px){
+  .flecha_v{
+    margin-left: 43% !important;
+  }
+
+}
 .text-2{
   color:  red !important;
   font-family: volteR;
@@ -1125,6 +1207,10 @@ ul {
   font-size: 13px !important;
 
   }
+  .itemss{
+    font-size: 13px !important;
+
+    }
   .datos_perfil .nav-link {
     font-size: 12px !important;
     padding-left: 5px !important;
@@ -1165,6 +1251,11 @@ ul {
     font-size: 11px !important;
 
     }
+
+    .itemss{
+      font-size: 11px !important;
+
+      }
   .datos_perfil .nav-link {
    font-size: 14px !important;
    padding-left: 20px !important;

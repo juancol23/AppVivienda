@@ -5,6 +5,11 @@ import { NgxSpinnerService } from 'ngx-spinner';
 import { Injectable,NgZone } from '@angular/core';
 import { ActivatedRoute,Params } from '@angular/router';
 import * as globals from '../globals/globals';
+import { AuthService } from '../servicios/auth.service';
+import {HttpClient, HttpHeaders} from '@angular/common/http';
+
+
+
 
 declare var $ :any;
 
@@ -21,11 +26,27 @@ export class DetailInmuebleComponent implements OnInit {
   public posicion : any;
   public imageurl :any;
 
+  public permision:any=[];
+
+  public id_usuario:string;
+  public isLogged: boolean = false;
+
+  public email_data:any;
+
+  public nombre_array:any;
+  public nombre;
+
+
+  public interes: boolean = false;
+
 
   constructor(private router: Router,
-    private FirebaseService: FirebaseService,private spinner: NgxSpinnerService,
-
-    private route:ActivatedRoute) { }
+    private FirebaseService: FirebaseService,
+    private spinner: NgxSpinnerService,
+    private route:ActivatedRoute,
+    private authService: AuthService,
+    public http: HttpClient
+    ) { }
 
   ngOnInit() {
 
@@ -35,9 +56,11 @@ export class DetailInmuebleComponent implements OnInit {
 
     })
 
-    this.getAllUser();
 
     this.getInmueble(this.id_solicitud);
+    this.getCurrentUser();
+    this.getAllUser();
+
 
     window.onkeyup = function (event) {
       if (event.keyCode == 27) {
@@ -47,6 +70,25 @@ export class DetailInmuebleComponent implements OnInit {
 
 
 
+  }
+
+  getCurrentUser() {
+
+    this.authService.isAuth().subscribe(auth => {
+      if (auth) {
+        this.isLogged = true;
+
+        this.id_usuario=auth.uid;
+
+
+      }else {
+
+        this.isLogged = false;
+        this.id_usuario="error";
+
+
+      }
+    });
   }
 
   getAllUser(){
@@ -79,15 +121,61 @@ getInmueble(id){
 
    if(res.length==0){
 
-    this.data="";
-
-
     this.router.navigate(['/home']);
+
+    return false;
 
 
     }else{
 
-    this.data=res;
+      this.data=res;
+
+
+    this.nombre_array= JSON.parse(localStorage.getItem("users"));
+
+    this.nombre=this.nombre_array[this.data[0]["id_user"]];
+    console.log(this.nombre);
+
+
+      this.FirebaseService.getSolicitudContainInmueblebyId(id).subscribe((res)=>{
+      this.permision=[];
+      this.permision.push(this.data[0]["id_user"]);
+      if(res.length==0){
+
+      }else{
+
+          for (let index = 0; index < res.length; index++) {
+            this.permision.push(res[index]["id_user"]);
+
+          }
+
+      }
+
+      if(this.permision.includes(this.id_usuario)){
+
+
+      }else{
+
+       this.data="";
+       this.router.navigate(['/registro-solicitud']);
+
+
+      }
+
+
+      if(this.data[0]["id_user"]!=this.id_usuario){
+
+        this.interes=true;
+        console.log(this.interes);
+      }
+
+
+
+
+
+      });
+
+
 
     }
 
@@ -150,6 +238,65 @@ btn_galeria(valor){
 
     this.imageurl=this.data[0]["image"][this.posicion]["url"];
   }
+
+
+}
+
+
+postular(){
+  this.spinner.show();
+
+  this.FirebaseService.getUserById(this.id_usuario).subscribe((res)=>{
+
+
+    this.email_data={
+      nombre:res["name"],
+      apellido:res["apellido"],
+      email_solicitante:res["email"],
+      celular:res["telefono"]
+    }
+
+
+
+    this.FirebaseService.getUserById(this.data[0].id_user).subscribe((res)=>{
+
+
+        this.email_data.email_vendedor=res["email"]
+        this.email_data.nombre_vendedor=res["name"]
+        this.email_data.apellido_vendedor=res["apellido"]
+
+
+this.http.post('http://localhost/sendEmail/send/send-email.php',
+ JSON.stringify(this.email_data),
+ {responseType: 'text'}
+ ).subscribe((res)=>{
+
+  if(res){
+
+
+    this.spinner.hide();
+
+    $("#modal_email").modal('show');
+
+
+  }else{
+    alert("error");
+  }
+
+
+ },(err)=>{
+
+  alert(err);
+ });
+
+
+    });
+
+
+
+  })
+
+
 
 
 }

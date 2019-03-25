@@ -164,7 +164,7 @@
               <div class="maps-renta row" style="margin:0px">
 
                       <div class="col-6 margin_p text-left " >
-                          <div class="name-busca "><i class="fas fa-user"></i>{{user[item.id_user]}} LE OFRECE:</div>
+                          <div class="name-busca "><i class="fas fa-user"></i>{{user[items.id_user]}} LE OFRECE:</div>
                       </div>
                       <div class="col-6 margin_p text-right " >
 
@@ -182,12 +182,12 @@
                           </div>
                         </div>
                           <div class="col-6 " style="padding-right: 0px;padding-left: 5px">
-                            <div *ngIf="items.cuartos==1">
+                            <div *ngIf="items.cuartos == 1">
                               <div class="border_s">
                                   <i class="fas fa-bed"></i><span class="text-right" >{{items.cuartos}} DORMITORIO </span>
                                 </div>
                           </div>
-                          <div *ngIf="items.cuartos>1">
+                          <div *ngIf="items.cuartos > 1">
                               <div class="border_s">
                                   <i class="fas fa-bed"></i><span class="text-right" >{{items.cuartos}} DORMITORIOS </span>
                                 </div>
@@ -205,11 +205,11 @@
                             </div>
 
                             <div class="col-lg-4 col-md-4 col-6 plr">
-                              <div *ngIf="items.bano==1">
+                              <div *ngIf="items.bano == 1">
                                 <div class="border_s"><i class="fas fa-toilet"></i><span class="text-right" >{{items.bano}} BAÑO </span>
                                 </div>
                               </div>
-                              <div *ngIf="items.bano>1">
+                              <div *ngIf="items.bano >1">
                                   <div class="border_s"><i class="fas fa-toilet"></i><span class="text-right" >{{items.bano}} BAÑOS </span>
                                   </div>
                                 </div>
@@ -281,7 +281,7 @@
                   <a class="btn_cerrar_modal" data-dismiss="modal">X</a>
               </div>
 
-              <div  class="text-center" *ngIf="arrayInmueble.length === 0" >
+              <div  class="text-center dispal" *ngIf="arrayInmueble.length === 0" >
                   <img src="assets/img/alerta.png" alt="">
                 <p class="p_login">Lo sentimos, no cuenta con Inmuebles registrados.</p>
                 <a class="btn nuevo_i_d" (click)="redireccionar('registro-inmueble')">NUEVO INMUEBLE</a>
@@ -299,7 +299,7 @@
                             <img [src]="items.image[0]['url']" class="img-fluid foto_normal">
 
                             </div>
-                            <div class="col-sm-6  padding" (click)="select(indice , items.id_inmueble )">
+                            <div class="col-sm-6  padding" (click)="select(indice, items.id_inmueble )">
                                 <div class="maps-renta row" style="margin:0px">
 
 
@@ -404,6 +404,55 @@
         </div>
     </div>
   </div>
+
+  <div class="modal fade " id="modal_exitoso" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered  modal-dialog-scrollable md-g" role="document" >
+        <div class="modal-content">
+
+            <div class="modal-body mdbody">
+                <div class="text-center">
+                    <a class="btn_cerrar_modal" data-dismiss="modal">X</a>
+                </div>
+                <br>
+                <div class="text-center"><i style="font-size: 60px;color: green" class="far fa-check-circle"></i></div>
+
+                <div class="text-center"><br> <h6>¡ Envío Exitoso !</h6></div>
+              <div class="text-center container"><br><p class="p-f">La informacion de tu inmueble fue enviada a  <span>{{user[item.id_user]}}</span></p></div>
+
+              <div class="text-center container"><p class="p-s">
+                Si <span>{{user[item.id_user]}}</span> le interesa tu <span>{{data[0]["tipo_departamento"]}}</span>  te llegará un correo de la información de
+                <span>{{user[item.id_user]}}</span>
+              </p></div>
+
+            </div>
+        </div>
+    </div>
+  </div>
+
+  <div class="modal fade " id="modal_permiso" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered  modal-dialog-scrollable md-g" role="document" >
+          <div class="modal-content">
+
+              <div class="modal-body mdbody">
+                  <div class="text-center">
+                      <a class="btn_cerrar_modal" data-dismiss="modal">X</a>
+                  </div>
+                  <br>
+                  <div  class="text-center dispal"  >
+                      <img src="assets/img/alerta.png" alt="">
+                    <p class="p_login">¿Deseas tener una propuesta a tu medida? <span> Registra tu solicitud.</span></p>
+                  </div>
+
+                  <div class="text-center">
+
+                     <a class="btn nuevo_i_d" (click)="redireccionar('registro-solicitud')">NUEVA SOLICITUD</a>
+                  </div>
+
+
+              </div>
+          </div>
+      </div>
+    </div>
 
 
   <ngx-spinner

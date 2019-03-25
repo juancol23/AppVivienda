@@ -41,6 +41,9 @@ export class DetailSolicitudComponent implements OnInit {
   public inmueble : any=[];
 
 
+  public permision:any=[];
+
+
   public isLogged: boolean = false;
   public id_user_inmueble:string;
 
@@ -65,12 +68,14 @@ export class DetailSolicitudComponent implements OnInit {
 
     })
 
-    this.getAllUser();
 
-    this.getSolicitud(this.id_solicitud);
+
+
+    this.getAllUser();
 
     this.getCurrentUser();
 
+    this.getSolicitud(this.id_solicitud);
 
 
 
@@ -185,6 +190,9 @@ getSolicitud(id){
 
 
 
+
+
+
     }
 
 })
@@ -225,119 +233,9 @@ setmapalat(coordenadas){
 
         if(res.length>0){
 
-     this.arrayInmueble=res
 
+         this.arrayInmueble=res
 
-     /*this.arrayInmueble = this.arrayInmueble.filter(elem => elem.tipo_departamento == this.filtro["tipo_departamento"]);
-     this.arrayInmueble = this.arrayInmueble.filter(elem => elem.operacion == this.filtro["operacion"]);
-     this.arrayInmueble = this.arrayInmueble.filter(elem => elem.cuartos  >= this.filtro["cuartos"] );
-     this.arrayInmueble = this.arrayInmueble.filter(elem => elem.bano  >= this.filtro["bano"] );
-
-     if(this.filtro["cochera"]=='NO'){
-      this.arrayInmueble = this.arrayInmueble.filter(elem => elem.cochera == this.filtro["cochera"] );
-     }else{
-      this.arrayInmueble = this.arrayInmueble.filter(elem => elem.cochera  >= this.filtro["cochera"] );
-     }
-
-     if(this.filtro["vista"]=='INDISTINTO'){
-
-    }else{
-      this.arrayInmueble = this.arrayInmueble.filter(elem => elem.vista == this.filtro["vista"] );
-    }
-
-    if(this.filtro["tipo_depa"]=='INDISTINTO'){
-
-    }else{
-      this.arrayInmueble = this.arrayInmueble.filter(elem => elem.tipo_depa == this.filtro["tipo_depa"] );
-    }
-
-    if(this.filtro["amoblado"]=='INDISTINTO'){
-
-    }else{
-      this.arrayInmueble = this.arrayInmueble.filter(elem => elem.amoblado == this.filtro["amoblado"] );
-    }
-    if(this.filtro["estreno"]=='INDISTINTO'){
-
-    }else{
-      this.arrayInmueble = this.arrayInmueble.filter(elem => elem.estreno == this.filtro["estreno"] );
-    }
-    if(this.filtro["proyecto"]=='INDISTINTO'){
-
-    }else{
-      this.arrayInmueble = this.arrayInmueble.filter(elem => elem.proyecto == this.filtro["proyecto"] );
-    }
-
-    this.arrayInmueble = this.arrayInmueble.filter(elem =>elem.area  <=  this.filtro["area"]   );
-
-    this.arrayInmueble = this.arrayInmueble.filter(elem =>elem.presupuesto.precio  <=  this.filtro["presupuesto"].precio  );
-    this.arrayInmueble = this.arrayInmueble.filter(elem =>elem.mantenimiento.precio  <=  this.filtro["mantenimiento"].precio   );
-
-    if(this.filtro["terraza"] ==true ){
-      this.arrayInmueble = this.arrayInmueble.filter(elem => elem.adicionales.terraza == this.filtro["terraza"] );
-    }
-
-  if(this.filtro["dscp"]==true  ) {
-    this.arrayInmueble = this.arrayInmueble.filter(elem => elem.adicionales.dscp == this.filtro["dscp"] );
-  }
-
-  if(this.filtro["gym"]==true ){
-    this.arrayInmueble = this.arrayInmueble.filter(elem => elem.adicionales.gym == this.filtro["gym"] );
-
-  }
-
-  if(this.filtro["juego"]==true){
-    this.arrayInmueble = this.arrayInmueble.filter(elem => elem.adicionales.juego == this.filtro["juego"] );
-
-  }
-
-  if(this.filtro["mascota"]==true  ){
-    this.arrayInmueble = this.arrayInmueble.filter(elem => elem.adicionales.mascota == this.filtro["mascota"] );
-
-  }
-
-  if(this.filtro["parrilla"]==true   ){
-    this.arrayInmueble = this.arrayInmueble.filter(elem => elem.adicionales.parrilla == this.filtro["parrilla"] );
-
- }
-
-  if(this.filtro["piscina"]==true ){
-    this.arrayInmueble = this.arrayInmueble.filter(elem => elem.adicionales.piscina == this.filtro["piscina"] );
-
-  }
-
-  if(this.filtro["reunion"]==true ){
-    this.arrayInmueble = this.arrayInmueble.filter(elem => elem.adicionales.reunion == this.filtro["reunion"] );
-
-  }
-
-  if(this.filtro["servicio"]==true ){
-    this.arrayInmueble = this.arrayInmueble.filter(elem => elem.adicionales.servicio == this.filtro["servicio"] );
-
-  }
-
-  if(this.filtro["vigilancia"]==true){
-    this.arrayInmueble = this.arrayInmueble.filter(elem => elem.adicionales.vigilancia == this.filtro["vigilancia"] );
-
-  }
-
-  if(this.filtro["deposito"]==true ){
-    this.arrayInmueble = this.arrayInmueble.filter(elem => elem.adicionales.deposito == this.filtro["deposito"] );
-
-  }
-
-  if(this.filtro["ascensor"]==true ){
-    this.arrayInmueble = this.arrayInmueble.filter(elem => elem.adicionales.ascensor == this.filtro["ascensor"] );
-
-  }
-
-  if(this.filtro["distrito"]!=[]){
-
-    this.arrayInmueble = this.arrayInmueble.filter(elem => this.filtro["distrito"].includes(elem.coddireccion));
-
-  }else{
-
-    console.log("sin filtro");
-  }*/
 
 
         }else{
@@ -517,27 +415,6 @@ setmapalat(coordenadas){
         valor2:this.arrayInmueble[indice]["presupuesto"]["precio"]
       })
     }
-
-    /*if(this.filtro["presupuesto"].moneda==this.arrayInmueble[indice]["presupuesto"]["moneda"]){
-
-    }else{
-      this.noMatch.push({
-        name:"Moneda Pre",
-        valor1:this.filtro["presupuesto"].moneda,
-        valor2:this.arrayInmueble[indice]["presupuesto"]["moneda"]
-      })
-    }
-
-
-    if(this.filtro["mantenimiento"].moneda==this.arrayInmueble[indice]["mantenimiento"]["moneda"]){
-
-    }else{
-      this.noMatch.push({
-        name:"Moneda Man",
-        valor1:this.filtro["mantenimiento"].moneda,
-        valor2:this.arrayInmueble[indice]["mantenimiento"]["moneda"]
-      })
-    }*/
 
     if(this.filtro["mantenimiento"].precio>=this.arrayInmueble[indice]["mantenimiento"]["precio"]){
 
@@ -744,9 +621,6 @@ setmapalat(coordenadas){
 
       this.spinner.show();
 
-
-
-
       this.FirebaseService.getMatchSI(this.data[0]["id_solicitud"],this.arrayInmueble[indice]["id_inmueble"]).subscribe((res)=>{
 
         this.data_res = res.size;
@@ -782,7 +656,7 @@ setmapalat(coordenadas){
 
       this.FirebaseService.updateSolicitud(this.data[0]["id_solicitud"], this.matchid).then((res)=>{
 
-        this.toastr.success('Felicitaciones, Inmueble registrado.' );
+        $("#modal_exitoso").modal('show');
 
         this.spinner.hide();
 
@@ -800,6 +674,7 @@ setmapalat(coordenadas){
 
     this.inmueble=[]
 
+
     for (let index = 0; index < this.data[0]["match"].length; index++) {
 
 
@@ -807,20 +682,39 @@ setmapalat(coordenadas){
 
         this.inmueble[index]=res
 
-
-
-      })
-
+      });
 
       }
-
-
 
     }
 
 
-    viewInmueble(id){
-      this.router.navigate([`detalle-inmueble/${id}`]);
+    viewInmueble(id_inmueble){
+
+     this.permision=[]
+
+     this.permision.push(this.data[0]["id_user"])
+
+     this.FirebaseService.getInmuebleByID(id_inmueble).subscribe((res)=>{
+
+            this.permision.push(res["id_user"])
+
+
+            if(this.permision.includes(this.id_user_inmueble)){
+
+              this.router.navigate([`detalle-inmueble/${id_inmueble}`]);
+
+            }else{
+
+              $("#modal_permiso").modal('show');
+
+
+            }
+
+      });
+
+
+
     }
 
 
@@ -830,6 +724,7 @@ setmapalat(coordenadas){
 
     this.router.navigate([href]);
     $("#modal_list_inmuebles").modal('hide');
+    $("#modal_permiso").modal('hide');
   }
 
   editarInmueble(id):void{

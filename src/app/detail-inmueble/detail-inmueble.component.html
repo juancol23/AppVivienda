@@ -138,6 +138,15 @@
          </div>
    </div>
 
+   <div *ngIf="interes == true"  class=" col-12 justify-content-md-center wid"><br>
+    <div class="row justify-content-md-center">
+    <div class="fir_se" style="width: 140px">
+     <button (click)="postular()"  class="btn bg-blul button_red" style="width: 120px; height: 120px;"  >ME INTERESA</button>
+   </div>
+ </div>
+ <br><br>
+ </div>
+
 
 
 
@@ -167,3 +176,38 @@
   </div>
 </div>
 
+
+
+<div class="modal fade " id="modal_email" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered  modal-dialog-scrollable md-g" role="document" >
+        <div class="modal-content">
+
+            <div class="modal-body mdbody">
+                <div class="text-center">
+                    <a class="btn_cerrar_modal" data-dismiss="modal">X</a>
+                </div>
+                <br>
+                <div class="text-center"><i style="font-size: 60px;color: green" class="far fa-check-circle"></i></div>
+
+                <div class="text-center"><br> <h6>¡ GRACIAS !</h6></div>
+              <div class="text-center container"><br><p class="p-f">Tu informacion fue enviada a <span>{{nombre}}</span>  </p></div>
+
+              <div class="text-center container"><p class="p-s">
+                  <span>{{nombre}}</span> se pondrá en contacto contigo.
+              </p></div>
+
+            </div>
+        </div>
+    </div>
+  </div>
+
+
+  <ngx-spinner
+  bdOpacity = 0.5
+  bdColor = "rgba(0,0,0,0.9)"
+  size = "large"
+  color = "#ffffff"
+  type = "ball-clip-rotate-multiple"
+  fullScreen = "true"
+  >
+  </ngx-spinner>

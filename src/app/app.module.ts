@@ -35,6 +35,8 @@ import { TermComponent } from './term/term.component';
 import { PoliticasComponent } from './politicas/politicas.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ToastrModule } from 'ngx-toastr';
+import {HttpClientModule} from '@angular/common/http';
+
 
 
 
@@ -80,7 +82,9 @@ import { ToastrModule } from 'ngx-toastr';
     positionClass: 'toast-bottom-center',
     preventDuplicates: true,
 
-    })
+
+    }),
+    HttpClientModule
   ],
   providers: [AngularFireAuth, AngularFirestore],
   bootstrap: [AppComponent]
