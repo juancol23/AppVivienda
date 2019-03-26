@@ -266,7 +266,7 @@ postular(){
         this.email_data.apellido_vendedor=res["apellido"]
 
 
-this.http.post('http://localhost/sendEmail/send/send-email.php',
+this.http.post('https://sava.com.pe/send/send-email.php',
  JSON.stringify(this.email_data),
  {responseType: 'text'}
  ).subscribe((res)=>{
@@ -278,15 +278,20 @@ this.http.post('http://localhost/sendEmail/send/send-email.php',
 
     $("#modal_email").modal('show');
 
+    console.log(res);
+
 
   }else{
     alert("error");
+
+    this.spinner.hide();
   }
 
 
  },(err)=>{
 
   alert(err);
+  this.spinner.hide();
  });
 
 

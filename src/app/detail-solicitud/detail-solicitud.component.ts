@@ -282,24 +282,28 @@ setmapalat(coordenadas){
       })
     }
 
-    if(this.filtro["cuartos"]>=this.arrayInmueble[indice]["cuartos"]){
+    if(this.filtro["cuartos"]>this.arrayInmueble[indice]["cuartos"]){
 
-    }else{
       this.noMatch.push({
         name:"Dormitorio",
         valor1:this.filtro["cuartos"],
         valor2:this.arrayInmueble[indice]["cuartos"]
       })
-    }
-
-    if(this.filtro["bano"]>=this.arrayInmueble[indice]["bano"]){
 
     }else{
+
+    }
+
+    if(this.filtro["bano"]>this.arrayInmueble[indice]["bano"]){
+
       this.noMatch.push({
         name:"Baño",
         valor1:this.filtro["bano"],
         valor2:this.arrayInmueble[indice]["bano"]
       })
+
+    }else{
+
     }
 
     if(this.filtro["cochera"]=='NO'){
@@ -312,17 +316,19 @@ setmapalat(coordenadas){
           valor2:this.arrayInmueble[indice]["cochera"]
         })
       }
-      this.arrayInmueble = this.arrayInmueble.filter(elem => elem.cochera == this.filtro["cochera"] );
+      //this.arrayInmueble = this.arrayInmueble.filter(elem => elem.cochera == this.filtro["cochera"] );
     }else{
 
-      if (this.filtro["cochera"]>=this.arrayInmueble[indice]["cochera"]){
+      if (this.filtro["cochera"]>this.arrayInmueble[indice]["cochera"]){
 
-      }else{
         this.noMatch.push({
           name:"Cochera",
           valor1:this.filtro["cochera"],
           valor2:this.arrayInmueble[indice]["cochera"]
         })
+
+      }else{
+
       }
     }
 
