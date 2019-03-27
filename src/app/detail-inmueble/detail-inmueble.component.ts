@@ -8,6 +8,8 @@ import * as globals from '../globals/globals';
 import { AuthService } from '../servicios/auth.service';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
 
+import { ToastrService } from 'ngx-toastr';
+
 
 
 
@@ -45,7 +47,8 @@ export class DetailInmuebleComponent implements OnInit {
     private spinner: NgxSpinnerService,
     private route:ActivatedRoute,
     private authService: AuthService,
-    public http: HttpClient
+    public http: HttpClient,
+    private toastr: ToastrService
     ) { }
 
   ngOnInit() {
@@ -245,6 +248,22 @@ btn_galeria(valor){
 
 postular(){
   this.spinner.show();
+
+  if(localStorage.getItem(this.id_usuario)==this.data[0]["id_inmueble"]){
+
+    this.spinner.hide();
+
+    this.toastr.warning('Solo puede enviar sus datos una vez.');
+
+    return false
+
+  }else{
+
+    localStorage.setItem(this.id_usuario,this.data[0]["id_inmueble"]);
+
+  }
+
+
 
   this.FirebaseService.getUserById(this.id_usuario).subscribe((res)=>{
 

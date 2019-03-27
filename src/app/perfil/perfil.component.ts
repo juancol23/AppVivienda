@@ -35,6 +35,8 @@ export class PerfilComponent implements OnInit{
   public isLogged: boolean = false;
   public typeUser: boolean = false;
 
+  public id_user: string
+
   public modelProfile:any = {};
   public modelPassword: any = {};
   public error:any={};
@@ -96,22 +98,6 @@ export class PerfilComponent implements OnInit{
 
 
 
-        $("#v-pills-messages-tab").on('shown.bs.tab', function() {
-
-
-          $(window).resize(function() {
-            // (the 'map' here is the result of the created 'var map = ...' above)
-            google.maps.event.trigger(map, "resize");
-          });
-
-        });
-
-
-
-
-
-
-
   }
 
 
@@ -125,6 +111,7 @@ export class PerfilComponent implements OnInit{
     this.authService.isAuth().subscribe(auth => {
       if (auth) {
 
+        this.id_user=auth.uid
             this.FirebaseService.getInmuebles(auth.uid).subscribe((res) => {
               this.data=res;
 
@@ -160,6 +147,7 @@ export class PerfilComponent implements OnInit{
       }
     });
   }
+
 
 
   getCurrentUser() {
