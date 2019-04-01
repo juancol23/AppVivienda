@@ -161,6 +161,8 @@ export class RegisterInmuebleComponent implements OnInit {
       if (status === google.maps.GeocoderStatus.OK) {
         if (results[1]) {
 
+
+
         } else {
         }
       } else {
@@ -510,7 +512,7 @@ registerInmueble(form: NgForm){
 
               }else{
 
-               
+
                 this.toastr.warning('Solo puede Seleccionar 10 imagenes' );
 
               }

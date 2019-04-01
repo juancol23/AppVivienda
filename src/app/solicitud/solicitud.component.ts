@@ -137,6 +137,7 @@ export class SolicitudComponent implements OnInit {
       tipo_departamento:'',
       operacion:'',
       distrito:'',
+      radio_distrito:'',
       cuartos:'',
       bano:'',
       cochera:'',
@@ -337,7 +338,6 @@ borrar(){
      $(".ac").removeClass("active");
 
   this.getSolicitud(this.filtro);
-  console.log(this.filtro);
 
 }
 
@@ -365,7 +365,6 @@ buscar(){
 
   this.getSolicitud(this.filtro);
 
-  console.log(this.filtro);
 
 }
 
@@ -453,7 +452,6 @@ changeExit(valor){
 
   }
 
-  console.log(this.filtro);
 
 }
 

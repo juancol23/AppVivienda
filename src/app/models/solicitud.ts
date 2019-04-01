@@ -18,6 +18,7 @@ export interface SolicitudInterface {
   comentario?:string;
   distrito?:[];
   radio?:any;
+  distrito_radio?:[];
 
   adicionales?:{
     terraza?:boolean,

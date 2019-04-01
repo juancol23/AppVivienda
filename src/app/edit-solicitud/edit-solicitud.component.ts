@@ -9,6 +9,8 @@ import { NgForm } from '@angular/forms';
 import {NgbDate, NgbCalendar,NgbDatepickerConfig,NgbDatepickerI18n,NgbDateStruct} from '@ng-bootstrap/ng-bootstrap';
 import { ToastrService } from 'ngx-toastr';
 
+import {HttpClient, HttpHeaders} from '@angular/common/http';
+
 class RequestDepartment {
 	id: string
 	value: any
@@ -70,6 +72,8 @@ export class EditSolicitudComponent implements OnInit {
   public zoom:number;
   public markers:any;
 
+  public markers_distrito:any=[];
+
   public colors = ['red', 'blue','black'];
   public distric:any;
 
@@ -89,7 +93,8 @@ export class EditSolicitudComponent implements OnInit {
 
 
 
-  constructor(private authService: AuthService ,
+  constructor(
+    public http: HttpClient,private authService: AuthService ,
     private FirebaseService: FirebaseService,
     private router: Router,
     private mapsAPILoader: MapsAPILoader,
@@ -215,23 +220,29 @@ export class EditSolicitudComponent implements OnInit {
 
       this.register.comentario=this.data[0]["comentario"]
 
-      this.distric=this.data[0]["distrito"]
 
-      if(this.distric.length==0 ){}else{
+
+      if(this.data[0]["distrito"].length>0 && this.data[0]["radio"].length==0){
+        this.distric=this.data[0]["distrito"]
         this.ub_dis= true
         this.ub_area= false
         $("#v-pills-home-tab").click();
+
       }
 
-      this.markers=this.data[0]["radio"]
 
-      if(this.markers.length==0 ){}
-      else{
-
+      if(this.data[0]["distrito"].length>0 && this.data[0]["radio"].length>0){
+        this.markers=this.data[0]["radio"]
         this.ub_dis= false
         this.ub_area= true
         $("#v-pills-profile-tab").click();
+
+        this.markers_distrito=this.data[0]["distrito"]
       }
+
+
+
+
 
 
       if(this.data[0]["adicionales"]["terraza"]){
@@ -548,8 +559,10 @@ eliminarItem_mapa(indice){
 
   this.markers.splice(indice, 1);
 
+  this.markers_distrito.splice(indice, 1);
 
   console.log(this.markers);
+  console.log(this.markers_distrito);
 
  }
 
@@ -563,6 +576,8 @@ mapClicked(event){
   if(this.markers.length<3){
 
     this.markers.push(string);
+
+    this.geocodeLatLng(lat,lng);
 
 
   }else{
@@ -590,6 +605,10 @@ if(valor == 'distrito'){
 
 }
 
+this.markers_distrito=[];
+this.distric=[];
+this.markers=[];
+
 }
 
 
@@ -600,12 +619,12 @@ if (!this.fromDate && !this.toDate) {
 } else if (this.fromDate && !this.toDate && date.after(this.fromDate)) {
   this.toDate = date;
 
-  
+
 
   this.de =new Date(this.fromDate.year,this.fromDate.month-1,this.fromDate.day);
   this.hasta =new Date(this.toDate.year,this.toDate.month-1,this.toDate.day);
 
- 
+
 } else {
   this.toDate = null;
   this.fromDate = date;
@@ -692,7 +711,7 @@ editSolicitud(form: NgForm){
 
         if(this.fromDate==null ||  this.toDate == null){
 
-          
+
           this.toastr.warning('Seleccionar rango de fechas.' );
           return false;
 
@@ -736,6 +755,8 @@ editSolicitud(form: NgForm){
 
           this.register.radius=this.markers;
 
+          this.register.distrito=this.markers_distrito;
+
 
         }else{
 
@@ -745,7 +766,9 @@ editSolicitud(form: NgForm){
 
       }else{
 
+
         this.register.radius=[];
+
 
       }
 
@@ -786,6 +809,47 @@ setmapalat(coordenadas){
 
     return parseFloat(mapa[1]);
 
+  }
+
+  geocodeLatLng(lat,long) {
+    this.http.get
+    (`https://reverse.geocoder.api.here.com/6.2/reversegeocode.json?prox=${lat}%2C${long}%2C250&mode=retrieveAddresses&maxresults=1&gen=9&app_id=5BPK6vRAExswPIHHiECa&app_code=wRKuKksx_b_u3B-AQ5H0Uw`
+    ,
+    {responseType: 'json'}
+    ).subscribe((res)=>{
+
+     if(res){
+
+
+
+
+      let distrito = globals.DISTRICT_DIRECTIONS
+
+      for(var i = 0; i < distrito.length; i++) {
+        if (distrito[i].name.indexOf(res["Response"]["View"][0]["Result"][0]["Location"]["Address"]["City"]) >-1 ) {
+
+
+              this.markers_distrito.push(distrito[i].skuDepPro +""+distrito[i].sku)
+
+            break;
+        }else{
+
+        }
+    }
+
+    console.log( this.markers_distrito);
+
+
+
+     }else{
+
+     }
+
+
+    },(err)=>{
+
+     console.log(err);
+    });
   }
 
 }

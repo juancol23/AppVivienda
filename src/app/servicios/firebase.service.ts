@@ -337,6 +337,7 @@ getSolicitudesAll(filtro){
 
     if(filtro["distrito"]!=''){
       query = query.where('distrito', 'array-contains', filtro["distrito"])
+
     }
 
     if(filtro["bano"]!=''){

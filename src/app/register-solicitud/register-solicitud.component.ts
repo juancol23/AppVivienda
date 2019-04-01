@@ -1,5 +1,7 @@
 import { Component, OnInit,NgZone,Injectable } from '@angular/core';
 import * as globals from '../globals/globals';
+
+import {HttpClient, HttpHeaders} from '@angular/common/http';
 import { AuthService } from '../servicios/auth.service';
 import { FirebaseService } from '../servicios/firebase.service';
 import { Router } from '@angular/router';
@@ -80,6 +82,7 @@ export class RegisterSolicitudComponent implements OnInit {
   public longitude: number;
   public zoom:number;
   public markers:any;
+  public markers_distrito:any=[];
 
   public colors = ['red', 'blue','black'];
   public distric: any;
@@ -102,7 +105,8 @@ export class RegisterSolicitudComponent implements OnInit {
 
 
 
-  constructor(private authService: AuthService ,
+  constructor(
+    public http: HttpClient,private authService: AuthService ,
     private FirebaseService: FirebaseService,
     private router: Router,
     private mapsAPILoader: MapsAPILoader,
@@ -120,7 +124,7 @@ export class RegisterSolicitudComponent implements OnInit {
     this.obtenerDepartamentos();
     this.changeCheckbox();
 
- 
+
 
 
 
@@ -194,6 +198,7 @@ resetear(){
     this.zoom=13
     this.markers=[]
     this.distric=[]
+    this.markers_distrito =[];
     this.ub_dis= true
     this.ub_area= false
     this.rangeDate=false
@@ -215,26 +220,47 @@ resetear(){
 }
 
 
-geocodeLatLng(geocoder,lat,long) {
-  var latlng = {
-    lat: lat,
-    lng: long
-  };
-  geocoder.geocode({
-    'location': latlng
-  }, function(results, status) {
-    if (status === google.maps.GeocoderStatus.OK) {
-      if (results[1]) {
-        console.table(results);
+geocodeLatLng(lat,long) {
+  this.http.get
+  (`https://reverse.geocoder.api.here.com/6.2/reversegeocode.json?prox=${lat}%2C${long}%2C250&mode=retrieveAddresses&maxresults=1&gen=9&app_id=5BPK6vRAExswPIHHiECa&app_code=wRKuKksx_b_u3B-AQ5H0Uw`
+  ,
+  {responseType: 'json'}
+  ).subscribe((res)=>{
 
-      } else {
-        console.log('No hay resultados');
+   if(res){
+
+
+
+
+    let distrito = globals.DISTRICT_DIRECTIONS
+
+    for(var i = 0; i < distrito.length; i++) {
+      if (distrito[i].name.indexOf(res["Response"]["View"][0]["Result"][0]["Location"]["Address"]["City"]) >-1 ) {
+
+
+            this.markers_distrito.push(distrito[i].skuDepPro +""+distrito[i].sku)
+
+          break;
+      }else{
+
       }
-    } else {
-      console.log('Geocoder failed due to: ' + status);
-    }
+  }
+
+  console.log( this.markers_distrito);
+
+
+
+   }else{
+
+   }
+
+
+  },(err)=>{
+
+   console.log(err);
   });
 }
+
 
 sortByTwoProperty = () => {
 		return (x, y) => {
@@ -364,6 +390,10 @@ selDistrict() {
 
     this.markers.splice(indice, 1);
 
+    this.markers_distrito.splice(indice, 1);
+
+    console.log(this.markers);
+    console.log(this.markers_distrito);
 
    }
 
@@ -377,15 +407,13 @@ selDistrict() {
     if(this.markers.length<3){
 
       this.markers.push(string);
-
+      this.geocodeLatLng(lat,lng);
 
     }else{
       this.toastr.warning('Solo puede seleccionar 3 lugares' );
     }
 
-    var geocoder = new google.maps.Geocoder;
 
-    this.geocodeLatLng(geocoder,lat,lng);
 
 
 
@@ -425,6 +453,10 @@ change(valor){
     this.ub_area= true;
 
   }
+
+  this.distric=[];
+  this.markers=[];
+  this.markers_distrito=[]
 
 }
 
@@ -555,6 +587,7 @@ registersolicitud(form: NgForm){
         if(this.markers.length>0){
 
           this.register.radius=this.markers;
+          this.register.distrito=this.markers_distrito;
 
 
         }else{
@@ -570,7 +603,7 @@ registersolicitud(form: NgForm){
       }
 
 
-   
+
 
       this.FirebaseService.register_solicitud(this.register).then((res) =>{
         this.spinner.hide();
