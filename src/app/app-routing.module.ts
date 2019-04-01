@@ -14,6 +14,7 @@ import {DetailSolicitudComponent} from './detail-solicitud/detail-solicitud.comp
 import {DetailInmuebleComponent} from './detail-inmueble/detail-inmueble.component';
 import { TermComponent } from './term/term.component';
 import { PoliticasComponent } from './politicas/politicas.component';
+import { ProfileComponent } from './profile/profile.component';
 
 const app_routes: Routes = [
   {path: 'home', component: InmuebleComponent},
@@ -21,7 +22,7 @@ const app_routes: Routes = [
   {path: 'reset', component: ResetComponent},
   {path: 'registro-inmueble', component: RegisterInmuebleComponent},
   {path: 'registro-solicitud', component: RegisterSolicitudComponent},
-  {path: 'perfil', component: PerfilComponent,canActivate: [AuthGuard]},
+  {path: 'perfil', component: ProfileComponent,canActivate: [AuthGuard]},
   {path: 'editar-solicitud/:id', component: EditSolicitudComponent,canActivate: [AuthGuard]},
   {path: 'editar-inmueble/:id', component: EditInmuebleComponent,canActivate: [AuthGuard]},
   {path: 'search', component: SolicitudComponent},

@@ -8,6 +8,8 @@ import * as globals from '../globals/globals';
 import { AuthService } from '../servicios/auth.service';
 import { ToastrService } from 'ngx-toastr';
 
+import {HttpClient, HttpHeaders} from '@angular/common/http';
+
 
 declare var $ :any;
 
@@ -35,6 +37,9 @@ export class DetailSolicitudComponent implements OnInit {
   public arrayInmueble:any=[];
   public colors = ['red', 'blue','black'];
 
+
+  public email_data:any;
+
   public filtro:any;
 
 
@@ -47,6 +52,8 @@ export class DetailSolicitudComponent implements OnInit {
   public isLogged: boolean = false;
   public id_user_inmueble:string;
 
+  public data_user_solicitud:any
+
 
   constructor(
     private authService: AuthService ,
@@ -54,7 +61,8 @@ export class DetailSolicitudComponent implements OnInit {
     private FirebaseService: FirebaseService,
     private spinner: NgxSpinnerService,
     private route:ActivatedRoute,
-    private toastr: ToastrService)
+    private toastr: ToastrService,
+    public http: HttpClient,)
   {}
 
   ngOnInit() {
@@ -76,6 +84,8 @@ export class DetailSolicitudComponent implements OnInit {
     this.getCurrentUser();
 
     this.getSolicitud(this.id_solicitud);
+
+
 
 
 
@@ -129,6 +139,14 @@ export class DetailSolicitudComponent implements OnInit {
         this.spinner.hide();
     });
 
+
+}
+
+data_user_soli(){
+  this.FirebaseService.getbyIdUser(this.data[0].id_user).subscribe((res)=>{
+   this.data_user_solicitud=res;
+
+  })
 
 }
 
@@ -187,7 +205,7 @@ getSolicitud(id){
 
     this.listarInmueble();
 
-
+    this.data_user_soli();
 
 
 
@@ -258,6 +276,7 @@ setmapalat(coordenadas){
   }
 
   select(indice,id){
+
 
     this.noMatch=[];
     this.id_inmueble="";
@@ -631,7 +650,9 @@ setmapalat(coordenadas){
 
         this.data_res = res.size;
 
-        this.functioncontar(indice);
+
+
+        this.functioncontar(indice,id) ;
 
       })
 
@@ -640,7 +661,7 @@ setmapalat(coordenadas){
   }
 
 
-  functioncontar(indice){
+  functioncontar(indice,id){
 
     $("#modal_list_inmuebles").modal('hide');
 
@@ -662,9 +683,67 @@ setmapalat(coordenadas){
 
       this.FirebaseService.updateSolicitud(this.data[0]["id_solicitud"], this.matchid).then((res)=>{
 
-        $("#modal_exitoso").modal('show');
+        this.email_data={
+          nombre_solicitud:this.user[this.data[0].id_user],
+          nombre_inmueble:this.user[this.id_user_inmueble],
+          email_solicitud:this.data_user_solicitud["email"],
+          codigo:id
+        }
 
+       console.log(this.email_data);
+
+       this.http.post('https://sava.com.pe/send/send-email-solicitud.php',
+       JSON.stringify(this.email_data),
+       {responseType: 'text'}
+       ).subscribe((res) =>{
+
+        if(res){
+
+          $("#modal_exitoso").modal('show');
+
+          this.spinner.hide();
+
+        }else{
+
+
+        }
+       },(err)=>{
+
+        console.log(err);
         this.spinner.hide();
+       })
+
+
+
+        /*this.http.post('https://sava.com.pe/send/send-email.php',
+        JSON.stringify(this.email_data),
+        {responseType: 'text'}
+        ).subscribe((res)=>{
+
+         if(res){
+
+
+           this.spinner.hide();
+
+           $("#modal_email").modal('show');
+
+           console.log(res);
+
+
+         }else{
+           alert("error");
+
+           this.spinner.hide();
+         }
+
+
+        },(err)=>{
+
+         alert(err);
+         this.spinner.hide();
+        });*/
+
+
 
       })
 

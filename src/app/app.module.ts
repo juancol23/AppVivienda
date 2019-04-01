@@ -36,6 +36,7 @@ import { PoliticasComponent } from './politicas/politicas.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ToastrModule } from 'ngx-toastr';
 import {HttpClientModule} from '@angular/common/http';
+import { ProfileComponent } from './profile/profile.component';
 
 
 
@@ -61,7 +62,8 @@ import {HttpClientModule} from '@angular/common/http';
     DetailInmuebleComponent,
     DetailSolicitudComponent,
     TermComponent,
-    PoliticasComponent
+    PoliticasComponent,
+    ProfileComponent
   ],
   imports: [
     BrowserModule,

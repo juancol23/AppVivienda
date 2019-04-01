@@ -60,6 +60,12 @@ getUserByEmail(email){
   .valueChanges();
 }
 
+deleteCountInmueble(id){
+
+  return this.afs.collection(`solicitudes`, ref => ref.where("match", 'array-contains', id))
+  .valueChanges();
+}
+
 deleteInmueble(id){
 
 
@@ -545,6 +551,14 @@ getallUser(){
 
 return  this.afs.collection(`users`).valueChanges();
 }
+
+
+getbyIdUser(id_user){
+
+  return  this.afs.collection(`users`).doc(id_user).valueChanges();
+
+}
+
 
 getSolicitudesByUser(uid){
   return this.afs.collection(`solicitudes`, ref => ref.where("id_user", '==', uid  ).orderBy('fecha','desc') ).valueChanges();

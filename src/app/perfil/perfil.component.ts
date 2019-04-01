@@ -1,15 +1,10 @@
-import { Component, OnInit,ViewChild } from '@angular/core';
+import { Component, OnInit} from '@angular/core';
 import { AuthService } from '../servicios/auth.service';
 import { FirebaseService } from '../servicios/firebase.service';
 import { NgForm } from '@angular/forms';
 import { Router } from '@angular/router';
 import * as globals from '../globals/globals';
-import { isUndefined } from 'util';
-import { AgmMap,MapsAPILoader } from '@agm/core';
-import { map } from 'rxjs/operators';
 import { ToastrService } from 'ngx-toastr';
-
-
 
 declare var $ :any;
 
@@ -27,8 +22,6 @@ declare var google;
 
 export class PerfilComponent implements OnInit{
 
-
-
   public photo_profile: string =null;
   public name_profile: string =null;
 
@@ -44,8 +37,8 @@ export class PerfilComponent implements OnInit{
 
   public inmuebles_match:any=[];
 
-  public data:any;
-  public solicitudata:any;
+  public data:any=[];
+  public solicitudata:any=[];
 
 
   public img:any={};
@@ -70,6 +63,7 @@ export class PerfilComponent implements OnInit{
   selectedFiles: FileList;
 
 
+
   public user:any={};
 
 
@@ -77,7 +71,6 @@ export class PerfilComponent implements OnInit{
   public colors = ['red', 'blue','black'];
 
   constructor(
-    private mapsAPILoader: MapsAPILoader,
     private authService: AuthService ,
     private FirebaseService: FirebaseService,
     private router: Router,
@@ -112,6 +105,8 @@ export class PerfilComponent implements OnInit{
       if (auth) {
 
         this.id_user=auth.uid
+
+
             this.FirebaseService.getInmuebles(auth.uid).subscribe((res) => {
               this.data=res;
 
